@@ -1,0 +1,4 @@
+CMU_MultimodalSDK/
+checkpoints
+__pycache__/
+*.log
