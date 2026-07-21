@@ -1,0 +1,50 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10553.64it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+loaded checkpoints/devBest/model_emotion_run2_posweight.std  (ablate=none)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2499   0.642   0.703   0.577   0.634
+sad            1127   0.661   0.360   0.515   0.424
+anger          1070   0.747   0.456   0.517   0.484
+surprise        441   0.901   0.200   0.016   0.029
+disgust         805   0.810   0.465   0.643   0.540
+fear            384   0.814   0.164   0.307   0.214
+MACRO                                 0.429   0.388
+
+chosen cut-offs (from DEV):
+  happy      -1.4909
+  sad        -0.7788
+  anger      -0.7015
+  surprise   -1.2267
+  disgust    +0.2479
+  fear       -0.9178
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2499   0.619   0.599   0.881   0.713
+sad            1127   0.498   0.298   0.791   0.433
+anger          1070   0.667   0.374   0.668   0.480
+surprise        441   0.686   0.161   0.549   0.249
+disgust         805   0.820   0.484   0.611   0.540
+fear            384   0.670   0.139   0.576   0.223
+MACRO                                 0.679   0.440
+
+macro-F1: 0.3876 (default) -> 0.4397 (tuned)   delta +0.0521
