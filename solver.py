@@ -22,7 +22,8 @@ checkpoint_path = "/home/elangoa/TMBL/checkpoints/"
 # log_file = "/home/elangoa/TMBL/checkpoints/log.txt"
 # log_file = "/home/elangoa/TMBL/checkpoints/log_emotion.txt"
 # log_file = "/home/elangoa/TMBL/checkpoints/log_emotion_roberta.txt" 
-log_file = "/home/elangoa/TMBL/checkpoints/log_emotion_attnpool.txt"
+#log_file = "/home/elangoa/TMBL/checkpoints/log_emotion_attnpool.txt"
+log_file = "/home/elangoa/TMBL/checkpoints/log_emotion_meanpool_FIXED.txt"
 
 with open(log_file, "a") as file:
     file.write(f"Log File Time{train_config.name} in {train_config.data}\n") # 每次打开记录一下当前时间             
@@ -62,7 +63,7 @@ class Solver(object):
         # loss_task = self.loss_task(y_tilde, y)
         loss_task = self.loss_task(y_tilde, (y > 0).float()) 
 
-        loss = 0.5*loss_diff + 0.5*loss_simi + loss_task
+        loss = 0.5*loss_diff + 0.05*loss_simi + loss_task
         return loss
 
     def get_simi_loss(self,):
@@ -115,6 +116,7 @@ class Solver(object):
         num_trials = self.train_config.trials # 3
  
         best_valid_loss = float('inf')
+        best_valid_f1 = -1.0
 
         # lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(self.optimizer, milestones=self.train_config.milestones, gamma=0.1)
         lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optimizer, gamma=0.5)
@@ -162,8 +164,10 @@ class Solver(object):
                     file.write(f"test loss: {round(np.mean(test_loss), 4)}, test acc: {round(np.mean(test_acc), 4)}\n")            
 
             # ===== 交叉验证(正则化): 若模型一直没有提升，则只允许更新 6*3=18 epoch self.train_config.patience * self.train_config.trials
-            if valid_loss <= best_valid_loss:
-                best_valid_loss = valid_loss
+            # if valid_loss <= best_valid_loss:
+            #     best_valid_loss = valid_loss
+            if valid_acc >= best_valid_f1:
+                best_valid_f1 = valid_acc
                 print("Found new best model on dev set!")
                 with open(log_file, "a") as file:
                     file.write(f"Found new best model on dev set!\n")            

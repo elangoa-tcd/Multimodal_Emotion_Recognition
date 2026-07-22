@@ -151,18 +151,18 @@ class AOTN(nn.Module):
         t_feature = self.project_t(t_feature) # ([32, 768]) -> ([32, 256]) # 保留独立模态
         v_feature = self.project_v(v_feature) # ([32, 140]) -> ([32, 256])
         a_feature = self.project_a(a_feature) # ([32, 296]) -> ([32, 256])
-        try: # 防止技术维度的特征绑定失衡 如([27, 256]) 绑定后变为 ([32, 256]) 最后一个batch不足32个样本
-            self.t_feature = torch.cat((t_feature.chunk(2, dim=0)[0], v_feature.chunk(2, dim=0)[0]),dim=0) # 模态绑定
-            self.v_feature = torch.cat((v_feature.chunk(2, dim=0)[0], a_feature.chunk(2, dim=0)[0]),dim=0)
-            self.a_feature = torch.cat((a_feature.chunk(2, dim=0)[0], t_feature.chunk(2, dim=0)[0]),dim=0)
-            # (2-3) 模态不变(共享学习)
-            # 采用改进的Transformer进行模态不变学习，同时 输入 text, video, audio 三个模态分别作为 Q K V 计算，输出交互后的模态特征 (每个模态都由 绑定模态 和 独立模态 组成)
-            self.share_T, self.share_V, self.share_A = self.tf_encoder_share(torch.stack([self.t_feature,t_feature],dim=0), torch.stack([self.v_feature,v_feature],dim=0), torch.stack([self.a_feature,a_feature],dim=0)) # ([2, 32, 256]) -> ([2, 32, 256])
-        except:
-            self.t_feature = t_feature + v_feature
-            self.v_feature = v_feature + a_feature
-            self.a_feature = a_feature + t_feature
-            self.share_T, self.share_V, self.share_A = self.tf_encoder_share(torch.stack([self.t_feature,t_feature],dim=0), torch.stack([self.v_feature,v_feature],dim=0), torch.stack([self.a_feature,a_feature],dim=0)) # ([2, 32, 256]) -> ([2, 32, 256])
+        # try: # 防止技术维度的特征绑定失衡 如([27, 256]) 绑定后变为 ([32, 256]) 最后一个batch不足32个样本
+        #     self.t_feature = torch.cat((t_feature.chunk(2, dim=0)[0], v_feature.chunk(2, dim=0)[0]),dim=0) # 模态绑定
+        #     self.v_feature = torch.cat((v_feature.chunk(2, dim=0)[0], a_feature.chunk(2, dim=0)[0]),dim=0)
+        #     self.a_feature = torch.cat((a_feature.chunk(2, dim=0)[0], t_feature.chunk(2, dim=0)[0]),dim=0)
+        #     # (2-3) 模态不变(共享学习)
+        #     # 采用改进的Transformer进行模态不变学习，同时 输入 text, video, audio 三个模态分别作为 Q K V 计算，输出交互后的模态特征 (每个模态都由 绑定模态 和 独立模态 组成)
+        #     self.share_T, self.share_V, self.share_A = self.tf_encoder_share(torch.stack([self.t_feature,t_feature],dim=0), torch.stack([self.v_feature,v_feature],dim=0), torch.stack([self.a_feature,a_feature],dim=0)) # ([2, 32, 256]) -> ([2, 32, 256])
+        # except:
+        self.t_feature = t_feature + v_feature
+        self.v_feature = v_feature + a_feature
+        self.a_feature = a_feature + t_feature
+        self.share_T, self.share_V, self.share_A = self.tf_encoder_share(torch.stack([self.t_feature,t_feature],dim=0), torch.stack([self.v_feature,v_feature],dim=0), torch.stack([self.a_feature,a_feature],dim=0)) # ([2, 32, 256]) -> ([2, 32, 256])
 
     def alignment(self, visual, acoustic, lengths, bert_sent, bert_sent_type, bert_sent_mask): # MOSEI: visual([59, 32, 35]) & acoustic([59, 32, 74]) & lengths([32]) & ([32, 61])
 

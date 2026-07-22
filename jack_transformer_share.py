@@ -228,9 +228,12 @@ class MyTransformer(nn.Module):
             for enc_layer3_1, enc_layer3_2, enc_layer3_3 in zip(self.layer_stack3_1,self.layer_stack3_2,self.layer_stack3_3):
                 temp_enc1, temp_enc2, temp_enc3 = enc_output1, enc_output2, enc_output3
                 
-                enc_output1, enc_slf_attn1  = enc_layer3_1(temp_enc1, temp_enc2, temp_enc3, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)
-                enc_output2, enc_slf_attn2  = enc_layer3_2(temp_enc1, temp_enc2, temp_enc3, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)
-                enc_output3, enc_slf_attn3  = enc_layer3_3(temp_enc1, temp_enc2, temp_enc3, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)
+                # enc_output1, enc_slf_attn1  = enc_layer3_1(temp_enc1, temp_enc2, temp_enc3, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)
+                # enc_output2, enc_slf_attn2  = enc_layer3_2(temp_enc1, temp_enc2, temp_enc3, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)
+                # enc_output3, enc_slf_attn3  = enc_layer3_3(temp_enc1, temp_enc2, temp_enc3, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)
+                enc_output1, enc_slf_attn1  = enc_layer3_1(temp_enc1, temp_enc2, temp_enc3, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)  # text asks
+                enc_output2, enc_slf_attn2  = enc_layer3_2(temp_enc2, temp_enc3, temp_enc1, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)  # video asks
+                enc_output3, enc_slf_attn3  = enc_layer3_3(temp_enc3, temp_enc1, temp_enc2, slf_attn_mask1=src_mask1, slf_attn_mask2=src_mask2)  # audio asks
 
                 enc_slf_attn_list1 += [enc_slf_attn1] if return_attns else []
                 enc_slf_attn_list2 += [enc_slf_attn2] if return_attns else []
