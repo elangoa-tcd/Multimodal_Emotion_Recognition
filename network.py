@@ -195,6 +195,11 @@ class AOTN(nn.Module):
         if _ab == 'text':    t_feature     = torch.zeros_like(t_feature)
         elif _ab == 'video': video_feature = torch.zeros_like(video_feature)
         elif _ab == 'audio': audio_feature = torch.zeros_like(audio_feature)
+        elif _ab == 'shuffle_text': t_feature     = t_feature[torch.randperm(t_feature.size(0), device=t_feature.device)]
+        elif _ab == 'shuffle_video': video_feature = video_feature[torch.randperm(video_feature.size(0), device=video_feature.device)]
+        elif _ab == 'shuffle_audio': audio_feature = audio_feature[torch.randperm(audio_feature.size(0), device=audio_feature.device)]
+        
+        
         
         # (2) 模态不变 模态绑定 模态特定
         self.shared_modaties(t_feature, video_feature, audio_feature) # 模态对齐->模态共享 ([32, 256])

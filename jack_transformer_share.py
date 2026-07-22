@@ -7,6 +7,9 @@ import numpy as np
 Adapted from https://github.com/kiva12138/MITRL/NavieTransformerExpr # Jack Add some different
 """
 
+_BRANCH_COUNTS = {'self_attention': 0, 'cross_modal': 0}
+
+
 class ScaledDotProductAttention(nn.Module):
     def __init__(self, temperature, attn_dropout=0.1):
         super(ScaledDotProductAttention, self).__init__()
@@ -157,8 +160,10 @@ class EncoderLayer(nn.Module):
         # 0527 更改一下策略，使用一种混合 attention 的策略，即针对 q k v三种输入(模态不变)，采用三种，针对q q q一种输入(模态特定)，采用一种
         
         if torch.allclose(k,v): # 按照forward, 只有传入的 k v 会是相等的
+            _BRANCH_COUNTS['self_attention'] += 1
             enc_output, enc_slf_attn = self.slf_attn_sa(q, q, q, mask1=slf_attn_mask1, mask2=slf_attn_mask2) # Single Attention
         else:
+            _BRANCH_COUNTS['cross_modal'] += 1
             enc_output, enc_slf_attn = self.slf_attn(q, k, v, mask1=slf_attn_mask1, mask2=slf_attn_mask2)
 
         enc_output = self.pos_ffn(enc_output)  

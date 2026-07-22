@@ -6,7 +6,7 @@ import argparse
 import numpy as np
 import torch
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
-
+from jack_transformer_share import _BRANCH_COUNTS
 from config import get_config
 from data_loader import get_loader
 import network
@@ -47,14 +47,17 @@ def report(true_bin, pred_bin, title):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", required=True, help="path to a .std model file")
-    ap.add_argument("--ablate", default="none", choices=["none", "text", "audio", "video"])
+    ap.add_argument("--ablate", default="none", choices=["none", "text", "audio", "video",'shuffle_text', 'shuffle_audio', 'shuffle_video'])
     ap.add_argument("--grid", type=int, default=200, help="threshold candidates per emotion")
+    ap.add_argument("--shuffle_eval", type=int, default=0,help="0 = fixed batch order. N>0 = reshuffle the TEST batches using N as the seed.")
     args = ap.parse_args()
 
     dev_cfg = get_config(parse=False, mode="dev")
     test_cfg = get_config(parse=False, mode="test")
     dev_loader = get_loader(dev_cfg, shuffle=False)     # also sets visual_size/acoustic_size
-    test_loader = get_loader(test_cfg, shuffle=False)
+    if args.shuffle_eval:
+        torch.manual_seed(args.shuffle_eval)
+    test_loader = get_loader(test_cfg, shuffle=bool(args.shuffle_eval))
 
     dev_cfg.ablate = args.ablate                        # read by network.alignment() (Part B)
     model = network.AOTN(dev_cfg).cuda().eval()
@@ -85,3 +88,4 @@ if __name__ == "__main__":
                    (test_logit > np.array(thresholds)).astype(int),
                    "TEST @ tuned cut-offs (chosen on DEV)")
     print(f"\nmacro-F1: {base:.4f} (default) -> {tuned:.4f} (tuned)   delta {tuned-base:+.4f}")
+    print("\nBRANCH COUNTS:", _BRANCH_COUNTS)
