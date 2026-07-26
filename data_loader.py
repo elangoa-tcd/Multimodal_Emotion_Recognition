@@ -125,10 +125,17 @@ def get_loader(config, shuffle=True):
 
         return visual, acoustic, labels, lengths, bert_sentences, bert_sentence_types, bert_sentence_att_mask
 
+    # data_loader = DataLoader(
+    #     dataset=dataset,
+    #     batch_size=config.batch_size,
+    #     shuffle=shuffle,
+    #     collate_fn=collate_fn)
+
     data_loader = DataLoader(
         dataset=dataset,
         batch_size=config.batch_size,
         shuffle=shuffle,
-        collate_fn=collate_fn)
+        collate_fn=collate_fn,
+        drop_last=shuffle)
 
     return data_loader

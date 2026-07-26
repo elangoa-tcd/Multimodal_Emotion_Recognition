@@ -25,7 +25,8 @@ project_dir = "/home/elangoa/data"
 sdk_dir ='/home/elangoa/TMBL/CMU-MultimodalSDK-main'
 data_dir = os.path.join(project_dir, 'Multimodal') # /data/ProjectData/Multimodal
 data_dict = {'mosi': os.path.join(data_dir,'MOSI'),
-             'mosei': '/home/elangoa/data/MOSEI',
+            #  'mosei': '/home/elangoa/data/MOSEI',
+             'mosei': '/home/elangoa/data/MOSEI_C_both',
              'ur_funny': os.path.join(data_dir,'UR_FUNNY')}
 
 optimizer_dict = {'RMSprop': optim.RMSprop, 'Adam': optim.Adam}

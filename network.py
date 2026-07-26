@@ -110,8 +110,12 @@ class AOTN(nn.Module):
         self.MLP_Communicator2 = MLP_Communicator(self.config.hidden_size, 2, hidden_size=64, depth=1)
 
         # 使用可学习的 cls 和 positionencoing 避免模型过拟合
-        self.cls_token = nn.Parameter(torch.zeros(self.config.batch_size, 1, self.config.hidden_size)) # (32,1,256)
-        self.pos_embed = nn.Parameter(torch.zeros(self.config.batch_size, 12 + 2, self.config.hidden_size)) # (32,14,256) 12 就是6种模态的融合长度 +2 就是表示将模态不变和模态特定区分开
+        # self.cls_token = nn.Parameter(torch.zeros(self.config.batch_size, 1, self.config.hidden_size)) # (32,1,256)
+        # self.pos_embed = nn.Parameter(torch.zeros(self.config.batch_size, 12 + 2, self.config.hidden_size)) # (32,14,256) 12 就是6种模态的融合长度 +2 就是表示将模态不变和模态特定区分开
+
+
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, self.config.hidden_size))
+        self.pos_embed = nn.Parameter(torch.zeros(1, 12 + 2, self.config.hidden_size))
 
     def extract_features(self, sequence, lengths, rnn1, rnn2, layer_norm): # sequence.shape = torch.Size([59, 32, 35])
         packed_sequence = pack_padded_sequence(sequence, lengths) # packed_sequence: ([645, 35]) & ([59]) % None & None
@@ -217,18 +221,26 @@ class AOTN(nn.Module):
         # self.share_A = self.MLP_Communicator2(self.share_A.permute(1, 0, 2)).permute(1, 0, 2)
         
         # ===== 加入 可学习的 cls token 区分 6 种模态信息 避免模型偏好某一种特定的模态 (可以提升一点acc7,acc2提升不大)
-        try: # 防止技术维度的特征绑定失衡 如([27, 256]) 绑定后变为 ([32, 256]) 最后一个batch不足32个样本
-            all_modal = torch.cat([self.private_a.permute(1, 0, 2), self.private_v.permute(1, 0, 2), self.private_t.permute(1, 0, 2), self.cls_token, \
-                                self.share_T.permute(1, 0, 2), self.share_V.permute(1, 0, 2), self.share_A.permute(1, 0, 2), self.cls_token],dim=1) # 捕获输入的分段信息
-            all_modal = all_modal + self.pos_embed # 捕获输入的顺序信息
-            # ([32, 2, 256])*3+([32, 1, 256])+([32, 2, 256])*3+([32, 1, 256]) -> ([32, 14, 256]) [B,L,dim] / [B,C,H,W]
-        except:
-            all_modal = torch.cat([self.private_a.permute(1, 0, 2), self.private_v.permute(1, 0, 2), self.private_t.permute(1, 0, 2), \
-                                self.share_T.permute(1, 0, 2), self.share_V.permute(1, 0, 2), self.share_A.permute(1, 0, 2)],dim=1)           
+        # try: # 防止技术维度的特征绑定失衡 如([27, 256]) 绑定后变为 ([32, 256]) 最后一个batch不足32个样本
+        #     all_modal = torch.cat([self.private_a.permute(1, 0, 2), self.private_v.permute(1, 0, 2), self.private_t.permute(1, 0, 2), self.cls_token, \
+        #                         self.share_T.permute(1, 0, 2), self.share_V.permute(1, 0, 2), self.share_A.permute(1, 0, 2), self.cls_token],dim=1) # 捕获输入的分段信息
+        #     all_modal = all_modal + self.pos_embed # 捕获输入的顺序信息
+        #     # ([32, 2, 256])*3+([32, 1, 256])+([32, 2, 256])*3+([32, 1, 256]) -> ([32, 14, 256]) [B,L,dim] / [B,C,H,W]
+        # except:
+        #     all_modal = torch.cat([self.private_a.permute(1, 0, 2), self.private_v.permute(1, 0, 2), self.private_t.permute(1, 0, 2), \
+        #                         self.share_T.permute(1, 0, 2), self.share_V.permute(1, 0, 2), self.share_A.permute(1, 0, 2)],dim=1)           
             
         # all_modal = torch.cat([self.private_a.permute(1, 0, 2), self.private_v.permute(1, 0, 2), self.private_t.permute(1, 0, 2), \
         #                     self.share_T.permute(1, 0, 2), self.share_V.permute(1, 0, 2), self.share_A.permute(1, 0, 2)],dim=1)        
-                      
+        B = self.private_a.size(1)
+        cls_tok = self.cls_token.expand(B, -1, -1)
+        all_modal = torch.cat([self.private_a.permute(1, 0, 2), self.private_v.permute(1, 0, 2), self.private_t.permute(1, 0, 2), cls_tok,
+                               self.share_T.permute(1, 0, 2), self.share_V.permute(1, 0, 2), self.share_A.permute(1, 0, 2), cls_tok], dim=1)
+        all_modal = all_modal + self.pos_embed
+
+
+
+
         second_o7 = self.fusion3(all_modal.permute(0, 2, 1)).view(all_modal.size(0), -1) 
         
         return second_o7

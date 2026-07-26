@@ -65,6 +65,38 @@ def get_labels(data):
     return (y > 0).astype(int)
 
 
+def segment_ids(data_dir):
+    ids = set()
+    for split in SPLITS:
+        path = os.path.join(data_dir, f"{split}.pkl")
+        if not os.path.exists(path):
+            sys.exit(f"--common_with: {path} not found")
+        with open(path, "rb") as f:
+            for s in pickle.load(f):
+                ids.add(s[2])
+    return ids
+
+
+def intersect_ids(dirs):
+    """Segment IDs present in EVERY listed directory.
+
+    Restricting every variant to this set is what makes macro-F1 comparable
+    across variants. Filtering in one direction only is NOT enough: if FACET
+    covers fewer segments than OpenFace2, a one-way filter still leaves the
+    baseline scored on extra clips the variant never sees.
+
+    And the clips FACET drops are not a random sample — face tracking fails on
+    small, turned, occluded or poorly lit faces, which is precisely where visual
+    features carry least information. Comparing across different clip sets would
+    measure that selection effect rather than feature quality.
+    """
+    sets = [segment_ids(d) for d in dirs]
+    out = set(sets[0])
+    for s in sets[1:]:
+        out &= s
+    return out
+
+
 # ----------------------------------------------------------------------------- pooling
 
 def pool_clip(x):
@@ -185,6 +217,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data_dir", default="/home/elangoa/data/MOSEI")
     ap.add_argument("--grid", type=int, default=200, help="cut-off candidates per emotion")
+    ap.add_argument("--common_with", nargs="+", default=None, metavar="DIR",
+                    help="restrict to the segment IDs present in ALL of these variant "
+                         "directories (and in --data_dir). Pass the SAME list to every "
+                         "variant so all of them are scored on identical clips.")
     args = ap.parse_args()
 
     print("=" * 78)
@@ -194,6 +230,23 @@ def main():
     data = {s: load_split(args.data_dir, s) for s in SPLITS}
     for s in SPLITS:
         print(f"  {s:6s}: {len(data[s]):6d} clips")
+
+    if args.common_with:
+        dirs = [args.data_dir] + list(args.common_with)
+        allowed = intersect_ids(dirs)
+        print(f"\n  restricting to the {len(allowed)} segment IDs common to all of:")
+        for d in dirs:
+            print(f"    {d}")
+        before = {s: len(data[s]) for s in SPLITS}
+        for s in SPLITS:
+            data[s] = [d for d in data[s] if d[2] in allowed]
+        print("  after restriction:")
+        for s in SPLITS:
+            print(f"    {s:6s}: {len(data[s]):6d} clips  "
+                  f"(dropped {before[s] - len(data[s])})")
+        if not all(data[s] for s in SPLITS):
+            sys.exit("\nA split is empty after restriction — the directories share no "
+                     "segment IDs. Check they were built from the same source.")
 
     y = {s: get_labels(data[s]) for s in SPLITS}
 
@@ -263,6 +316,22 @@ def main():
     results.append(fit_and_score(Ttr, yy["train"], Tdv, yy["dev"], Tte, yy["test"],
                                  "text only (TF-IDF) [control]", args.grid))
 
+    # THE CEILING TEST: does audio+video add anything ON TOP of text?
+    # This is the quantity a multimodal model is trying to capture. If text+A/V
+    # scores the same as text alone, the non-verbal channels are redundant with
+    # the transcript and NO fusion architecture can extract value that is not there.
+    #
+    # TF-IDF rows are L2-normalised; the A/V block is standardised, so its rows have
+    # much larger norm across 545 dimensions and would dominate the regularisation.
+    # L2-normalising the A/V block puts the two on comparable footing.
+    from scipy.sparse import hstack as sp_hstack, csr_matrix
+    from sklearn.preprocessing import normalize as l2norm
+    TAVtr = sp_hstack([Ttr, csr_matrix(l2norm(AVtr))]).tocsr()
+    TAVdv = sp_hstack([Tdv, csr_matrix(l2norm(AVdv))]).tocsr()
+    TAVte = sp_hstack([Tte, csr_matrix(l2norm(AVte))]).tocsr()
+    results.append(fit_and_score(TAVtr, yy["train"], TAVdv, yy["dev"], TAVte, yy["test"],
+                                 "text + audio + video", args.grid))
+
     for label, _, f1_tuned in results:
         print_row(label, f1_tuned)
 
@@ -276,11 +345,25 @@ def main():
     vid = float(np.mean(results[0][2]))
     aud = float(np.mean(results[1][2]))
 
+    tav = float(np.mean(results[4][2]))
+
     print(f"  trivial baseline      : {tb:.4f}")
     print(f"  video only            : {vid:.4f}   ({vid - tb:+.4f} vs trivial)")
     print(f"  audio only            : {aud:.4f}   ({aud - tb:+.4f} vs trivial)")
     print(f"  audio + video         : {av:.4f}   ({av - tb:+.4f} vs trivial)")
     print(f"  text control          : {tx:.4f}   ({tx - tb:+.4f} vs trivial)")
+    print(f"  text + audio + video  : {tav:.4f}   ({tav - tx:+.4f} vs TEXT ALONE)")
+    print()
+    print("  The last line is the one that decides whether fusion is worth pursuing:")
+    if tav - tx >= 0.015:
+        print(f"  => Audio/video add {tav - tx:+.4f} ON TOP of text. There IS headroom for")
+        print("     a multimodal model to beat a text-only one. Fixing the fusion is")
+        print("     worth doing, and this number is roughly the ceiling to aim for.")
+    else:
+        print(f"  => Audio/video add only {tav - tx:+.4f} on top of text — they are largely")
+        print("     REDUNDANT with the transcript on this dataset. No fusion architecture")
+        print("     can extract value that is not present. This is a legitimate finding:")
+        print("     report the ceiling, not a fusion fix.")
     print()
 
     if tx - tb < 0.02:
