@@ -47,7 +47,7 @@ def report(true_bin, pred_bin, title):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", required=True, help="path to a .std model file")
-    ap.add_argument("--ablate", default="none", choices=["none", "text", "audio", "video",'shuffle_text', 'shuffle_audio', 'shuffle_video'])
+    ap.add_argument("--ablate", default="none", choices=["none", "text", "audio", "only_text", "video",'shuffle_text', 'shuffle_audio', 'shuffle_video'])
     ap.add_argument("--grid", type=int, default=200, help="threshold candidates per emotion")
     ap.add_argument("--shuffle_eval", type=int, default=0,help="0 = fixed batch order. N>0 = reshuffle the TEST batches using N as the seed.")
     args = ap.parse_args()

@@ -1,0 +1,212 @@
+==================== ablate=none ====================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 12247.31it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_RUN1_dropout03.std  (ablate=none)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.688   0.691   0.755   0.722
+sad            1128   0.656   0.374   0.621   0.467
+anger          1070   0.740   0.446   0.538   0.488
+surprise        441   0.662   0.168   0.653   0.268
+disgust         805   0.806   0.457   0.630   0.530
+fear            385   0.723   0.141   0.462   0.216
+MACRO                                 0.610   0.448
+
+chosen cut-offs (from DEV):
+  happy      -1.0620
+  sad        +0.1254
+  anger      -0.9152
+  surprise   +0.7460
+  disgust    +0.2790
+  fear       +0.3014
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.644   0.612   0.918   0.734
+sad            1128   0.670   0.382   0.586   0.462
+anger          1070   0.641   0.360   0.721   0.480
+surprise        441   0.756   0.185   0.465   0.265
+disgust         805   0.819   0.482   0.606   0.537
+fear            385   0.752   0.148   0.421   0.219
+MACRO                                 0.619   0.450
+
+macro-F1: 0.4483 (default) -> 0.4498 (tuned)   delta +0.0015
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
+==================== ablate=text ====================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9435.52it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_RUN1_dropout03.std  (ablate=text)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.644   0.680   0.637   0.658
+sad            1128   0.560   0.310   0.667   0.423
+anger          1070   0.676   0.343   0.446   0.388
+surprise        441   0.514   0.123   0.676   0.209
+disgust         805   0.697   0.275   0.458   0.344
+fear            385   0.650   0.118   0.499   0.191
+MACRO                                 0.564   0.369
+
+chosen cut-offs (from DEV):
+  happy      -1.3359
+  sad        -0.4675
+  anger      -0.5365
+  surprise   +0.3431
+  disgust    +0.0970
+  fear       +0.3640
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.571   0.557   0.973   0.709
+sad            1128   0.443   0.279   0.819   0.416
+anger          1070   0.592   0.306   0.614   0.409
+surprise        441   0.711   0.126   0.345   0.184
+disgust         805   0.710   0.284   0.445   0.347
+fear            385   0.738   0.134   0.395   0.200
+MACRO                                 0.598   0.377
+
+macro-F1: 0.3686 (default) -> 0.3774 (tuned)   delta +0.0088
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
+==================== ablate=audio ====================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7641.09it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_RUN1_dropout03.std  (ablate=audio)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.685   0.696   0.731   0.713
+sad            1128   0.642   0.362   0.621   0.457
+anger          1070   0.707   0.405   0.591   0.481
+surprise        441   0.640   0.160   0.660   0.258
+disgust         805   0.778   0.412   0.667   0.509
+fear            385   0.746   0.144   0.418   0.214
+MACRO                                 0.615   0.439
+
+chosen cut-offs (from DEV):
+  happy      -1.3457
+  sad        -0.4078
+  anger      -0.4959
+  surprise   +1.0894
+  disgust    +0.7857
+  fear       -0.1481
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.624   0.595   0.942   0.729
+sad            1128   0.577   0.332   0.737   0.458
+anger          1070   0.616   0.340   0.716   0.461
+surprise        441   0.777   0.185   0.397   0.253
+disgust         805   0.823   0.489   0.571   0.527
+fear            385   0.735   0.142   0.436   0.214
+MACRO                                 0.633   0.440
+
+macro-F1: 0.4388 (default) -> 0.4404 (tuned)   delta +0.0016
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
+==================== ablate=video ====================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9016.89it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_RUN1_dropout03.std  (ablate=video)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.643   0.653   0.715   0.683
+sad            1128   0.632   0.350   0.607   0.444
+anger          1070   0.736   0.437   0.515   0.473
+surprise        441   0.659   0.166   0.644   0.263
+disgust         805   0.805   0.455   0.632   0.529
+fear            385   0.699   0.131   0.470   0.205
+MACRO                                 0.597   0.433
+
+chosen cut-offs (from DEV):
+  happy      -1.1523
+  sad        -0.2260
+  anger      -0.8476
+  surprise   +0.8752
+  disgust    -0.0051
+  fear       +0.0996
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.619   0.595   0.908   0.719
+sad            1128   0.606   0.341   0.669   0.452
+anger          1070   0.636   0.353   0.697   0.468
+surprise        441   0.769   0.187   0.426   0.259
+disgust         805   0.805   0.454   0.632   0.529
+fear            385   0.709   0.133   0.457   0.206
+MACRO                                 0.632   0.439
+
+macro-F1: 0.4330 (default) -> 0.4389 (tuned)   delta +0.0060
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}

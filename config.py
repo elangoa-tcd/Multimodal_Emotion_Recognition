@@ -122,8 +122,9 @@ def get_config(parse=True, **optional_kwargs):
     parser.add_argument('--data', type=str, default=data_str)  # mosi or mosei or ur_funny
 
     # modality ablation: zero out one modality's pooled features ('none' = full model)
-    parser.add_argument('--ablate', type=str, default='none', choices=['none', 'text', 'audio', 'video','shuffle_text', 'shuffle_audio', 'shuffle_video'])
+    parser.add_argument('--ablate', type=str, default='none', choices=['none', 'text', 'audio', 'video','only_text','shuffle_text', 'shuffle_audio', 'shuffle_video'])
     
+    parser.add_argument('--modality_dropout', type=float, default=0.0)
     # Parse arguments
     if parse:
         kwargs = parser.parse_args()

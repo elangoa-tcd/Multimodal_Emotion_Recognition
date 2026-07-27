@@ -199,10 +199,19 @@ class AOTN(nn.Module):
         if _ab == 'text':    t_feature     = torch.zeros_like(t_feature)
         elif _ab == 'video': video_feature = torch.zeros_like(video_feature)
         elif _ab == 'audio': audio_feature = torch.zeros_like(audio_feature)
+        elif _ab == 'only_text':
+            video_feature = torch.zeros_like(video_feature)
+            audio_feature = torch.zeros_like(audio_feature)
         elif _ab == 'shuffle_text': t_feature     = t_feature[torch.randperm(t_feature.size(0), device=t_feature.device)]
         elif _ab == 'shuffle_video': video_feature = video_feature[torch.randperm(video_feature.size(0), device=video_feature.device)]
         elif _ab == 'shuffle_audio': audio_feature = audio_feature[torch.randperm(audio_feature.size(0), device=audio_feature.device)]
         
+        # modality dropout: per-sample, train-time only, text only (text is the crutch;
+        # audio/video are the branches being strengthened, so they are never dropped)
+        p_md = getattr(self.config, 'modality_dropout', 0.0)
+        if self.training and p_md > 0:
+            keep = (torch.rand(t_feature.size(0), 1, device=t_feature.device) > p_md).float()
+            t_feature = t_feature * keep
         
         
         # (2) 模态不变 模态绑定 模态特定

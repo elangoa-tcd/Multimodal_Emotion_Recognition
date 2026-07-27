@@ -78,9 +78,11 @@ def get_loader(config, shuffle=True):
                 text = " ".join(sample[0][3]) # len(text)= 179 len(sample[0][3])=39 ['and', 'um', 'i', 'have', 'to', 'admit', 'i', 'was', 'watching', 'this', 'i', 'put', 'it', 'on', ...]
                 # encoded_bert_sent = bert_tokenizer.encode_plus(
                 #     text, max_length=SENT_LEN + 2, add_special_tokens=True, pad_to_max_length=True)
-                encoded_bert_sent = bert_tokenizer(text, max_length=SENT_LEN + 2, add_special_tokens=True,
-                    padding='max_length', truncation=True)
+                # encoded_bert_sent = bert_tokenizer(text, max_length=SENT_LEN + 2, add_special_tokens=True,
+                #     padding='max_length', truncation=True)
+                encoded_bert_sent = bert_tokenizer(text, max_length=min(2 * SENT_LEN + 2, 512), add_special_tokens=True, padding='max_length', truncation=True)
                 bert_details.append(encoded_bert_sent)
+                
 
             # Bert things are batch_first
             bert_sentences = torch.LongTensor([sample["input_ids"] for sample in bert_details]) # bert_sentences.shape=([64, 41]) 堆叠(64): len(41): [101, 1045, 16755, 2009, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...]

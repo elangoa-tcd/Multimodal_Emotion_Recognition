@@ -1,0 +1,62 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+==============================================================================
+CEILING ON TOP OF BERT-STRENGTH TEXT
+==============================================================================
+mosei
+train
+mosei
+dev
+mosei
+test
+  data: /home/elangoa/data/MOSEI_C_both
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7689.38it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  checkpoint: /home/elangoa/TMBL/checkpoints/devBest/model_RUN1_dropout03.std
+
+------------------------------------------------------------------------------
+EXTRACTING FEATURES  (one forward pass per split)
+------------------------------------------------------------------------------
+  train : bert (16315, 768)   audio+video (16315, 545)   labels (16315, 6)
+  dev   : bert (1871, 768)   audio+video (1871, 545)   labels (1871, 6)
+  test  : bert (4654, 768)   audio+video (4654, 545)   labels (4654, 6)
+
+------------------------------------------------------------------------------
+RESULTS  (fit on train, cut-offs chosen on dev, scored on test)
+------------------------------------------------------------------------------
+                                 happy     sad   anger  surpri  disgus    fear     MACRO
+  say-yes-to-everything          0.699   0.390   0.374   0.173   0.295   0.153    0.3472
+  audio + video only             0.729   0.460   0.427   0.207   0.383   0.202    0.4013
+  BERT text only                 0.724   0.446   0.471   0.252   0.531   0.201    0.4374
+  BERT text + audio + video      0.754   0.486   0.490   0.267   0.535   0.212    0.4573
+
+------------------------------------------------------------------------------
+VERDICT
+------------------------------------------------------------------------------
+  trivial baseline           : 0.3472
+  audio + video only         : 0.4013   (+0.0541 vs trivial)
+  BERT text only             : 0.4374   (+0.0902 vs trivial)
+  BERT text + audio + video  : 0.4573   (+0.0199 vs BERT TEXT ALONE)
+
+  >>> CEILING on top of BERT-strength text: +0.0199 macro-F1
+
+  Compare against what the model already realises:
+    - the `only_text` ablation delta, if wired, or
+    - the sum of the audio and video ablation deltas (a floor, since
+      single-modality ablations let the other modality compensate).
+
+  If realised >= ceiling, the model is already extracting everything
+  available and further fusion work cannot help. If realised is well
+  below, that gap is what a fusion fix could recover.
+
