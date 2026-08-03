@@ -1,0 +1,1938 @@
+mosei
+mosei
+mosei
+mosei
+Configurations
+{'ablate': 'none',
+ 'activation': <class 'torch.nn.modules.activation.ReLU'>,
+ 'batch_size': 48,
+ 'data': 'mosei',
+ 'data_dir': '/home/elangoa/data/MOSEI_C_both',
+ 'dataset_dir': '/home/elangoa/data/MOSEI_C_both',
+ 'depth': 1,
+ 'dropout': 0.5,
+ 'embedding_size': 300,
+ 'hidden_size': 256,
+ 'learning_rate': 0.0001,
+ 'milestones': [10, 30, 80],
+ 'mlp_hidden_size': 64,
+ 'modality_dropout': 0.0,
+ 'mode': 'train',
+ 'model': 'AOTN',
+ 'n_epoch': 300,
+ 'name': 'final_roberta',
+ 'num_classes': 6,
+ 'optimizer': <class 'torch.optim.adam.Adam'>,
+ 'patience': 15,
+ 'rnncell': 'lstm',
+ 'sdk_dir': '/home/elangoa/TMBL/CMU-MultimodalSDK-main',
+ 'test_duration': 1,
+ 'text_encoder': 'roberta-large',
+ 'text_freeze_upto': 19,
+ 'trials': 5,
+ 'word_emb_path': '/home/elangoa/data/MOSEI/glove_dummy.txt'}
+train
+dev
+test
+pos_weight per emotion [happy,sad,anger,surprise,disgust,fear]: [0.8694854974746704, 2.8235294818878174, 3.6309962272644043, 8.936053276062012, 4.523019790649414, 11.26691722869873]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights:  75%|███████▌  | 293/389 [00:00<00:00, 2885.25it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 3278.58it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.dense.bias        | UNEXPECTED | 
+lm_head.bias              | UNEXPECTED | 
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+pooler.dense.weight       | MISSING    | 
+pooler.dense.bias         | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+=======Start training from epoch -1==================
+
+Epoch -1 - Training loss: 1.0124  Time: 2026-08-02_10:45:51
+
+[dev] macro-F1: 0.4040  macro-Recall: 0.6576
+val loss: 1.0157, val acc: 0.404
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.660   0.698   0.646   0.671
+sad            1128   0.599   0.332   0.648   0.439
+anger          1070   0.630   0.353   0.734   0.477
+surprise        441   0.582   0.140   0.667   0.232
+disgust         805   0.686   0.339   0.857   0.486
+fear            385   0.593   0.121   0.623   0.202
+MACRO                                 0.696   0.418
+test loss: 0.9709, test acc: 0.4178
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 0 - Training loss: 0.9494  Time: 2026-08-02_10:49:12
+
+[dev] macro-F1: 0.4082  macro-Recall: 0.6782
+val loss: 0.9874, val acc: 0.4082
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.674   0.707   0.669   0.688
+sad            1128   0.581   0.327   0.688   0.443
+anger          1070   0.667   0.377   0.691   0.488
+surprise        441   0.532   0.126   0.664   0.212
+disgust         805   0.718   0.363   0.836   0.506
+fear            385   0.615   0.127   0.621   0.210
+MACRO                                 0.695   0.425
+test loss: 0.959, test acc: 0.4245
+Found new best model on dev set!
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.674   0.707   0.669   0.688
+sad            1128   0.581   0.327   0.688   0.443
+anger          1070   0.667   0.377   0.691   0.488
+surprise        441   0.532   0.126   0.664   0.212
+disgust         805   0.718   0.363   0.836   0.506
+fear            385   0.615   0.127   0.621   0.210
+MACRO                                 0.695   0.425
+####################################################################################################
+
+Epoch 1 - Training loss: 0.9169  Time: 2026-08-02_10:53:05
+
+[dev] macro-F1: 0.4234  macro-Recall: 0.6469
+val loss: 0.9978, val acc: 0.4234
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.681   0.691   0.733   0.711
+sad            1128   0.634   0.353   0.611   0.447
+anger          1070   0.692   0.398   0.658   0.496
+surprise        441   0.594   0.142   0.649   0.233
+disgust         805   0.776   0.417   0.740   0.533
+fear            385   0.608   0.130   0.660   0.218
+MACRO                                 0.675   0.440
+test loss: 0.9538, test acc: 0.4396
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 2 - Training loss: 0.8848  Time: 2026-08-02_10:56:27
+
+[dev] macro-F1: 0.4299  macro-Recall: 0.6531
+val loss: 0.9868, val acc: 0.4299
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.694   0.705   0.740   0.722
+sad            1128   0.626   0.351   0.643   0.454
+anger          1070   0.742   0.447   0.523   0.482
+surprise        441   0.609   0.140   0.605   0.227
+disgust         805   0.788   0.433   0.723   0.541
+fear            385   0.561   0.128   0.740   0.218
+MACRO                                 0.662   0.441
+test loss: 0.9645, test acc: 0.4408
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 3 - Training loss: 0.8396  Time: 2026-08-02_10:59:49
+
+[dev] macro-F1: 0.4150  macro-Recall: 0.6232
+val loss: 1.0461, val acc: 0.415
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.684   0.689   0.748   0.718
+sad            1128   0.651   0.363   0.582   0.447
+anger          1070   0.717   0.415   0.563   0.478
+surprise        441   0.583   0.136   0.637   0.224
+disgust         805   0.743   0.375   0.728   0.495
+fear            385   0.654   0.128   0.548   0.208
+MACRO                                 0.634   0.428
+test loss: 1.0292, test acc: 0.4284
+####################################################################################################
+
+Epoch 4 - Training loss: 0.7899  Time: 2026-08-02_11:03:08
+
+[dev] macro-F1: 0.4144  macro-Recall: 0.5988
+val loss: 1.1023, val acc: 0.4144
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.688   0.753   0.623   0.682
+sad            1128   0.605   0.348   0.723   0.470
+anger          1070   0.674   0.381   0.669   0.485
+surprise        441   0.727   0.150   0.404   0.219
+disgust         805   0.735   0.373   0.784   0.506
+fear            385   0.710   0.142   0.496   0.221
+MACRO                                 0.617   0.430
+test loss: 1.0499, test acc: 0.4304
+####################################################################################################
+
+Epoch 5 - Training loss: 0.7259  Time: 2026-08-02_11:06:28
+
+[dev] macro-F1: 0.4192  macro-Recall: 0.5321
+val loss: 1.2281, val acc: 0.4192
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.680   0.766   0.581   0.661
+sad            1128   0.644   0.366   0.643   0.466
+anger          1070   0.724   0.426   0.585   0.493
+surprise        441   0.725   0.171   0.492   0.254
+disgust         805   0.775   0.412   0.712   0.522
+fear            385   0.821   0.150   0.249   0.188
+MACRO                                 0.544   0.431
+test loss: 1.1917, test acc: 0.4306
+####################################################################################################
+
+Epoch 6 - Training loss: 0.6666  Time: 2026-08-02_11:09:49
+
+[dev] macro-F1: 0.4231  macro-Recall: 0.5508
+val loss: 1.2737, val acc: 0.4231
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.683   0.750   0.614   0.675
+sad            1128   0.626   0.361   0.700   0.476
+anger          1070   0.715   0.416   0.598   0.491
+surprise        441   0.737   0.196   0.569   0.291
+disgust         805   0.793   0.439   0.697   0.538
+fear            385   0.765   0.144   0.371   0.208
+MACRO                                 0.592   0.446
+test loss: 1.2065, test acc: 0.4465
+####################################################################################################
+
+Epoch 7 - Training loss: 0.6071  Time: 2026-08-02_11:13:09
+
+[dev] macro-F1: 0.4226  macro-Recall: 0.5218
+val loss: 1.532, val acc: 0.4226
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.688   0.711   0.705   0.708
+sad            1128   0.634   0.359   0.648   0.462
+anger          1070   0.733   0.430   0.499   0.462
+surprise        441   0.732   0.180   0.515   0.267
+disgust         805   0.800   0.447   0.655   0.532
+fear            385   0.821   0.151   0.252   0.189
+MACRO                                 0.546   0.436
+test loss: 1.4404, test acc: 0.4365
+####################################################################################################
+
+Epoch 8 - Training loss: 0.5546  Time: 2026-08-02_11:16:27
+
+[dev] macro-F1: 0.4239  macro-Recall: 0.5517
+val loss: 1.7607, val acc: 0.4239
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.692   0.710   0.721   0.716
+sad            1128   0.671   0.382   0.575   0.459
+anger          1070   0.713   0.414   0.605   0.492
+surprise        441   0.724   0.181   0.544   0.272
+disgust         805   0.761   0.397   0.732   0.514
+fear            385   0.820   0.155   0.262   0.195
+MACRO                                 0.573   0.441
+test loss: 1.634, test acc: 0.4412
+####################################################################################################
+
+Epoch 9 - Training loss: 0.519  Time: 2026-08-02_11:19:47
+
+[dev] macro-F1: 0.4148  macro-Recall: 0.4632
+val loss: 2.0486, val acc: 0.4148
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.693   0.713   0.716   0.714
+sad            1128   0.677   0.387   0.566   0.459
+anger          1070   0.729   0.430   0.547   0.482
+surprise        441   0.819   0.201   0.306   0.243
+disgust         805   0.805   0.456   0.655   0.538
+fear            385   0.850   0.166   0.203   0.182
+MACRO                                 0.499   0.436
+test loss: 1.8943, test acc: 0.4364
+####################################################################################################
+
+Epoch 10 - Training loss: 0.483  Time: 2026-08-02_11:23:05
+
+[dev] macro-F1: 0.4157  macro-Recall: 0.5029
+val loss: 2.0085, val acc: 0.4157
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.685   0.712   0.692   0.702
+sad            1128   0.628   0.362   0.701   0.478
+anger          1070   0.732   0.430   0.502   0.463
+surprise        441   0.805   0.185   0.311   0.232
+disgust         805   0.814   0.471   0.590   0.524
+fear            385   0.739   0.124   0.356   0.184
+MACRO                                 0.525   0.430
+test loss: 1.8915, test acc: 0.4304
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.694   0.705   0.740   0.722
+sad            1128   0.626   0.351   0.643   0.454
+anger          1070   0.742   0.447   0.523   0.482
+surprise        441   0.609   0.140   0.605   0.227
+disgust         805   0.788   0.433   0.723   0.541
+fear            385   0.561   0.128   0.740   0.218
+MACRO                                 0.662   0.441
+####################################################################################################
+
+Epoch 11 - Training loss: 0.8147  Time: 2026-08-02_11:26:55
+
+[dev] macro-F1: 0.4411  macro-Recall: 0.5764
+val loss: 1.0559, val acc: 0.4411
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.691   0.789   0.737
+sad            1128   0.677   0.390   0.585   0.468
+anger          1070   0.747   0.458   0.544   0.497
+surprise        441   0.710   0.174   0.549   0.264
+disgust         805   0.826   0.497   0.600   0.544
+fear            385   0.705   0.143   0.512   0.223
+MACRO                                 0.596   0.455
+test loss: 1.0208, test acc: 0.4555
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 12 - Training loss: 0.773  Time: 2026-08-02_11:30:16
+
+[dev] macro-F1: 0.4377  macro-Recall: 0.5953
+val loss: 1.1252, val acc: 0.4377
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.704   0.722   0.730   0.726
+sad            1128   0.660   0.375   0.602   0.462
+anger          1070   0.712   0.414   0.607   0.492
+surprise        441   0.713   0.169   0.519   0.255
+disgust         805   0.786   0.427   0.703   0.531
+fear            385   0.740   0.144   0.434   0.216
+MACRO                                 0.599   0.447
+test loss: 1.0849, test acc: 0.4471
+####################################################################################################
+
+Epoch 13 - Training loss: 0.727  Time: 2026-08-02_11:33:36
+
+[dev] macro-F1: 0.4263  macro-Recall: 0.5790
+val loss: 1.1778, val acc: 0.4263
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.692   0.723   0.690   0.706
+sad            1128   0.637   0.363   0.659   0.468
+anger          1070   0.714   0.416   0.604   0.493
+surprise        441   0.699   0.176   0.590   0.271
+disgust         805   0.775   0.413   0.714   0.524
+fear            385   0.739   0.145   0.442   0.219
+MACRO                                 0.616   0.447
+test loss: 1.1241, test acc: 0.4466
+####################################################################################################
+
+Epoch 14 - Training loss: 0.6834  Time: 2026-08-02_11:36:56
+
+[dev] macro-F1: 0.4376  macro-Recall: 0.6194
+val loss: 1.2749, val acc: 0.4376
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.693   0.729   0.683   0.705
+sad            1128   0.626   0.353   0.652   0.458
+anger          1070   0.717   0.418   0.592   0.490
+surprise        441   0.663   0.164   0.624   0.260
+disgust         805   0.760   0.397   0.745   0.518
+fear            385   0.717   0.140   0.470   0.216
+MACRO                                 0.627   0.441
+test loss: 1.225, test acc: 0.4411
+####################################################################################################
+
+Epoch 15 - Training loss: 0.6326  Time: 2026-08-02_11:40:15
+
+[dev] macro-F1: 0.4263  macro-Recall: 0.5439
+val loss: 1.3361, val acc: 0.4263
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.693   0.725   0.687   0.706
+sad            1128   0.609   0.348   0.700   0.465
+anger          1070   0.742   0.444   0.485   0.464
+surprise        441   0.747   0.188   0.501   0.273
+disgust         805   0.788   0.428   0.672   0.523
+fear            385   0.761   0.147   0.392   0.213
+MACRO                                 0.573   0.441
+test loss: 1.2529, test acc: 0.4406
+####################################################################################################
+
+Epoch 16 - Training loss: 0.5841  Time: 2026-08-02_11:43:34
+
+[dev] macro-F1: 0.4286  macro-Recall: 0.5454
+val loss: 1.6607, val acc: 0.4286
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.704   0.748   0.725
+sad            1128   0.658   0.373   0.601   0.460
+anger          1070   0.708   0.406   0.581   0.478
+surprise        441   0.743   0.184   0.497   0.268
+disgust         805   0.778   0.417   0.707   0.524
+fear            385   0.818   0.162   0.286   0.206
+MACRO                                 0.570   0.444
+test loss: 1.5621, test acc: 0.4437
+####################################################################################################
+
+Epoch 17 - Training loss: 0.5481  Time: 2026-08-02_11:46:54
+
+[dev] macro-F1: 0.4294  macro-Recall: 0.5050
+val loss: 1.7714, val acc: 0.4294
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.694   0.699   0.757   0.727
+sad            1128   0.684   0.391   0.541   0.454
+anger          1070   0.750   0.458   0.482   0.470
+surprise        441   0.747   0.179   0.465   0.259
+disgust         805   0.810   0.462   0.620   0.530
+fear            385   0.819   0.152   0.260   0.192
+MACRO                                 0.521   0.438
+test loss: 1.6788, test acc: 0.4384
+####################################################################################################
+
+Epoch 18 - Training loss: 0.5103  Time: 2026-08-02_11:50:12
+
+[dev] macro-F1: 0.4269  macro-Recall: 0.5153
+val loss: 1.9947, val acc: 0.4269
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.717   0.716   0.716
+sad            1128   0.637   0.361   0.646   0.463
+anger          1070   0.746   0.453   0.494   0.473
+surprise        441   0.777   0.193   0.424   0.265
+disgust         805   0.798   0.444   0.656   0.529
+fear            385   0.808   0.153   0.291   0.201
+MACRO                                 0.538   0.441
+test loss: 1.8627, test acc: 0.4413
+####################################################################################################
+
+Epoch 19 - Training loss: 0.4701  Time: 2026-08-02_11:53:32
+
+[dev] macro-F1: 0.4203  macro-Recall: 0.4618
+val loss: 2.2694, val acc: 0.4203
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.692   0.739   0.658   0.696
+sad            1128   0.660   0.377   0.619   0.469
+anger          1070   0.752   0.461   0.456   0.458
+surprise        441   0.779   0.196   0.431   0.270
+disgust         805   0.814   0.471   0.626   0.538
+fear            385   0.862   0.156   0.153   0.155
+MACRO                                 0.491   0.431
+test loss: 2.1231, test acc: 0.431
+####################################################################################################
+
+Epoch 20 - Training loss: 0.4442  Time: 2026-08-02_11:56:50
+
+[dev] macro-F1: 0.4327  macro-Recall: 0.5029
+val loss: 2.1792, val acc: 0.4327
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.695   0.696   0.767   0.729
+sad            1128   0.683   0.389   0.542   0.453
+anger          1070   0.726   0.420   0.507   0.459
+surprise        441   0.788   0.194   0.392   0.259
+disgust         805   0.816   0.473   0.555   0.511
+fear            385   0.784   0.134   0.294   0.184
+MACRO                                 0.509   0.432
+test loss: 2.0807, test acc: 0.4325
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.691   0.789   0.737
+sad            1128   0.677   0.390   0.585   0.468
+anger          1070   0.747   0.458   0.544   0.497
+surprise        441   0.710   0.174   0.549   0.264
+disgust         805   0.826   0.497   0.600   0.544
+fear            385   0.705   0.143   0.512   0.223
+MACRO                                 0.596   0.455
+####################################################################################################
+
+Epoch 21 - Training loss: 0.7639  Time: 2026-08-02_12:00:40
+
+[dev] macro-F1: 0.4259  macro-Recall: 0.5993
+val loss: 1.1064, val acc: 0.4259
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.698   0.747   0.662   0.702
+sad            1128   0.613   0.350   0.694   0.465
+anger          1070   0.715   0.419   0.625   0.502
+surprise        441   0.699   0.165   0.535   0.252
+disgust         805   0.753   0.391   0.768   0.518
+fear            385   0.738   0.146   0.444   0.219
+MACRO                                 0.621   0.443
+test loss: 1.0802, test acc: 0.4431
+####################################################################################################
+
+Epoch 22 - Training loss: 0.7185  Time: 2026-08-02_12:04:00
+
+[dev] macro-F1: 0.4094  macro-Recall: 0.6262
+val loss: 1.1804, val acc: 0.4094
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.685   0.757   0.608   0.674
+sad            1128   0.609   0.348   0.700   0.465
+anger          1070   0.666   0.375   0.675   0.482
+surprise        441   0.578   0.146   0.712   0.242
+disgust         805   0.685   0.336   0.842   0.480
+fear            385   0.775   0.139   0.332   0.196
+MACRO                                 0.645   0.423
+test loss: 1.1712, test acc: 0.4234
+####################################################################################################
+
+Epoch 23 - Training loss: 0.6739  Time: 2026-08-02_12:07:19
+
+[dev] macro-F1: 0.4231  macro-Recall: 0.5544
+val loss: 1.3441, val acc: 0.4231
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.691   0.714   0.708   0.711
+sad            1128   0.664   0.379   0.604   0.465
+anger          1070   0.718   0.416   0.562   0.478
+surprise        441   0.690   0.170   0.583   0.263
+disgust         805   0.777   0.415   0.702   0.521
+fear            385   0.780   0.149   0.351   0.209
+MACRO                                 0.585   0.441
+test loss: 1.2748, test acc: 0.4412
+####################################################################################################
+
+Epoch 24 - Training loss: 0.6315  Time: 2026-08-02_12:10:38
+
+[dev] macro-F1: 0.4247  macro-Recall: 0.5593
+val loss: 1.4721, val acc: 0.4247
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.723   0.716   0.719
+sad            1128   0.626   0.360   0.699   0.475
+anger          1070   0.756   0.471   0.495   0.483
+surprise        441   0.656   0.158   0.610   0.251
+disgust         805   0.800   0.448   0.673   0.538
+fear            385   0.780   0.136   0.312   0.190
+MACRO                                 0.584   0.443
+test loss: 1.4068, test acc: 0.4428
+####################################################################################################
+
+Epoch 25 - Training loss: 0.5844  Time: 2026-08-02_12:13:57
+
+[dev] macro-F1: 0.4209  macro-Recall: 0.5306
+val loss: 1.5279, val acc: 0.4209
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.687   0.747   0.630   0.683
+sad            1128   0.627   0.360   0.688   0.472
+anger          1070   0.731   0.432   0.542   0.481
+surprise        441   0.764   0.189   0.454   0.267
+disgust         805   0.796   0.443   0.697   0.542
+fear            385   0.770   0.151   0.384   0.216
+MACRO                                 0.566   0.444
+test loss: 1.4321, test acc: 0.4436
+####################################################################################################
+
+Epoch 26 - Training loss: 0.5515  Time: 2026-08-02_12:17:16
+
+[dev] macro-F1: 0.4283  macro-Recall: 0.5117
+val loss: 1.6708, val acc: 0.4283
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.719   0.711   0.715
+sad            1128   0.659   0.377   0.626   0.471
+anger          1070   0.745   0.451   0.503   0.475
+surprise        441   0.771   0.191   0.438   0.266
+disgust         805   0.808   0.461   0.639   0.535
+fear            385   0.757   0.138   0.371   0.202
+MACRO                                 0.548   0.444
+test loss: 1.5833, test acc: 0.4439
+####################################################################################################
+
+Epoch 27 - Training loss: 0.5185  Time: 2026-08-02_12:20:36
+
+[dev] macro-F1: 0.4110  macro-Recall: 0.4576
+val loss: 1.7711, val acc: 0.411
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.678   0.744   0.610   0.670
+sad            1128   0.626   0.358   0.688   0.471
+anger          1070   0.758   0.469   0.407   0.436
+surprise        441   0.789   0.185   0.363   0.245
+disgust         805   0.812   0.468   0.617   0.532
+fear            385   0.834   0.149   0.213   0.175
+MACRO                                 0.483   0.422
+test loss: 1.6753, test acc: 0.4218
+Running out of patience, loading previous best model.
+Current learning rate: 5e-05
+####################################################################################################
+
+Epoch 28 - Training loss: 0.7498  Time: 2026-08-02_12:23:57
+
+[dev] macro-F1: 0.4359  macro-Recall: 0.5903
+val loss: 1.1442, val acc: 0.4359
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.691   0.716   0.704   0.710
+sad            1128   0.641   0.365   0.651   0.468
+anger          1070   0.736   0.444   0.587   0.506
+surprise        441   0.691   0.166   0.560   0.256
+disgust         805   0.768   0.406   0.744   0.525
+fear            385   0.772   0.158   0.405   0.227
+MACRO                                 0.608   0.449
+test loss: 1.1127, test acc: 0.4486
+####################################################################################################
+
+Epoch 29 - Training loss: 0.7049  Time: 2026-08-02_12:27:16
+
+[dev] macro-F1: 0.4306  macro-Recall: 0.5825
+val loss: 1.1942, val acc: 0.4306
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.733   0.687   0.709
+sad            1128   0.624   0.355   0.674   0.465
+anger          1070   0.749   0.460   0.534   0.494
+surprise        441   0.674   0.164   0.596   0.258
+disgust         805   0.787   0.429   0.691   0.529
+fear            385   0.724   0.150   0.499   0.230
+MACRO                                 0.613   0.448
+test loss: 1.1575, test acc: 0.4476
+####################################################################################################
+
+Epoch 30 - Training loss: 0.6566  Time: 2026-08-02_12:30:36
+
+[dev] macro-F1: 0.4339  macro-Recall: 0.5262
+val loss: 1.4156, val acc: 0.4339
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.695   0.675   0.833   0.746
+sad            1128   0.697   0.396   0.473   0.431
+anger          1070   0.772   0.506   0.454   0.479
+surprise        441   0.716   0.179   0.556   0.270
+disgust         805   0.834   0.517   0.600   0.555
+fear            385   0.786   0.156   0.361   0.218
+MACRO                                 0.546   0.450
+test loss: 1.3517, test acc: 0.45
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.691   0.789   0.737
+sad            1128   0.677   0.390   0.585   0.468
+anger          1070   0.747   0.458   0.544   0.497
+surprise        441   0.710   0.174   0.549   0.264
+disgust         805   0.826   0.497   0.600   0.544
+fear            385   0.705   0.143   0.512   0.223
+MACRO                                 0.596   0.455
+####################################################################################################
+
+Epoch 31 - Training loss: 0.7503  Time: 2026-08-02_12:34:26
+
+[dev] macro-F1: 0.4341  macro-Recall: 0.5975
+val loss: 1.1332, val acc: 0.4341
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.717   0.728   0.722
+sad            1128   0.651   0.371   0.627   0.466
+anger          1070   0.740   0.447   0.561   0.498
+surprise        441   0.641   0.156   0.633   0.250
+disgust         805   0.764   0.404   0.766   0.529
+fear            385   0.789   0.162   0.371   0.225
+MACRO                                 0.614   0.448
+test loss: 1.1042, test acc: 0.4483
+####################################################################################################
+
+Epoch 32 - Training loss: 0.7023  Time: 2026-08-02_12:37:44
+
+[dev] macro-F1: 0.4337  macro-Recall: 0.5886
+val loss: 1.2257, val acc: 0.4337
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.694   0.725   0.692   0.708
+sad            1128   0.623   0.355   0.683   0.467
+anger          1070   0.725   0.432   0.623   0.511
+surprise        441   0.711   0.171   0.535   0.260
+disgust         805   0.780   0.421   0.722   0.532
+fear            385   0.757   0.153   0.429   0.226
+MACRO                                 0.614   0.450
+test loss: 1.1881, test acc: 0.4505
+####################################################################################################
+
+Epoch 33 - Training loss: 0.6581  Time: 2026-08-02_12:41:03
+
+[dev] macro-F1: 0.4304  macro-Recall: 0.5677
+val loss: 1.3447, val acc: 0.4304
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.703   0.735   0.697   0.716
+sad            1128   0.631   0.359   0.666   0.466
+anger          1070   0.770   0.499   0.479   0.489
+surprise        441   0.651   0.160   0.630   0.255
+disgust         805   0.797   0.445   0.698   0.544
+fear            385   0.759   0.152   0.418   0.223
+MACRO                                 0.598   0.449
+test loss: 1.2741, test acc: 0.4488
+####################################################################################################
+
+Epoch 34 - Training loss: 0.6108  Time: 2026-08-02_12:44:21
+
+[dev] macro-F1: 0.4253  macro-Recall: 0.5212
+val loss: 1.5437, val acc: 0.4253
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.694   0.710   0.728   0.719
+sad            1128   0.653   0.367   0.595   0.454
+anger          1070   0.729   0.430   0.550   0.483
+surprise        441   0.760   0.175   0.413   0.246
+disgust         805   0.808   0.461   0.652   0.540
+fear            385   0.794   0.151   0.322   0.205
+MACRO                                 0.543   0.441
+test loss: 1.45, test acc: 0.4411
+####################################################################################################
+
+Epoch 35 - Training loss: 0.572  Time: 2026-08-02_12:47:40
+
+[dev] macro-F1: 0.4315  macro-Recall: 0.5417
+val loss: 1.6157, val acc: 0.4315
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.703   0.742   0.685   0.712
+sad            1128   0.634   0.364   0.682   0.475
+anger          1070   0.744   0.452   0.538   0.491
+surprise        441   0.733   0.179   0.508   0.265
+disgust         805   0.805   0.455   0.646   0.534
+fear            385   0.763   0.131   0.330   0.187
+MACRO                                 0.565   0.444
+test loss: 1.5644, test acc: 0.4441
+####################################################################################################
+
+Epoch 36 - Training loss: 0.5343  Time: 2026-08-02_12:51:00
+
+[dev] macro-F1: 0.4260  macro-Recall: 0.5099
+val loss: 1.785, val acc: 0.426
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.727   0.695   0.711
+sad            1128   0.652   0.373   0.639   0.471
+anger          1070   0.734   0.442   0.590   0.505
+surprise        441   0.794   0.190   0.363   0.250
+disgust         805   0.795   0.442   0.699   0.542
+fear            385   0.835   0.155   0.223   0.183
+MACRO                                 0.535   0.444
+test loss: 1.6537, test acc: 0.4435
+####################################################################################################
+
+Epoch 37 - Training loss: 0.4931  Time: 2026-08-02_12:54:19
+
+[dev] macro-F1: 0.4246  macro-Recall: 0.4690
+val loss: 1.9859, val acc: 0.4246
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.725   0.706   0.715
+sad            1128   0.640   0.363   0.638   0.462
+anger          1070   0.769   0.498   0.442   0.468
+surprise        441   0.820   0.208   0.320   0.252
+disgust         805   0.819   0.480   0.564   0.519
+fear            385   0.832   0.156   0.234   0.187
+MACRO                                 0.484   0.434
+test loss: 1.8293, test acc: 0.4341
+####################################################################################################
+
+Epoch 38 - Training loss: 0.4683  Time: 2026-08-02_12:57:39
+
+[dev] macro-F1: 0.4327  macro-Recall: 0.4928
+val loss: 2.1978, val acc: 0.4327
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.694   0.743   0.657   0.698
+sad            1128   0.645   0.369   0.655   0.473
+anger          1070   0.741   0.444   0.498   0.470
+surprise        441   0.805   0.197   0.345   0.251
+disgust         805   0.820   0.484   0.630   0.548
+fear            385   0.821   0.138   0.221   0.170
+MACRO                                 0.501   0.435
+test loss: 2.1066, test acc: 0.4347
+####################################################################################################
+
+Epoch 39 - Training loss: 0.4399  Time: 2026-08-02_13:00:59
+
+[dev] macro-F1: 0.4265  macro-Recall: 0.5248
+val loss: 2.1537, val acc: 0.4265
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.701   0.736   0.691   0.713
+sad            1128   0.639   0.360   0.631   0.459
+anger          1070   0.726   0.424   0.536   0.474
+surprise        441   0.743   0.178   0.474   0.259
+disgust         805   0.790   0.433   0.683   0.530
+fear            385   0.831   0.138   0.197   0.162
+MACRO                                 0.536   0.433
+test loss: 2.0279, test acc: 0.4327
+####################################################################################################
+
+Epoch 40 - Training loss: 0.4146  Time: 2026-08-02_13:04:19
+
+[dev] macro-F1: 0.4112  macro-Recall: 0.4721
+val loss: 2.4646, val acc: 0.4112
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.672   0.746   0.590   0.659
+sad            1128   0.620   0.353   0.679   0.464
+anger          1070   0.737   0.439   0.524   0.478
+surprise        441   0.813   0.194   0.306   0.237
+disgust         805   0.792   0.438   0.711   0.542
+fear            385   0.858   0.142   0.143   0.143
+MACRO                                 0.492   0.420
+test loss: 2.3632, test acc: 0.4205
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.691   0.789   0.737
+sad            1128   0.677   0.390   0.585   0.468
+anger          1070   0.747   0.458   0.544   0.497
+surprise        441   0.710   0.174   0.549   0.264
+disgust         805   0.826   0.497   0.600   0.544
+fear            385   0.705   0.143   0.512   0.223
+MACRO                                 0.596   0.455
+####################################################################################################
+
+Epoch 41 - Training loss: 0.7457  Time: 2026-08-02_13:08:10
+
+[dev] macro-F1: 0.4355  macro-Recall: 0.6177
+val loss: 1.1605, val acc: 0.4355
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.698   0.718   0.720   0.719
+sad            1128   0.629   0.357   0.659   0.463
+anger          1070   0.714   0.416   0.607   0.494
+surprise        441   0.647   0.157   0.621   0.250
+disgust         805   0.755   0.394   0.769   0.521
+fear            385   0.762   0.153   0.413   0.223
+MACRO                                 0.632   0.445
+test loss: 1.1211, test acc: 0.445
+####################################################################################################
+
+Epoch 42 - Training loss: 0.7107  Time: 2026-08-02_13:11:28
+
+[dev] macro-F1: 0.4387  macro-Recall: 0.6012
+val loss: 1.1843, val acc: 0.4387
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.695   0.693   0.775   0.732
+sad            1128   0.651   0.366   0.605   0.457
+anger          1070   0.754   0.467   0.503   0.484
+surprise        441   0.631   0.156   0.655   0.252
+disgust         805   0.795   0.442   0.696   0.541
+fear            385   0.727   0.149   0.486   0.228
+MACRO                                 0.620   0.449
+test loss: 1.1653, test acc: 0.4487
+####################################################################################################
+
+Epoch 43 - Training loss: 0.6628  Time: 2026-08-02_13:14:48
+
+[dev] macro-F1: 0.4318  macro-Recall: 0.5571
+val loss: 1.3579, val acc: 0.4318
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.708   0.740   0.724
+sad            1128   0.660   0.370   0.573   0.449
+anger          1070   0.734   0.441   0.582   0.502
+surprise        441   0.705   0.173   0.558   0.264
+disgust         805   0.780   0.421   0.723   0.532
+fear            385   0.822   0.170   0.296   0.216
+MACRO                                 0.579   0.448
+test loss: 1.3039, test acc: 0.4477
+Running out of patience, loading previous best model.
+Current learning rate: 5e-05
+####################################################################################################
+
+Epoch 44 - Training loss: 0.7465  Time: 2026-08-02_13:18:09
+
+[dev] macro-F1: 0.4300  macro-Recall: 0.5839
+val loss: 1.1236, val acc: 0.43
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.718   0.713   0.716
+sad            1128   0.646   0.366   0.628   0.462
+anger          1070   0.738   0.447   0.581   0.505
+surprise        441   0.677   0.165   0.596   0.259
+disgust         805   0.789   0.434   0.720   0.542
+fear            385   0.742   0.151   0.457   0.227
+MACRO                                 0.616   0.452
+test loss: 1.0902, test acc: 0.4518
+####################################################################################################
+
+Epoch 45 - Training loss: 0.7003  Time: 2026-08-02_13:21:27
+
+[dev] macro-F1: 0.4383  macro-Recall: 0.5889
+val loss: 1.2088, val acc: 0.4383
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.692   0.690   0.774   0.729
+sad            1128   0.648   0.362   0.594   0.450
+anger          1070   0.754   0.467   0.483   0.475
+surprise        441   0.661   0.166   0.639   0.263
+disgust         805   0.784   0.425   0.707   0.531
+fear            385   0.763   0.148   0.392   0.215
+MACRO                                 0.598   0.444
+test loss: 1.1948, test acc: 0.4439
+####################################################################################################
+
+Epoch 46 - Training loss: 0.6517  Time: 2026-08-02_13:24:47
+
+[dev] macro-F1: 0.4295  macro-Recall: 0.5559
+val loss: 1.3558, val acc: 0.4295
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.692   0.743   0.650   0.694
+sad            1128   0.609   0.345   0.683   0.458
+anger          1070   0.747   0.459   0.553   0.501
+surprise        441   0.720   0.179   0.544   0.269
+disgust         805   0.782   0.424   0.718   0.533
+fear            385   0.774   0.142   0.343   0.201
+MACRO                                 0.582   0.443
+test loss: 1.3215, test acc: 0.4426
+####################################################################################################
+
+Epoch 47 - Training loss: 0.604  Time: 2026-08-02_13:28:06
+
+[dev] macro-F1: 0.4357  macro-Recall: 0.5536
+val loss: 1.5468, val acc: 0.4357
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.722   0.707   0.714
+sad            1128   0.655   0.372   0.614   0.463
+anger          1070   0.723   0.428   0.609   0.503
+surprise        441   0.726   0.175   0.508   0.260
+disgust         805   0.787   0.430   0.708   0.535
+fear            385   0.810   0.143   0.260   0.184
+MACRO                                 0.568   0.443
+test loss: 1.4755, test acc: 0.4433
+####################################################################################################
+
+Epoch 48 - Training loss: 0.5677  Time: 2026-08-02_13:31:27
+
+[dev] macro-F1: 0.4267  macro-Recall: 0.5195
+val loss: 1.7352, val acc: 0.4267
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.688   0.726   0.671   0.698
+sad            1128   0.644   0.367   0.648   0.468
+anger          1070   0.755   0.471   0.529   0.498
+surprise        441   0.727   0.178   0.519   0.265
+disgust         805   0.795   0.442   0.709   0.545
+fear            385   0.834   0.157   0.231   0.187
+MACRO                                 0.551   0.443
+test loss: 1.6511, test acc: 0.4435
+####################################################################################################
+
+Epoch 49 - Training loss: 0.5238  Time: 2026-08-02_13:34:45
+
+[dev] macro-F1: 0.4213  macro-Recall: 0.5100
+val loss: 1.9452, val acc: 0.4213
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.719   0.722   0.721
+sad            1128   0.661   0.378   0.621   0.470
+anger          1070   0.734   0.439   0.571   0.496
+surprise        441   0.761   0.183   0.438   0.258
+disgust         805   0.795   0.440   0.681   0.535
+fear            385   0.859   0.179   0.197   0.188
+MACRO                                 0.538   0.444
+test loss: 1.8344, test acc: 0.4445
+####################################################################################################
+
+Epoch 50 - Training loss: 0.4952  Time: 2026-08-02_13:38:05
+
+[dev] macro-F1: 0.4207  macro-Recall: 0.5009
+val loss: 1.9882, val acc: 0.4207
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.688   0.742   0.641   0.688
+sad            1128   0.638   0.367   0.684   0.478
+anger          1070   0.746   0.455   0.534   0.491
+surprise        441   0.776   0.184   0.397   0.251
+disgust         805   0.797   0.443   0.677   0.536
+fear            385   0.833   0.151   0.221   0.179
+MACRO                                 0.526   0.437
+test loss: 1.8591, test acc: 0.4372
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.691   0.789   0.737
+sad            1128   0.677   0.390   0.585   0.468
+anger          1070   0.747   0.458   0.544   0.497
+surprise        441   0.710   0.174   0.549   0.264
+disgust         805   0.826   0.497   0.600   0.544
+fear            385   0.705   0.143   0.512   0.223
+MACRO                                 0.596   0.455
+####################################################################################################
+
+Epoch 51 - Training loss: 0.7466  Time: 2026-08-02_13:41:55
+
+[dev] macro-F1: 0.4444  macro-Recall: 0.5879
+val loss: 1.1326, val acc: 0.4444
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.698   0.773   0.734
+sad            1128   0.663   0.375   0.585   0.457
+anger          1070   0.748   0.460   0.558   0.504
+surprise        441   0.697   0.169   0.562   0.260
+disgust         805   0.801   0.452   0.697   0.548
+fear            385   0.744   0.149   0.444   0.223
+MACRO                                 0.603   0.454
+test loss: 1.1001, test acc: 0.4544
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 52 - Training loss: 0.7053  Time: 2026-08-02_13:45:16
+
+[dev] macro-F1: 0.4458  macro-Recall: 0.5767
+val loss: 1.2248, val acc: 0.4458
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453
+test loss: 1.189, test acc: 0.4533
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 53 - Training loss: 0.6607  Time: 2026-08-02_13:48:38
+
+[dev] macro-F1: 0.4383  macro-Recall: 0.6121
+val loss: 1.2661, val acc: 0.4383
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.723   0.714   0.718
+sad            1128   0.613   0.351   0.706   0.469
+anger          1070   0.721   0.425   0.607   0.500
+surprise        441   0.701   0.174   0.576   0.267
+disgust         805   0.786   0.427   0.689   0.528
+fear            385   0.726   0.151   0.501   0.232
+MACRO                                 0.632   0.452
+test loss: 1.2097, test acc: 0.4525
+####################################################################################################
+
+Epoch 54 - Training loss: 0.6214  Time: 2026-08-02_13:51:57
+
+[dev] macro-F1: 0.4307  macro-Recall: 0.5069
+val loss: 1.5459, val acc: 0.4307
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.706   0.732   0.712   0.722
+sad            1128   0.667   0.377   0.573   0.455
+anger          1070   0.755   0.468   0.490   0.479
+surprise        441   0.761   0.190   0.467   0.270
+disgust         805   0.806   0.458   0.663   0.542
+fear            385   0.831   0.166   0.260   0.203
+MACRO                                 0.527   0.445
+test loss: 1.4528, test acc: 0.4449
+####################################################################################################
+
+Epoch 55 - Training loss: 0.5833  Time: 2026-08-02_13:55:17
+
+[dev] macro-F1: 0.4343  macro-Recall: 0.5212
+val loss: 1.6831, val acc: 0.4343
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.705   0.720   0.735   0.728
+sad            1128   0.678   0.386   0.556   0.456
+anger          1070   0.738   0.441   0.527   0.480
+surprise        441   0.749   0.185   0.483   0.268
+disgust         805   0.807   0.458   0.620   0.527
+fear            385   0.824   0.154   0.252   0.192
+MACRO                                 0.529   0.442
+test loss: 1.588, test acc: 0.4416
+####################################################################################################
+
+Epoch 56 - Training loss: 0.543  Time: 2026-08-02_13:58:37
+
+[dev] macro-F1: 0.4335  macro-Recall: 0.5185
+val loss: 1.8279, val acc: 0.4335
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.728   0.700   0.714
+sad            1128   0.648   0.367   0.621   0.461
+anger          1070   0.737   0.440   0.533   0.482
+surprise        441   0.775   0.200   0.456   0.278
+disgust         805   0.803   0.453   0.663   0.538
+fear            385   0.826   0.170   0.286   0.213
+MACRO                                 0.543   0.448
+test loss: 1.7127, test acc: 0.4477
+####################################################################################################
+
+Epoch 57 - Training loss: 0.5109  Time: 2026-08-02_14:01:57
+
+[dev] macro-F1: 0.4225  macro-Recall: 0.5017
+val loss: 1.9625, val acc: 0.4225
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.691   0.731   0.672   0.700
+sad            1128   0.646   0.368   0.641   0.468
+anger          1070   0.754   0.468   0.519   0.492
+surprise        441   0.753   0.184   0.469   0.265
+disgust         805   0.820   0.484   0.645   0.553
+fear            385   0.822   0.156   0.262   0.196
+MACRO                                 0.535   0.446
+test loss: 1.8142, test acc: 0.4456
+####################################################################################################
+
+Epoch 58 - Training loss: 0.4781  Time: 2026-08-02_14:05:15
+
+[dev] macro-F1: 0.4312  macro-Recall: 0.4975
+val loss: 2.0825, val acc: 0.4312
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.691   0.704   0.732   0.718
+sad            1128   0.661   0.378   0.620   0.470
+anger          1070   0.760   0.479   0.506   0.492
+surprise        441   0.810   0.200   0.333   0.250
+disgust         805   0.822   0.488   0.635   0.552
+fear            385   0.806   0.166   0.335   0.222
+MACRO                                 0.527   0.451
+test loss: 1.9654, test acc: 0.4505
+####################################################################################################
+
+Epoch 59 - Training loss: 0.4549  Time: 2026-08-02_14:08:35
+
+[dev] macro-F1: 0.4209  macro-Recall: 0.5149
+val loss: 2.0835, val acc: 0.4209
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.694   0.721   0.701   0.711
+sad            1128   0.648   0.372   0.659   0.476
+anger          1070   0.757   0.472   0.492   0.482
+surprise        441   0.744   0.185   0.501   0.270
+disgust         805   0.800   0.448   0.665   0.535
+fear            385   0.827   0.162   0.260   0.199
+MACRO                                 0.546   0.446
+test loss: 1.9876, test acc: 0.4455
+####################################################################################################
+
+Epoch 60 - Training loss: 0.4263  Time: 2026-08-02_14:11:55
+
+[dev] macro-F1: 0.4176  macro-Recall: 0.4537
+val loss: 2.5188, val acc: 0.4176
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.690   0.737   0.658   0.695
+sad            1128   0.665   0.383   0.629   0.476
+anger          1070   0.741   0.443   0.487   0.464
+surprise        441   0.812   0.191   0.304   0.234
+disgust         805   0.818   0.479   0.583   0.526
+fear            385   0.862   0.161   0.158   0.160
+MACRO                                 0.470   0.426
+test loss: 2.3076, test acc: 0.4259
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453
+####################################################################################################
+
+Epoch 61 - Training loss: 0.6576  Time: 2026-08-02_14:15:45
+
+[dev] macro-F1: 0.4299  macro-Recall: 0.5258
+val loss: 1.415, val acc: 0.4299
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.735   0.680   0.706
+sad            1128   0.651   0.371   0.630   0.467
+anger          1070   0.746   0.456   0.548   0.497
+surprise        441   0.748   0.169   0.424   0.242
+disgust         805   0.794   0.438   0.668   0.529
+fear            385   0.804   0.159   0.319   0.213
+MACRO                                 0.545   0.442
+test loss: 1.3453, test acc: 0.4424
+####################################################################################################
+
+Epoch 62 - Training loss: 0.6172  Time: 2026-08-02_14:19:05
+
+[dev] macro-F1: 0.4252  macro-Recall: 0.5456
+val loss: 1.5178, val acc: 0.4252
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.701   0.738   0.687   0.712
+sad            1128   0.643   0.361   0.614   0.455
+anger          1070   0.723   0.425   0.583   0.492
+surprise        441   0.712   0.172   0.537   0.261
+disgust         805   0.788   0.431   0.702   0.534
+fear            385   0.801   0.153   0.309   0.204
+MACRO                                 0.572   0.443
+test loss: 1.4623, test acc: 0.4429
+####################################################################################################
+
+Epoch 63 - Training loss: 0.5838  Time: 2026-08-02_14:22:23
+
+[dev] macro-F1: 0.4257  macro-Recall: 0.4924
+val loss: 1.7165, val acc: 0.4257
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.695   0.733   0.680   0.705
+sad            1128   0.647   0.365   0.621   0.460
+anger          1070   0.755   0.472   0.540   0.504
+surprise        441   0.803   0.197   0.351   0.253
+disgust         805   0.814   0.473   0.635   0.542
+fear            385   0.807   0.143   0.268   0.186
+MACRO                                 0.516   0.442
+test loss: 1.6313, test acc: 0.4417
+####################################################################################################
+
+Epoch 64 - Training loss: 0.5541  Time: 2026-08-02_14:25:43
+
+[dev] macro-F1: 0.4228  macro-Recall: 0.5675
+val loss: 1.6194, val acc: 0.4228
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.687   0.742   0.640   0.687
+sad            1128   0.602   0.346   0.721   0.468
+anger          1070   0.751   0.461   0.492   0.476
+surprise        441   0.680   0.165   0.583   0.257
+disgust         805   0.771   0.410   0.733   0.526
+fear            385   0.751   0.133   0.364   0.195
+MACRO                                 0.589   0.435
+test loss: 1.5206, test acc: 0.4345
+####################################################################################################
+
+Epoch 65 - Training loss: 0.5239  Time: 2026-08-02_14:29:03
+
+[dev] macro-F1: 0.4241  macro-Recall: 0.4920
+val loss: 1.9534, val acc: 0.4241
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.721   0.717   0.719
+sad            1128   0.666   0.378   0.585   0.459
+anger          1070   0.763   0.482   0.420   0.449
+surprise        441   0.752   0.179   0.449   0.255
+disgust         805   0.809   0.462   0.639   0.536
+fear            385   0.822   0.142   0.229   0.175
+MACRO                                 0.506   0.432
+test loss: 1.8272, test acc: 0.4322
+####################################################################################################
+
+Epoch 66 - Training loss: 0.4979  Time: 2026-08-02_14:32:23
+
+[dev] macro-F1: 0.4241  macro-Recall: 0.4796
+val loss: 2.0736, val acc: 0.4241
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.698   0.714   0.729   0.721
+sad            1128   0.662   0.378   0.610   0.467
+anger          1070   0.761   0.478   0.447   0.462
+surprise        441   0.779   0.191   0.413   0.261
+disgust         805   0.832   0.513   0.576   0.543
+fear            385   0.811   0.155   0.288   0.202
+MACRO                                 0.510   0.443
+test loss: 1.9094, test acc: 0.4426
+####################################################################################################
+
+Epoch 67 - Training loss: 0.4641  Time: 2026-08-02_14:35:42
+
+[dev] macro-F1: 0.4230  macro-Recall: 0.4827
+val loss: 2.1021, val acc: 0.423
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.689   0.723   0.683   0.702
+sad            1128   0.629   0.357   0.660   0.463
+anger          1070   0.742   0.445   0.492   0.467
+surprise        441   0.791   0.178   0.333   0.232
+disgust         805   0.814   0.471   0.599   0.527
+fear            385   0.816   0.142   0.242   0.179
+MACRO                                 0.501   0.428
+test loss: 2.0139, test acc: 0.4283
+####################################################################################################
+
+Epoch 68 - Training loss: 0.4367  Time: 2026-08-02_14:39:03
+
+[dev] macro-F1: 0.4226  macro-Recall: 0.4807
+val loss: 2.532, val acc: 0.4226
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.687   0.728   0.664   0.694
+sad            1128   0.651   0.372   0.639   0.470
+anger          1070   0.735   0.438   0.533   0.481
+surprise        441   0.810   0.195   0.320   0.242
+disgust         805   0.805   0.455   0.647   0.535
+fear            385   0.828   0.151   0.234   0.183
+MACRO                                 0.506   0.434
+test loss: 2.3125, test acc: 0.4343
+Running out of patience, loading previous best model.
+Current learning rate: 2.5e-05
+####################################################################################################
+
+Epoch 69 - Training loss: 0.6458  Time: 2026-08-02_14:42:23
+
+[dev] macro-F1: 0.4362  macro-Recall: 0.5623
+val loss: 1.3562, val acc: 0.4362
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.718   0.716   0.717
+sad            1128   0.633   0.358   0.649   0.461
+anger          1070   0.756   0.472   0.522   0.496
+surprise        441   0.731   0.180   0.517   0.267
+disgust         805   0.804   0.455   0.673   0.543
+fear            385   0.742   0.142   0.423   0.213
+MACRO                                 0.584   0.450
+test loss: 1.3091, test acc: 0.4496
+####################################################################################################
+
+Epoch 70 - Training loss: 0.6139  Time: 2026-08-02_14:45:42
+
+[dev] macro-F1: 0.4306  macro-Recall: 0.5249
+val loss: 1.5404, val acc: 0.4306
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.693   0.718   0.704   0.711
+sad            1128   0.661   0.374   0.592   0.458
+anger          1070   0.740   0.448   0.569   0.502
+surprise        441   0.763   0.191   0.463   0.270
+disgust         805   0.808   0.463   0.676   0.549
+fear            385   0.802   0.156   0.317   0.209
+MACRO                                 0.553   0.450
+test loss: 1.4573, test acc: 0.45
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453
+####################################################################################################
+
+Epoch 71 - Training loss: 0.6474  Time: 2026-08-02_14:49:33
+
+[dev] macro-F1: 0.4324  macro-Recall: 0.5456
+val loss: 1.4339, val acc: 0.4324
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.693   0.725   0.690   0.707
+sad            1128   0.656   0.370   0.598   0.457
+anger          1070   0.740   0.450   0.586   0.509
+surprise        441   0.711   0.171   0.533   0.259
+disgust         805   0.784   0.425   0.713   0.533
+fear            385   0.821   0.168   0.294   0.213
+MACRO                                 0.569   0.446
+test loss: 1.3774, test acc: 0.4465
+####################################################################################################
+
+Epoch 72 - Training loss: 0.614  Time: 2026-08-02_14:52:51
+
+[dev] macro-F1: 0.4342  macro-Recall: 0.5588
+val loss: 1.4826, val acc: 0.4342
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.743   0.664   0.701
+sad            1128   0.622   0.357   0.701   0.473
+anger          1070   0.745   0.453   0.537   0.492
+surprise        441   0.715   0.173   0.533   0.262
+disgust         805   0.792   0.436   0.702   0.538
+fear            385   0.802   0.168   0.351   0.227
+MACRO                                 0.581   0.449
+test loss: 1.4115, test acc: 0.4489
+####################################################################################################
+
+Epoch 73 - Training loss: 0.5821  Time: 2026-08-02_14:56:10
+
+[dev] macro-F1: 0.4326  macro-Recall: 0.5403
+val loss: 1.6182, val acc: 0.4326
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.701   0.720   0.725   0.722
+sad            1128   0.648   0.364   0.605   0.455
+anger          1070   0.734   0.438   0.556   0.490
+surprise        441   0.709   0.166   0.517   0.252
+disgust         805   0.796   0.441   0.672   0.533
+fear            385   0.811   0.155   0.288   0.202
+MACRO                                 0.561   0.442
+test loss: 1.5432, test acc: 0.4422
+####################################################################################################
+
+Epoch 74 - Training loss: 0.5521  Time: 2026-08-02_14:59:30
+
+[dev] macro-F1: 0.4241  macro-Recall: 0.5170
+val loss: 1.7988, val acc: 0.4241
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.739   0.683   0.710
+sad            1128   0.649   0.367   0.620   0.461
+anger          1070   0.735   0.439   0.551   0.489
+surprise        441   0.726   0.169   0.485   0.251
+disgust         805   0.796   0.441   0.662   0.529
+fear            385   0.823   0.159   0.265   0.199
+MACRO                                 0.544   0.440
+test loss: 1.7001, test acc: 0.4398
+####################################################################################################
+
+Epoch 75 - Training loss: 0.5295  Time: 2026-08-02_15:02:50
+
+[dev] macro-F1: 0.4327  macro-Recall: 0.5275
+val loss: 1.9284, val acc: 0.4327
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.702   0.730   0.704   0.717
+sad            1128   0.649   0.370   0.635   0.467
+anger          1070   0.733   0.438   0.572   0.496
+surprise        441   0.750   0.179   0.456   0.257
+disgust         805   0.788   0.430   0.692   0.531
+fear            385   0.828   0.160   0.252   0.195
+MACRO                                 0.552   0.444
+test loss: 1.7713, test acc: 0.4438
+####################################################################################################
+
+Epoch 76 - Training loss: 0.507  Time: 2026-08-02_15:06:09
+
+[dev] macro-F1: 0.4314  macro-Recall: 0.5040
+val loss: 1.9128, val acc: 0.4314
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.702   0.742   0.682   0.710
+sad            1128   0.650   0.370   0.632   0.467
+anger          1070   0.747   0.456   0.525   0.488
+surprise        441   0.787   0.198   0.406   0.266
+disgust         805   0.814   0.472   0.639   0.542
+fear            385   0.828   0.162   0.257   0.199
+MACRO                                 0.523   0.445
+test loss: 1.7642, test acc: 0.4454
+####################################################################################################
+
+Epoch 77 - Training loss: 0.4755  Time: 2026-08-02_15:09:28
+
+[dev] macro-F1: 0.4188  macro-Recall: 0.4807
+val loss: 2.3136, val acc: 0.4188
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.753   0.646   0.695
+sad            1128   0.641   0.365   0.653   0.469
+anger          1070   0.744   0.451   0.517   0.481
+surprise        441   0.795   0.189   0.356   0.247
+disgust         805   0.798   0.443   0.652   0.528
+fear            385   0.856   0.158   0.171   0.164
+MACRO                                 0.499   0.431
+test loss: 2.117, test acc: 0.4308
+####################################################################################################
+
+Epoch 78 - Training loss: 0.4537  Time: 2026-08-02_15:12:48
+
+[dev] macro-F1: 0.4163  macro-Recall: 0.4693
+val loss: 2.5195, val acc: 0.4163
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.725   0.703   0.714
+sad            1128   0.667   0.380   0.592   0.463
+anger          1070   0.739   0.446   0.547   0.491
+surprise        441   0.806   0.196   0.338   0.248
+disgust         805   0.799   0.445   0.670   0.535
+fear            385   0.892   0.201   0.104   0.137
+MACRO                                 0.492   0.431
+test loss: 2.2972, test acc: 0.4312
+####################################################################################################
+
+Epoch 79 - Training loss: 0.4408  Time: 2026-08-02_15:16:08
+
+[dev] macro-F1: 0.4187  macro-Recall: 0.4845
+val loss: 2.3042, val acc: 0.4187
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.688   0.761   0.611   0.678
+sad            1128   0.631   0.361   0.681   0.472
+anger          1070   0.736   0.442   0.557   0.493
+surprise        441   0.808   0.204   0.354   0.259
+disgust         805   0.803   0.451   0.652   0.534
+fear            385   0.835   0.153   0.221   0.181
+MACRO                                 0.513   0.436
+test loss: 2.1002, test acc: 0.436
+####################################################################################################
+
+Epoch 80 - Training loss: 0.4189  Time: 2026-08-02_15:19:28
+
+[dev] macro-F1: 0.4126  macro-Recall: 0.4433
+val loss: 2.6518, val acc: 0.4126
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.696   0.735   0.679   0.706
+sad            1128   0.665   0.380   0.601   0.465
+anger          1070   0.760   0.474   0.420   0.445
+surprise        441   0.796   0.177   0.315   0.226
+disgust         805   0.817   0.478   0.616   0.539
+fear            385   0.876   0.183   0.145   0.162
+MACRO                                 0.463   0.424
+test loss: 2.3985, test acc: 0.4239
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453
+####################################################################################################
+
+Epoch 81 - Training loss: 0.6445  Time: 2026-08-02_15:23:19
+
+[dev] macro-F1: 0.4339  macro-Recall: 0.5497
+val loss: 1.3656, val acc: 0.4339
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.734   0.689   0.711
+sad            1128   0.632   0.358   0.650   0.461
+anger          1070   0.744   0.452   0.542   0.493
+surprise        441   0.741   0.184   0.506   0.270
+disgust         805   0.791   0.436   0.702   0.538
+fear            385   0.780   0.152   0.361   0.214
+MACRO                                 0.575   0.448
+test loss: 1.312, test acc: 0.4479
+####################################################################################################
+
+Epoch 82 - Training loss: 0.6156  Time: 2026-08-02_15:26:39
+
+[dev] macro-F1: 0.4372  macro-Recall: 0.5478
+val loss: 1.4972, val acc: 0.4372
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.697   0.728   0.697   0.712
+sad            1128   0.627   0.357   0.672   0.466
+anger          1070   0.749   0.461   0.536   0.495
+surprise        441   0.740   0.186   0.517   0.274
+disgust         805   0.792   0.436   0.688   0.534
+fear            385   0.807   0.155   0.301   0.205
+MACRO                                 0.568   0.448
+test loss: 1.4422, test acc: 0.4477
+####################################################################################################
+
+Epoch 83 - Training loss: 0.5885  Time: 2026-08-02_15:29:59
+
+[dev] macro-F1: 0.4219  macro-Recall: 0.5283
+val loss: 1.6132, val acc: 0.4219
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.691   0.737   0.659   0.696
+sad            1128   0.644   0.365   0.637   0.464
+anger          1070   0.717   0.421   0.615   0.500
+surprise        441   0.752   0.186   0.478   0.267
+disgust         805   0.772   0.412   0.734   0.527
+fear            385   0.826   0.168   0.278   0.209
+MACRO                                 0.567   0.444
+test loss: 1.514, test acc: 0.444
+####################################################################################################
+
+Epoch 84 - Training loss: 0.564  Time: 2026-08-02_15:33:20
+
+[dev] macro-F1: 0.4274  macro-Recall: 0.5122
+val loss: 1.8649, val acc: 0.4274
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.709   0.747   0.727
+sad            1128   0.670   0.377   0.554   0.449
+anger          1070   0.752   0.464   0.490   0.476
+surprise        441   0.715   0.167   0.503   0.251
+disgust         805   0.808   0.462   0.661   0.544
+fear            385   0.842   0.159   0.213   0.182
+MACRO                                 0.528   0.438
+test loss: 1.755, test acc: 0.4382
+Running out of patience, loading previous best model.
+Current learning rate: 2.5e-05
+####################################################################################################
+
+Epoch 85 - Training loss: 0.6476  Time: 2026-08-02_15:36:40
+
+[dev] macro-F1: 0.4360  macro-Recall: 0.5840
+val loss: 1.3452, val acc: 0.436
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.713   0.739   0.726
+sad            1128   0.644   0.363   0.623   0.459
+anger          1070   0.734   0.442   0.591   0.505
+surprise        441   0.694   0.172   0.583   0.265
+disgust         805   0.789   0.433   0.717   0.540
+fear            385   0.765   0.147   0.384   0.213
+MACRO                                 0.606   0.451
+test loss: 1.2918, test acc: 0.4513
+####################################################################################################
+
+Epoch 86 - Training loss: 0.613  Time: 2026-08-02_15:40:00
+
+[dev] macro-F1: 0.4299  macro-Recall: 0.5333
+val loss: 1.4986, val acc: 0.4299
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.692   0.741   0.653   0.695
+sad            1128   0.651   0.371   0.631   0.467
+anger          1070   0.739   0.447   0.568   0.501
+surprise        441   0.733   0.178   0.501   0.262
+disgust         805   0.795   0.441   0.681   0.535
+fear            385   0.805   0.163   0.327   0.217
+MACRO                                 0.560   0.446
+test loss: 1.4579, test acc: 0.4463
+####################################################################################################
+
+Epoch 87 - Training loss: 0.5787  Time: 2026-08-02_15:43:20
+
+[dev] macro-F1: 0.4304  macro-Recall: 0.5075
+val loss: 1.7192, val acc: 0.4304
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.722   0.717   0.720
+sad            1128   0.651   0.366   0.604   0.456
+anger          1070   0.750   0.462   0.524   0.491
+surprise        441   0.780   0.188   0.397   0.255
+disgust         805   0.814   0.472   0.650   0.547
+fear            385   0.808   0.157   0.301   0.206
+MACRO                                 0.532   0.446
+test loss: 1.6093, test acc: 0.4458
+####################################################################################################
+
+Epoch 88 - Training loss: 0.5534  Time: 2026-08-02_15:46:39
+
+[dev] macro-F1: 0.4252  macro-Recall: 0.4798
+val loss: 1.8957, val acc: 0.4252
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.698   0.727   0.699   0.713
+sad            1128   0.652   0.369   0.611   0.460
+anger          1070   0.760   0.477   0.475   0.476
+surprise        441   0.801   0.202   0.372   0.262
+disgust         805   0.817   0.478   0.626   0.542
+fear            385   0.818   0.153   0.265   0.194
+MACRO                                 0.508   0.441
+test loss: 1.7749, test acc: 0.4411
+####################################################################################################
+
+Epoch 89 - Training loss: 0.5239  Time: 2026-08-02_15:49:59
+
+[dev] macro-F1: 0.4219  macro-Recall: 0.4953
+val loss: 1.9762, val acc: 0.4219
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.725   0.711   0.718
+sad            1128   0.657   0.373   0.611   0.463
+anger          1070   0.737   0.444   0.561   0.495
+surprise        441   0.783   0.185   0.381   0.249
+disgust         805   0.806   0.457   0.648   0.536
+fear            385   0.829   0.144   0.216   0.173
+MACRO                                 0.521   0.439
+test loss: 1.8468, test acc: 0.4391
+####################################################################################################
+
+Epoch 90 - Training loss: 0.4985  Time: 2026-08-02_15:53:19
+
+[dev] macro-F1: 0.4267  macro-Recall: 0.5017
+val loss: 2.1078, val acc: 0.4267
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.701   0.726   0.710   0.718
+sad            1128   0.660   0.374   0.594   0.459
+anger          1070   0.730   0.431   0.550   0.483
+surprise        441   0.780   0.193   0.417   0.264
+disgust         805   0.793   0.438   0.684   0.534
+fear            385   0.848   0.149   0.179   0.163
+MACRO                                 0.522   0.437
+test loss: 1.9787, test acc: 0.4369
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453
+####################################################################################################
+
+Epoch 91 - Training loss: 0.6438  Time: 2026-08-02_15:57:10
+
+[dev] macro-F1: 0.4356  macro-Recall: 0.5630
+val loss: 1.3857, val acc: 0.4356
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.733   0.694   0.713
+sad            1128   0.635   0.360   0.654   0.465
+anger          1070   0.745   0.456   0.562   0.504
+surprise        441   0.717   0.173   0.524   0.260
+disgust         805   0.797   0.443   0.691   0.540
+fear            385   0.774   0.153   0.382   0.219
+MACRO                                 0.584   0.450
+test loss: 1.3193, test acc: 0.4499
+####################################################################################################
+
+Epoch 92 - Training loss: 0.6118  Time: 2026-08-02_16:00:29
+
+[dev] macro-F1: 0.4325  macro-Recall: 0.5467
+val loss: 1.5554, val acc: 0.4325
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.701   0.706   0.758   0.731
+sad            1128   0.672   0.381   0.561   0.454
+anger          1070   0.743   0.453   0.566   0.504
+surprise        441   0.701   0.171   0.558   0.261
+disgust         805   0.793   0.439   0.702   0.540
+fear            385   0.820   0.161   0.278   0.204
+MACRO                                 0.570   0.449
+test loss: 1.4797, test acc: 0.4488
+####################################################################################################
+
+Epoch 93 - Training loss: 0.5881  Time: 2026-08-02_16:03:48
+
+[dev] macro-F1: 0.4327  macro-Recall: 0.5059
+val loss: 1.6993, val acc: 0.4327
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.703   0.698   0.788   0.740
+sad            1128   0.675   0.378   0.526   0.440
+anger          1070   0.761   0.482   0.490   0.486
+surprise        441   0.747   0.178   0.463   0.257
+disgust         805   0.823   0.492   0.614   0.546
+fear            385   0.825   0.166   0.278   0.208
+MACRO                                 0.526   0.446
+test loss: 1.6031, test acc: 0.446
+####################################################################################################
+
+Epoch 94 - Training loss: 0.5583  Time: 2026-08-02_16:07:08
+
+[dev] macro-F1: 0.4243  macro-Recall: 0.5113
+val loss: 1.7682, val acc: 0.4243
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.687   0.761   0.606   0.675
+sad            1128   0.636   0.362   0.661   0.468
+anger          1070   0.722   0.425   0.588   0.493
+surprise        441   0.784   0.193   0.404   0.261
+disgust         805   0.785   0.425   0.691   0.527
+fear            385   0.833   0.173   0.270   0.211
+MACRO                                 0.537   0.439
+test loss: 1.6682, test acc: 0.4392
+####################################################################################################
+
+Epoch 95 - Training loss: 0.5324  Time: 2026-08-02_16:10:27
+
+[dev] macro-F1: 0.4289  macro-Recall: 0.5127
+val loss: 1.834, val acc: 0.4289
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.698   0.747   0.661   0.702
+sad            1128   0.635   0.362   0.668   0.470
+anger          1070   0.749   0.461   0.536   0.496
+surprise        441   0.769   0.181   0.406   0.250
+disgust         805   0.797   0.444   0.683   0.538
+fear            385   0.818   0.154   0.268   0.195
+MACRO                                 0.537   0.442
+test loss: 1.7673, test acc: 0.4418
+####################################################################################################
+
+Epoch 96 - Training loss: 0.5118  Time: 2026-08-02_16:13:48
+
+[dev] macro-F1: 0.4339  macro-Recall: 0.5230
+val loss: 1.8741, val acc: 0.4339
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.740   0.675   0.706
+sad            1128   0.636   0.365   0.676   0.474
+anger          1070   0.751   0.463   0.536   0.497
+surprise        441   0.775   0.194   0.435   0.269
+disgust         805   0.810   0.466   0.662   0.547
+fear            385   0.807   0.152   0.294   0.201
+MACRO                                 0.546   0.449
+test loss: 1.7486, test acc: 0.4488
+####################################################################################################
+
+Epoch 97 - Training loss: 0.4899  Time: 2026-08-02_16:17:07
+
+[dev] macro-F1: 0.4300  macro-Recall: 0.5092
+val loss: 1.9823, val acc: 0.43
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.695   0.739   0.667   0.701
+sad            1128   0.625   0.355   0.675   0.466
+anger          1070   0.735   0.440   0.564   0.494
+surprise        441   0.798   0.179   0.313   0.227
+disgust         805   0.807   0.460   0.648   0.538
+fear            385   0.809   0.143   0.262   0.185
+MACRO                                 0.521   0.435
+test loss: 1.8682, test acc: 0.4353
+####################################################################################################
+
+Epoch 98 - Training loss: 0.4662  Time: 2026-08-02_16:20:26
+
+[dev] macro-F1: 0.4260  macro-Recall: 0.4849
+val loss: 2.1904, val acc: 0.426
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.732   0.692   0.711
+sad            1128   0.644   0.368   0.652   0.471
+anger          1070   0.751   0.457   0.432   0.444
+surprise        441   0.806   0.203   0.358   0.259
+disgust         805   0.824   0.493   0.610   0.546
+fear            385   0.807   0.145   0.273   0.190
+MACRO                                 0.503   0.437
+test loss: 2.0971, test acc: 0.4367
+####################################################################################################
+
+Epoch 99 - Training loss: 0.4482  Time: 2026-08-02_16:23:47
+
+[dev] macro-F1: 0.4202  macro-Recall: 0.5065
+val loss: 2.2216, val acc: 0.4202
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.695   0.742   0.662   0.700
+sad            1128   0.639   0.364   0.654   0.468
+anger          1070   0.737   0.442   0.540   0.486
+surprise        441   0.755   0.176   0.429   0.249
+disgust         805   0.801   0.447   0.643   0.527
+fear            385   0.829   0.166   0.265   0.204
+MACRO                                 0.532   0.439
+test loss: 2.0967, test acc: 0.4391
+####################################################################################################
+
+Epoch 100 - Training loss: 0.4346  Time: 2026-08-02_16:27:06
+
+[dev] macro-F1: 0.4241  macro-Recall: 0.4701
+val loss: 2.5234, val acc: 0.4241
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.699   0.716   0.729   0.723
+sad            1128   0.660   0.375   0.602   0.462
+anger          1070   0.755   0.465   0.436   0.450
+surprise        441   0.800   0.198   0.363   0.256
+disgust         805   0.818   0.479   0.634   0.546
+fear            385   0.860   0.170   0.177   0.173
+MACRO                                 0.490   0.435
+test loss: 2.3672, test acc: 0.4349
+Running out of patience, loading previous best model.
+Current learning rate: 2.5e-05
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453
+####################################################################################################
+Running out of patience, early stopping.
+================== Start Testing ====================================
+
+===== Per-emotion detection metrics (positive / 'present' class) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453

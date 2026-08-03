@@ -1,0 +1,53 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 12923.44it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.bias              | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+pooler.dense.bias         | MISSING    | 
+pooler.dense.weight       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+loaded checkpoints/devBest/model_final_roberta.std  (ablate=none)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.700   0.710   0.744   0.727
+sad            1128   0.663   0.375   0.586   0.457
+anger          1070   0.752   0.466   0.526   0.494
+surprise        441   0.702   0.173   0.569   0.266
+disgust         805   0.805   0.458   0.691   0.551
+fear            385   0.759   0.153   0.423   0.225
+MACRO                                 0.590   0.453
+
+chosen cut-offs (from DEV):
+  happy      -0.9597
+  sad        -0.6809
+  anger      -0.8268
+  surprise   -0.0036
+  disgust    +0.2952
+  fear       -0.3136
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.680   0.649   0.881   0.747
+sad            1128   0.593   0.345   0.756   0.474
+anger          1070   0.706   0.413   0.658   0.507
+surprise        441   0.702   0.173   0.569   0.265
+disgust         805   0.815   0.475   0.673   0.557
+fear            385   0.730   0.145   0.462   0.221
+MACRO                                 0.667   0.462
+
+macro-F1: 0.4533 (default) -> 0.4619 (tuned)   delta +0.0085
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}

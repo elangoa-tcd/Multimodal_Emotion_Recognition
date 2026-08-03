@@ -10,8 +10,8 @@ import os
 # word_emb_path = ''
 data_str = "mosei" # mosi or mosei or ur_funny
 # text encoder: "bert-base-uncased" (768d, 12 layers) or "roberta-large" (1024d, 24 layers)
-# text_encoder_str = "roberta-large"
-text_encoder_str = "bert-base-uncased"
+text_encoder_str = "roberta-large"
+# text_encoder_str = "bert-base-uncased"
 word_emb_path = '/home/elangoa/data/MOSEI/glove_dummy.txt' # 改为mosi测试的时候，这里记得也要改 MOSI MOSEI UR_FUNNY
 assert(word_emb_path is not None)
 
