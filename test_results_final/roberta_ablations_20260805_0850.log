@@ -1,0 +1,215 @@
+==================== roberta ablate=text ====================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 13794.25it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.bias              | UNEXPECTED | 
+pooler.dense.bias         | MISSING    | 
+pooler.dense.weight       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_final_roberta.std  (ablate=text)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.647   0.691   0.620   0.653
+sad            1128   0.619   0.336   0.586   0.427
+anger          1070   0.738   0.416   0.345   0.377
+surprise        441   0.699   0.117   0.333   0.173
+disgust         805   0.807   0.316   0.099   0.151
+fear            385   0.753   0.120   0.312   0.173
+MACRO                                 0.382   0.326
+
+chosen cut-offs (from DEV):
+  happy      -2.0236
+  sad        -0.4694
+  anger      -0.8904
+  surprise   -0.6257
+  disgust    -2.8525
+  fear       -0.0025
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.545   0.542   0.991   0.700
+sad            1128   0.506   0.300   0.777   0.433
+anger          1070   0.600   0.305   0.580   0.400
+surprise        441   0.503   0.109   0.592   0.184
+disgust         805   0.351   0.188   0.830   0.307
+fear            385   0.753   0.120   0.314   0.174
+MACRO                                 0.681   0.366
+
+macro-F1: 0.3259 (default) -> 0.3664 (tuned)   delta +0.0405
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
+==================== roberta ablate=audio ====================
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 14095.03it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+lm_head.bias              | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+pooler.dense.bias         | MISSING    | 
+pooler.dense.weight       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_final_roberta.std  (ablate=audio)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.690   0.745   0.643   0.690
+sad            1128   0.642   0.360   0.614   0.454
+anger          1070   0.703   0.405   0.621   0.490
+surprise        441   0.701   0.175   0.578   0.268
+disgust         805   0.788   0.433   0.717   0.540
+fear            385   0.784   0.165   0.397   0.234
+MACRO                                 0.595   0.446
+
+chosen cut-offs (from DEV):
+  happy      -1.5236
+  sad        -0.2443
+  anger      -0.1843
+  surprise   +0.0725
+  disgust    +1.3367
+  fear       -0.7724
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.656   0.622   0.915   0.741
+sad            1128   0.611   0.346   0.680   0.459
+anger          1070   0.682   0.387   0.653   0.486
+surprise        441   0.712   0.176   0.551   0.266
+disgust         805   0.830   0.507   0.616   0.556
+fear            385   0.710   0.144   0.504   0.224
+MACRO                                 0.653   0.455
+
+macro-F1: 0.4459 (default) -> 0.4552 (tuned)   delta +0.0092
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
+==================== roberta ablate=video ====================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 12713.58it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.layer_norm.bias   | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+lm_head.bias              | UNEXPECTED | 
+pooler.dense.bias         | MISSING    | 
+pooler.dense.weight       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_final_roberta.std  (ablate=video)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.669   0.671   0.753   0.710
+sad            1128   0.667   0.372   0.540   0.440
+anger          1070   0.761   0.480   0.476   0.478
+surprise        441   0.705   0.174   0.562   0.266
+disgust         805   0.813   0.471   0.675   0.555
+fear            385   0.757   0.154   0.434   0.228
+MACRO                                 0.573   0.446
+
+chosen cut-offs (from DEV):
+  happy      -1.0241
+  sad        -1.0166
+  anger      -1.0654
+  surprise   +0.3157
+  disgust    -0.1079
+  fear       +0.9087
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.642   0.615   0.890   0.728
+sad            1128   0.544   0.318   0.770   0.450
+anger          1070   0.706   0.411   0.643   0.502
+surprise        441   0.740   0.178   0.483   0.261
+disgust         805   0.811   0.468   0.684   0.556
+fear            385   0.830   0.180   0.296   0.224
+MACRO                                 0.628   0.453
+
+macro-F1: 0.4460 (default) -> 0.4533 (tuned)   delta +0.0073
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
+==================== roberta ablate=only_text ====================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+dev
+test
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 12663.84it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.bias              | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+pooler.dense.bias         | MISSING    | 
+pooler.dense.weight       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+loaded /home/elangoa/TMBL/checkpoints/devBest/model_final_roberta.std  (ablate=only_text)
+
+===== TEST @ default cut-off (logit > 0) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.668   0.703   0.660   0.681
+sad            1128   0.646   0.356   0.570   0.439
+anger          1070   0.738   0.442   0.533   0.483
+surprise        441   0.701   0.170   0.553   0.260
+disgust         805   0.804   0.457   0.703   0.554
+fear            385   0.776   0.155   0.384   0.221
+MACRO                                 0.567   0.439
+
+chosen cut-offs (from DEV):
+  happy      -1.4279
+  sad        -0.9102
+  anger      -0.1307
+  surprise   +0.2393
+  disgust    +1.6063
+  fear       -0.3410
+
+===== TEST @ tuned cut-offs (chosen on DEV) =====
+emotion     support     Acc    Prec  Recall      F1
+happy          2498   0.630   0.604   0.904   0.724
+sad            1128   0.498   0.297   0.785   0.431
+anger          1070   0.725   0.425   0.552   0.480
+surprise        441   0.733   0.177   0.497   0.261
+disgust         805   0.840   0.536   0.566   0.551
+fear            385   0.745   0.152   0.452   0.227
+MACRO                                 0.626   0.446
+
+macro-F1: 0.4395 (default) -> 0.4457 (tuned)   delta +0.0062
+
+BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
