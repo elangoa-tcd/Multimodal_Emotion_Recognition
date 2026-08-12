@@ -3,7 +3,9 @@ mosei
 mosei
 dev
 test
-Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 12923.44it/s]
+
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 389/389 [00:00<00:00, 12923.44it/s]
 [transformers] [1mRobertaModel LOAD REPORT[0m from: roberta-large
 Key                       | Status     | 
 --------------------------+------------+-
@@ -51,3 +53,4 @@ MACRO                                 0.667   0.462
 macro-F1: 0.4533 (default) -> 0.4619 (tuned)   delta +0.0085
 
 BRANCH COUNTS: {'self_attention': 4080, 'cross_modal': 2040}
+D

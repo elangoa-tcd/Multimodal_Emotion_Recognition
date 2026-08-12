@@ -2,3 +2,5 @@ CMU_MultimodalSDK/
 checkpoints
 __pycache__/
 # *.log
+MD_Files/
+test_results/
