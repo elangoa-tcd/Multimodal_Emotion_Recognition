@@ -47,10 +47,11 @@ if __name__ == "__main__":
     ap.add_argument("--ablate", default="none", choices=["none", "text", "audio", "only_text", "video",'shuffle_text', 'shuffle_audio', 'shuffle_video'])
     ap.add_argument("--grid", type=int, default=200, help="threshold candidates per emotion")
     ap.add_argument("--shuffle_eval", type=int, default=0,help="0 = fixed batch order. N>0 = reshuffle the TEST batches using N as the seed.")
-    args = ap.parse_args()
+    args, _ = ap.parse_known_args()   # shared flags (--text_encoder, --pooling, --data_dir) go to get_config
 
     dev_cfg = get_config(parse=False, mode="dev")
     test_cfg = get_config(parse=False, mode="test")
+    assert dev_cfg.task == 'emotion', "threshold tuning applies to the 6-emotion task only"
     dev_loader = get_loader(dev_cfg, shuffle=False)     # also sets visual_size/acoustic_size
     if args.shuffle_eval:
         torch.manual_seed(args.shuffle_eval)

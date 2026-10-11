@@ -4,24 +4,30 @@ from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import DataLoader, Dataset
 # from transformers import BertTokenizer
 from transformers import AutoTokenizer
-from config import text_encoder_str
 from create_dataset import MOSI, MOSEI, UR_FUNNY, PAD
 
 # bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 # # bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', mirror='https://huggingface.co/mirrors')
 
 ...
-# bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-bert_tokenizer = AutoTokenizer.from_pretrained(text_encoder_str)
+_TOKENIZERS = {}
+
+
+def get_tokenizer(name):
+    """Load each tokenizer once per process, for whichever encoder the run uses."""
+    if name not in _TOKENIZERS:
+        _TOKENIZERS[name] = AutoTokenizer.from_pretrained(name)
+    return _TOKENIZERS[name]
+
 
 class MSADataset(Dataset):
     def __init__(self, config):
         # Fetch dataset
-        if "mosi" in str(config.data_dir).lower():
+        if config.data.lower() == "mosi":
             dataset = MOSI(config)
-        elif "mosei" in str(config.data_dir).lower():
+        elif config.data.lower() == "mosei":
             dataset = MOSEI(config)
-        elif "ur_funny" in str(config.data_dir).lower(): # Jack Add From MISA Code
+        elif config.data.lower() == "ur_funny": # Jack Add From MISA Code
             dataset = UR_FUNNY(config)
         else:
             print("Dataset not defined correctly")
@@ -48,6 +54,7 @@ class MSADataset(Dataset):
 def get_loader(config, shuffle=True):
     """Load DataLoader of given DialogDataset"""
     dataset = MSADataset(config)
+    bert_tokenizer = get_tokenizer(config.text_encoder)
     print(config.mode)
     config.data_len = len(dataset)
 
@@ -59,9 +66,10 @@ def get_loader(config, shuffle=True):
         batch = sorted(batch, key=lambda x: x[0][0].shape[0], reverse=True)
         # get the data out of the batch - use pad sequence util functions from PyTorch to pad things
 
-        # labels = torch.cat([torch.from_numpy(sample[1]) for sample in batch], dim=0) # ([32, 1])
-        # labels = torch.cat([torch.from_numpy(sample[1][:, 0:1]) for sample in batch], dim=0) # sentiment column only -> ([32, 1])
-        labels = torch.cat([torch.from_numpy(sample[1][:, 1:7]) for sample in batch], dim=0) # 6 emotion columns -> ([32, 6])
+        if config.task == 'emotion':
+            labels = torch.cat([torch.from_numpy(sample[1][:, 1:7]) for sample in batch], dim=0)  # 6 emotion columns -> [B, 6]
+        else:
+            labels = torch.cat([torch.from_numpy(sample[1][:, 0:1]) for sample in batch], dim=0)  # sentiment column -> [B, 1]
         sentences = pad_sequence([torch.LongTensor(sample[0][0]) for sample in batch], padding_value=PAD) # UR_FUUNY: torch.Size([46, 32, 300])
         visual = pad_sequence([torch.FloatTensor(sample[0][1]) for sample in batch]) # ([46, 32, 75]) # Jack Change FloatTensor -> LongTensor
         acoustic = pad_sequence([torch.FloatTensor(sample[0][2]) for sample in batch]) # ([46, 32, 81]) # Jack Change

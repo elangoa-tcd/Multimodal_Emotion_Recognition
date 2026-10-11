@@ -112,7 +112,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", required=True, help="path to a trained .std file")
     ap.add_argument("--grid", type=int, default=200, help="cut-off candidates per emotion")
-    args = ap.parse_args()
+    args, _ = ap.parse_known_args() 
 
     print("=" * 78)
     print("CEILING ON TOP OF BERT-STRENGTH TEXT")

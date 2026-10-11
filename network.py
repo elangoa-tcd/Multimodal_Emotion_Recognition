@@ -31,8 +31,8 @@ class AOTN(nn.Module):
         bertconfig = AutoConfig.from_pretrained(config.text_encoder, output_hidden_states=True)
         self.bertmodel = AutoModel.from_pretrained(config.text_encoder, config=bertconfig)
         self.text_dim = bertconfig.hidden_size # 768 for bert-base, 1024 for roberta-large
-        # self.text_pool = AttentionPool(self.text_dim, attn_hidden=128, dropout=self.config.dropout)
-
+        if self.config.pooling == 'attention':
+            self.text_pool = AttentionPool(self.text_dim, attn_hidden=128, dropout=self.config.dropout)
 
         self.vrnn1 = rnn(input_sizes[1], hidden_sizes[1], bidirectional=True)
         self.vrnn2 = rnn(2 * hidden_sizes[1], hidden_sizes[1], bidirectional=True)
@@ -180,13 +180,14 @@ class AOTN(nn.Module):
                                     attention_mask=bert_sent_mask) # token_type_ids dropped: roberta has no segment embeddings; bert default is the all-zeros we passed anyway
         bert_output = bert_output[0] # bert_output[0].shape ([64, 41, 768]) len(bert_output)=3  bert_output[1].shape ([64, 768])
         # masked mean
-        masked_output = torch.mul(bert_sent_mask.unsqueeze(2), bert_output) # ([64, 41])->([64, 41, 1]) @ ([64, 41, 768]) -> masked_output ([64, 41, 768])
-        mask_len = torch.sum(bert_sent_mask, dim=1, keepdim=True) # mask_len (64,1)
-        bert_output = torch.sum(masked_output, dim=1, keepdim=False) / mask_len # 'torch.cuda.FloatTensor' bert_output ([64, 768])
-        t_feature = bert_output # ([64, 768])
-
-         # ---- attention pooling (new) ----
-        # t_feature = self.text_pool(bert_output, bert_sent_mask)
+        if self.config.pooling == 'attention':
+            # learned weight per token (AttentionPool, bottom of this file)
+            t_feature = self.text_pool(bert_output, bert_sent_mask)               # [B, L, D] -> [B, D]
+        else:
+            # masked mean: average over real tokens only
+            masked_output = torch.mul(bert_sent_mask.unsqueeze(2), bert_output)   # [B, L, D]
+            mask_len = torch.sum(bert_sent_mask, dim=1, keepdim=True)             # [B, 1]
+            t_feature = torch.sum(masked_output, dim=1) / mask_len 
 
         # (1-2) 视频特征提取
         final_h1v, final_h2v = self.extract_features(visual, lengths, self.vrnn1, self.vrnn2, self.vlayer_norm) # ([59, 32, 35]) -> ([2, 32, 35]), ([2, 32, 35])

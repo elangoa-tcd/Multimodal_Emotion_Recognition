@@ -8,43 +8,42 @@ import network as new_models
 # import MultimodalSA.Jack_model as new_models
 from utils import DiffLoss,SimilarityKL
 from utils import to_gpu
-
-torch.manual_seed(123)
-torch.cuda.manual_seed_all(123)
-
-from config import get_config
-train_config = get_config(mode='train')
-
-
-# checkpoint_path = "/home/jack/Project/MutiModal/SentimentAnalysis/JackNet/checkpoints/AOTN_Normal/"
-# log_file = "/home/jack/Project/MutiModal/SentimentAnalysis/JackNet/checkpoints/AOTN_Normal/MutimodalSALog.txt"
-checkpoint_path = "/home/elangoa/TMBL/checkpoints/"
-# log_file = "/home/elangoa/TMBL/checkpoints/log.txt"
-# log_file = "/home/elangoa/TMBL/checkpoints/log_emotion.txt"
-# log_file = "/home/elangoa/TMBL/checkpoints/log_emotion_roberta.txt" 
-#log_file = "/home/elangoa/TMBL/checkpoints/log_emotion_attnpool.txt"
-log_file = "/home/elangoa/TMBL/checkpoints/log_emotion_meanpool_FIXED.txt"
-
-with open(log_file, "a") as file:
-    file.write(f"Log File Time{train_config.name} in {train_config.data}\n") # 每次打开记录一下当前时间             
+        
 
 class Solver(object):
     def __init__(self, train_config, train_data_loader, dev_data_loader, test_data_loader,
                  is_train=True, model=None):
         
-        self.loss_diff = DiffLoss()       
+        # ---- where this run writes its checkpoints and its log ----
+        self.checkpoint_path = train_config.checkpoint_dir
+        os.makedirs(os.path.join(self.checkpoint_path, 'devBest'), exist_ok=True)
+        self.log_file = os.path.join(self.checkpoint_path, f'log_{train_config.name}.txt')
+        with open(self.log_file, "a") as file:
+            file.write(f"Log File Time{train_config.name} in {train_config.data}\n")
+
+        self.loss_diff = DiffLoss()
         self.loss_simi = SimilarityKL()
-        # self.loss_task = nn.MSELoss(reduction="mean") # MOSEI和MOSI情感分析属于回归任务,使用MSE损失
-        # self.loss_task = nn.BCEWithLogitsLoss(reduction="mean")
-        # pos_weight[i] = (#absent / #present) for emotion i, computed from the TRAIN set.
-        # This up-weights the rare "present" class so rare emotions (surprise, fear) stop being ignored.
-        _tl = np.array([np.array(s[1]).reshape(-1)[1:7]
-                        for s in train_data_loader.dataset.data])
-        _present = (_tl > 0).sum(0)
-        _pos_weight = torch.tensor((_tl.shape[0] - _present) / np.maximum(_present, 1),
-                                   dtype=torch.float32).cuda()
-        print("pos_weight per emotion [happy,sad,anger,surprise,disgust,fear]:", _pos_weight.tolist())
-        self.loss_task = nn.BCEWithLogitsLoss(reduction="mean", pos_weight=_pos_weight)
+
+        if train_config.task == 'emotion':
+            # pos_weight[i] = (#absent / #present) for emotion i, computed from the TRAIN set.
+            # 'full' up-weights rare emotions (surprise, fear); 'sqrt' is a milder version; 'none' = plain BCE.
+            _tl = np.array([np.array(s[1]).reshape(-1)[1:7]
+                            for s in train_data_loader.dataset.data])
+            _present = (_tl > 0).sum(0)
+            _pos_weight = torch.tensor((_tl.shape[0] - _present) / np.maximum(_present, 1),
+                                       dtype=torch.float32).cuda()
+            if train_config.pos_weight == 'sqrt':
+                _pos_weight = torch.sqrt(_pos_weight)
+            if train_config.pos_weight == 'none':
+                print("pos_weight mode: none (unweighted BCE)")
+                self.loss_task = nn.BCEWithLogitsLoss(reduction="mean")
+            else:
+                print(f"pos_weight mode: {train_config.pos_weight}")
+                print("pos_weight per emotion [happy,sad,anger,surprise,disgust,fear]:", _pos_weight.tolist())
+                self.loss_task = nn.BCEWithLogitsLoss(reduction="mean", pos_weight=_pos_weight)
+        else:
+            # sentiment: regression on the [-3, 3] score, as in the original TMBL
+            self.loss_task = nn.MSELoss(reduction="mean")
 
 
         self.train_config = train_config
@@ -54,14 +53,21 @@ class Solver(object):
         self.is_train = is_train
         self.model = model
 
+    def _best_path(self, kind):
+        """kind = 'model' or 'optim' -> checkpoints/devBest/<kind>_<run name>.std"""
+        return os.path.join(self.checkpoint_path, 'devBest', f'{kind}_{self.train_config.name}.std')
+    
+    
     def loss_function(self, y_tilde, y):
         """
         total_loss = w1 * cls_loss + w_2 * polar_loss + w_3 * scale_loss
         """
         loss_diff = self.get_diff_loss()
         loss_simi = self.get_simi_loss()
-        # loss_task = self.loss_task(y_tilde, y)
-        loss_task = self.loss_task(y_tilde, (y > 0).float()) 
+        if self.train_config.task == 'emotion':
+            loss_task = self.loss_task(y_tilde, (y > 0).float())   # intensity > 0 -> "present"
+        else:
+            loss_task = self.loss_task(y_tilde, y)                  # regress the sentiment score directly
 
         loss = 0.5*loss_diff + 0.05*loss_simi + loss_task
         return loss
@@ -105,8 +111,8 @@ class Solver(object):
         # Jack Add CheckPoint
         #==============================
         start_epoch = -1 # 手动指定从第几个epoch开始训练
-        checkpoint_file = checkpoint_path + f"epoch{start_epoch}.pt"
-        if checkpoint_path is not None and os.path.isfile(checkpoint_file):
+        checkpoint_file = os.path.join(self.checkpoint_path, f"epoch{start_epoch}.pt")
+        if self.checkpoint_path is not None and os.path.isfile(checkpoint_file):
             checkpoint = torch.load(checkpoint_file)
             self.model.load_state_dict(checkpoint['model_state_dict'])
             self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
@@ -145,14 +151,14 @@ class Solver(object):
             from datetime import datetime
             time_now = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')            
             print(f"\nEpoch {e} - Training loss: {round(np.mean(train_loss), 4)}  Time: {time_now}\n")
-            with open(log_file, "a") as file:
+            with open(self.log_file, "a") as file:
                 # file.write(f"Epoch {e} - Training acc: {round(np.mean(train_acc), 4)} Time: {time_now}\n")            
                 file.write(f"\nEpoch {e} - Training loss: {round(np.mean(train_loss), 4)}  Time: {time_now}\n")
 
             # ==== 验证
             valid_loss, valid_acc = self.eval(mode="dev")
             print(f"val loss: {round(np.mean(valid_loss), 4)}, val acc: {round(np.mean(valid_acc), 4)}")
-            with open(log_file, "a") as file:
+            with open(self.log_file, "a") as file:
                 file.write(f"val loss: {round(np.mean(valid_loss), 4)}, val acc: {round(np.mean(valid_acc), 4)}\n")            
             
             # ==== 测试
@@ -160,7 +166,7 @@ class Solver(object):
                 # lr_scheduler.step()
                 test_loss, test_acc = self.eval(e,mode="test")
                 print(f"test loss: {round(np.mean(test_loss), 4)}, test acc: {round(np.mean(test_acc), 4)}")
-                with open(log_file, "a") as file:
+                with open(self.log_file, "a") as file:
                     file.write(f"test loss: {round(np.mean(test_loss), 4)}, test acc: {round(np.mean(test_acc), 4)}\n")            
 
             # ===== 交叉验证(正则化): 若模型一直没有提升，则只允许更新 6*3=18 epoch self.train_config.patience * self.train_config.trials
@@ -169,25 +175,24 @@ class Solver(object):
             if valid_acc >= best_valid_f1:
                 best_valid_f1 = valid_acc
                 print("Found new best model on dev set!")
-                with open(log_file, "a") as file:
+                with open(self.log_file, "a") as file:
                     file.write(f"Found new best model on dev set!\n")            
-                if not os.path.exists('checkpoints'): os.makedirs('checkpoints')
-                torch.save(self.model.state_dict(), f'{checkpoint_path}/devBest/model_{self.train_config.name}.std')
-                torch.save(self.optimizer.state_dict(), f'{checkpoint_path}/devBest/optim_{self.train_config.name}.std')
+                torch.save(self.model.state_dict(), self.best_path('model'))
+                torch.save(self.optimizer.state_dict(),	self._best_path('optim'))
                 curr_patience = patience
             else:
                 curr_patience -= 1
                 if curr_patience <= -1:
                     print("Running out of patience, loading previous best model.")
-                    with open(log_file, "a") as file:
+                    with open(self.log_file, "a") as file:
                         file.write(f"Running out of patience, loading previous best model.")  
                     num_trials -= 1
                     curr_patience = patience
-                    self.model.load_state_dict(torch.load(f'{checkpoint_path}devBest/model_{self.train_config.name}.std'))
-                    self.optimizer.load_state_dict(torch.load(f'{checkpoint_path}devBest/optim_{self.train_config.name}.std'))
+                    self.model.load_state_dict(torch.load(self._best_path('model')))
+                    self.optimizer.load_state_dict(torch.load(	self._best_path('optim')))
                     lr_scheduler.step()
                     print(f"Current learning rate: {self.optimizer.state_dict()['param_groups'][0]['lr']}")
-                    with open(log_file, "a") as file:
+                    with open(self.log_file, "a") as file:
                         file.write(f"Current learning rate: {self.optimizer.state_dict()['param_groups'][0]['lr']}")              
             file.close()
 
@@ -198,11 +203,11 @@ class Solver(object):
                     'epoch': e,
                     'model_state_dict': self.model.state_dict(),
                     'optimizer_state_dict': self.optimizer.state_dict()
-                },checkpoint_path + f"epoch{e}.pt")
+                },os.path.join(self.checkpoint_path, f"epoch{e}.pt"))
                 test_loss, test_acc = self.eval(e,mode="test", to_print=True)
             
             print("#" * 100)
-            with open(log_file, "a") as file:
+            with open(self.log_file, "a") as file:
                 file.write("#" * 100)       
 
             if num_trials <= 0:
@@ -224,8 +229,7 @@ class Solver(object):
         elif mode == "test":
             dataloader = self.test_data_loader
             if to_print:
-                self.model.load_state_dict(torch.load(
-                    f'{checkpoint_path}devBest/model_{self.train_config.name}.std'))
+                self.model.load_state_dict(torch.load(self._best_path('model')))
                 print("================== Start Testing ====================================")
 
         with torch.no_grad():
@@ -442,14 +446,14 @@ class Solver(object):
 
         if mode == "dev":
             print(f"[dev] macro-F1: {macro_f1:.4f}  macro-Recall: {macro_rec:.4f}")
-            with open(log_file, "a") as file:
+            with open(self.log_file, "a") as file:
                 file.write(f"[dev] macro-F1: {macro_f1:.4f}  macro-Recall: {macro_rec:.4f}\n")
 
         if mode == "test" or to_print:
             title = "\n===== Per-emotion detection metrics (positive / 'present' class) ====="
             print(title)
             emit(print)
-            with open(log_file, "a") as file:
+            with open(self.log_file, "a") as file:
                 file.write(title + "\n")
                 emit(lambda s: file.write(s + "\n"))
 
