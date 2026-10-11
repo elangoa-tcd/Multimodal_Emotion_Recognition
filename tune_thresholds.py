@@ -1,5 +1,6 @@
 """ per-emotion threshold tuning. No retraining."""
 import argparse
+import os
 import numpy as np
 import torch
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
@@ -7,22 +8,23 @@ from jack_transformer_share import _BRANCH_COUNTS
 from config import get_config
 from data_loader import get_loader
 import network
+from utils.results_io import emotion_metrics, prediction_rows, write_csv, write_json
 
 EMO = ["happy", "sad", "anger", "surprise", "disgust", "fear"]
 
 
 def collect(model, loader):
-    """Run the model over a loader; return (logits [N,6], raw labels [N,6])."""
-    logits, labels = [], []
+    """Run the model over a loader; return (segment ids, logits [N,6], raw labels [N,6])."""
+    ids, logits, labels = [], [], []
     with torch.no_grad():
         for batch in loader:
-            v, a, y, l, bert_sent, bert_type, bert_mask = batch
+            v, a, y, l, bert_sent, bert_type, bert_mask, seg_ids = batch
             out = model(v.cuda(), a.cuda(), l,
                         bert_sent.cuda(), bert_type.cuda(), bert_mask.cuda())
+            ids.extend(seg_ids)
             logits.append(out.detach().cpu().numpy())
             labels.append(y.numpy())
-    return (np.concatenate(logits, 0).reshape(-1, 6),
-            np.concatenate(labels, 0).reshape(-1, 6))
+    return (ids,np.concatenate(logits, 0).reshape(-1, 6), np.concatenate(labels, 0).reshape(-1, 6))
 
 
 def report(true_bin, pred_bin, title):
@@ -47,6 +49,9 @@ if __name__ == "__main__":
     ap.add_argument("--ablate", default="none", choices=["none", "text", "audio", "only_text", "video",'shuffle_text', 'shuffle_audio', 'shuffle_video'])
     ap.add_argument("--grid", type=int, default=200, help="threshold candidates per emotion")
     ap.add_argument("--shuffle_eval", type=int, default=0,help="0 = fixed batch order. N>0 = reshuffle the TEST batches using N as the seed.")
+    ap.add_argument("--run_name", default=None,help="name used for output files; default: taken from the checkpoint, model_<name>.std")
+    ap.add_argument("--results_dir", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "results"))
+
     args, _ = ap.parse_known_args()   # shared flags (--text_encoder, --pooling, --data_dir) go to get_config
 
     dev_cfg = get_config(parse=False, mode="dev")
@@ -63,8 +68,8 @@ if __name__ == "__main__":
     model.load_state_dict(state)
     print(f"loaded {args.checkpoint}  (ablate={args.ablate})")
 
-    dev_logit, dev_lab = collect(model, dev_loader)
-    test_logit, test_lab = collect(model, test_loader)
+    dev_ids, dev_logit, dev_lab = collect(model, dev_loader)
+    test_ids, test_logit, test_lab = collect(model, test_loader)
     dev_true, test_true = (dev_lab > 0).astype(int), (test_lab > 0).astype(int)
 
     # baseline: the current fixed cut-off 
@@ -85,3 +90,21 @@ if __name__ == "__main__":
     tuned = report(test_true, (test_logit > np.array(thresholds)).astype(int),"TEST @ tuned cut-offs (chosen on DEV)")
     print(f"\nmacro-F1: {base:.4f} (default) -> {tuned:.4f} (tuned)   delta {tuned-base:+.4f}")
     print("\nBRANCH COUNTS:", _BRANCH_COUNTS)
+
+    
+    # ---- save everything needed to recompute these numbers without a GPU ----
+    run_name = args.run_name or os.path.basename(args.checkpoint).replace('model_', '', 1).rsplit('.', 1)[0]
+    tag = run_name if args.ablate == 'none' else f"{run_name}__ablate-{args.ablate}"
+    R = args.results_dir
+    print(f"\nsaving results as '{tag}'")
+    write_csv(os.path.join(R, 'predictions', f'{tag}_dev.csv'), prediction_rows(dev_ids, dev_logit, dev_lab))
+    write_csv(os.path.join(R, 'predictions', f'{tag}_test.csv'), prediction_rows(test_ids, test_logit, test_lab))
+    write_csv(os.path.join(R, 'metrics', f'{tag}_test_default.csv'),
+              emotion_metrics(test_true, (test_logit > 0).astype(int)))
+    write_csv(os.path.join(R, 'metrics', f'{tag}_test_tuned.csv'),
+              emotion_metrics(test_true, (test_logit > np.array(thresholds)).astype(int)))
+    write_json(os.path.join(R, 'thresholds', f'{tag}.json'),
+               {'checkpoint': args.checkpoint, 'ablate': args.ablate, 'grid': args.grid,
+                'thresholds': dict(zip(EMO, thresholds)),
+                'macro_f1_default': base, 'macro_f1_tuned': tuned})
+

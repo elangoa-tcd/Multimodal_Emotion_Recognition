@@ -314,8 +314,8 @@ def load_segment_ids(other_dir):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--src_dir", default="/home/elangoa/data/MOSEI",
-                    help="directory holding the original .csd files (read-only)")
+    ap.add_argument("--src_dir", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "MOSEI"),
+                    help="directory holding the original .csd files (read-only); default <repo>/data/MOSEI")
     ap.add_argument("--out", required=True, help="directory to write this variant into")
     ap.add_argument("--norm", choices=["clip", "none", "corpus"], default="clip",
                     help="clip = original per-utterance z-norm; none = raw; "
@@ -329,6 +329,11 @@ def main():
                          "directory, so macro-F1 is computed on identical clips")
     ap.add_argument("--force", action="store_true", help="overwrite existing .pkl files")
     args = ap.parse_args()
+    # allow ~ in paths even when written as --out=~/data/...
+    args.src_dir = os.path.expanduser(args.src_dir)
+    args.out = os.path.expanduser(args.out)
+    if args.common_with:
+        args.common_with = os.path.expanduser(args.common_with)
 
     print("=" * 78)
     print("BUILD MOSEI VARIANT")

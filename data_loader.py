@@ -132,8 +132,11 @@ def get_loader(config, shuffle=True):
             '''
         # lengths are useful later in using RNNs
         lengths = torch.LongTensor([sample[0][0].shape[0] for sample in batch])
+        
+        # segment IDs (e.g. '-3g5yACwYnA_4') identify each clip, so saved predictions can be matched to CMU-MOSEI
+        segment_ids = [sample[2] for sample in batch]
 
-        return visual, acoustic, labels, lengths, bert_sentences, bert_sentence_types, bert_sentence_att_mask
+        return visual, acoustic, labels, lengths, bert_sentences, bert_sentence_types, bert_sentence_att_mask, segment_ids
 
     # data_loader = DataLoader(
     #     dataset=dataset,

@@ -48,7 +48,7 @@ def get_config(parse=True, **optional_kwargs):
     2. Create Config class initilized with parsed kwargs.
     3. Return Config class.
     """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(allow_abbrev=False)
 
     # Mode
     parser.add_argument('--mode', type=str, default='train')
