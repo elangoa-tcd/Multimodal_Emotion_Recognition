@@ -1,0 +1,1893 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+mosei
+mosei
+mosei
+mosei
+Configurations
+{'activation': <class 'torch.nn.modules.activation.ReLU'>,
+ 'batch_size': 48,
+ 'data': 'mosei',
+ 'data_dir': '/home/elangoa/data/MOSEI',
+ 'dataset_dir': '/home/elangoa/data/MOSEI',
+ 'depth': 1,
+ 'dropout': 0.5,
+ 'embedding_size': 300,
+ 'hidden_size': 256,
+ 'learning_rate': 0.0001,
+ 'milestones': [10, 30, 80],
+ 'mlp_hidden_size': 64,
+ 'mode': 'train',
+ 'model': 'AOTN',
+ 'n_epoch': 300,
+ 'name': '2026-06-16_13:34:26',
+ 'num_classes': 1,
+ 'optimizer': <class 'torch.optim.adam.Adam'>,
+ 'patience': 15,
+ 'rnncell': 'lstm',
+ 'sdk_dir': '/home/elangoa/TMBL/CMU-MultimodalSDK-main',
+ 'test_duration': 1,
+ 'trials': 5,
+ 'word_emb_path': '/home/elangoa/data/MOSEI/glove_dummy.txt'}
+train
+dev
+test
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10296.64it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+=======Start training from epoch -1==================
+
+Epoch -1 - Training loss: 0.7097  Time: 2026-06-16_13:35:55
+
+val_mult_acc7:  0.44967880085653106
+Accuracy_val (pos/neg)  0.8462073764787752
+Accuracy_val (non-neg/neg)  0.8270877944325482
+val loss: 0.6457, val acc: 0.8271
+
+test_mult_acc7:  0.45585392051557466
+mae:  0.62488055
+corr:  0.740788380359418
+F1 (pos/neg) : 0.8557092312883829
+test_Accuracy (pos/neg)  0.8543101074084274
+F1 (non-neg/neg) : 0.8291833552359468
+test_Accuracy (non-neg/neg)  0.8315789473684211
+test loss: 0.6568, test acc: 0.8316
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 0 - Training loss: 0.4717  Time: 2026-06-16_13:37:36
+
+val_mult_acc7:  0.5053533190578159
+Accuracy_val (pos/neg)  0.8517745302713987
+Accuracy_val (non-neg/neg)  0.8351177730192719
+val loss: 0.558, val acc: 0.8351
+
+test_mult_acc7:  0.4842105263157895
+mae:  0.59592515
+corr:  0.7472736873885075
+F1 (pos/neg) : 0.8502669590110289
+test_Accuracy (pos/neg)  0.8485265767006335
+F1 (non-neg/neg) : 0.8346840240909283
+test_Accuracy (non-neg/neg)  0.8360902255639098
+test loss: 0.6163, test acc: 0.8361
+Found new best model on dev set!
+================== Start Testing ====================================
+
+test_mult_acc7:  0.4842105263157895
+mae:  0.59592515
+corr:  0.7472736873885075
+F1 (pos/neg) : 0.8502669590110289
+mae:  0.59592515
+corr:  0.7472736873885075
+mult_acc5:  0.5097744360902255
+mult_acc7: 
+ 0.4842105263157895
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.82759   0.74777   0.78566      1348
+        True    0.85910   0.90802   0.88288      2283
+
+    accuracy                        0.84853      3631
+   macro avg    0.84334   0.82790   0.83427      3631
+weighted avg    0.84740   0.84853   0.84679      3631
+
+
+Accuracy (pos/neg)  0.8485265767006335
+F1 (pos/neg) : 0.8502669590110289
+test_Accuracy (pos/neg)  0.8485265767006335
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.70440   0.74777   0.72544      1348
+        True    0.89454   0.87209   0.88317      3307
+
+    accuracy                        0.83609      4655
+   macro avg    0.79947   0.80993   0.80431      4655
+weighted avg    0.83948   0.83609   0.83750      4655
+
+
+Accuracy (non-neg/neg)  0.8360902255639098
+F1 (non-neg/neg) : 0.8346840240909283
+F1 (non-neg/neg) : 0.8346840240909283
+test_Accuracy (non-neg/neg)  0.8360902255639098
+####################################################################################################
+
+Epoch 1 - Training loss: 0.3511  Time: 2026-06-16_13:39:28
+
+val_mult_acc7:  0.46359743040685225
+Accuracy_val (pos/neg)  0.8364648573416841
+Accuracy_val (non-neg/neg)  0.8024625267665952
+val loss: 0.7878, val acc: 0.8025
+
+test_mult_acc7:  0.43093447905477983
+mae:  0.69796175
+corr:  0.7456774064295013
+F1 (pos/neg) : 0.8423303042697491
+test_Accuracy (pos/neg)  0.8435692646653814
+F1 (non-neg/neg) : 0.7986924374581882
+test_Accuracy (non-neg/neg)  0.8055853920515574
+test loss: 0.8594, test acc: 0.8056
+####################################################################################################
+
+Epoch 2 - Training loss: 0.2502  Time: 2026-06-16_13:41:08
+
+val_mult_acc7:  0.5037473233404711
+Accuracy_val (pos/neg)  0.8441196938065414
+Accuracy_val (non-neg/neg)  0.8292291220556746
+val loss: 0.6468, val acc: 0.8292
+
+test_mult_acc7:  0.47969924812030074
+mae:  0.62931794
+corr:  0.7526414632782832
+F1 (pos/neg) : 0.84895835217074
+test_Accuracy (pos/neg)  0.8477003580280914
+F1 (non-neg/neg) : 0.8277032417006565
+test_Accuracy (non-neg/neg)  0.8300751879699249
+test loss: 0.6992, test acc: 0.8301
+####################################################################################################
+
+Epoch 3 - Training loss: 0.1925  Time: 2026-06-16_13:42:48
+
+val_mult_acc7:  0.42880085653104927
+Accuracy_val (pos/neg)  0.8322894919972165
+Accuracy_val (non-neg/neg)  0.8222698072805139
+val loss: 0.8532, val acc: 0.8223
+
+test_mult_acc7:  0.41181525241675615
+mae:  0.7304134
+corr:  0.7377505377224007
+F1 (pos/neg) : 0.8460864619390563
+test_Accuracy (pos/neg)  0.8432938584412007
+F1 (non-neg/neg) : 0.8262049506611052
+test_Accuracy (non-neg/neg)  0.8270676691729323
+test loss: 0.8921, test acc: 0.8271
+####################################################################################################
+
+Epoch 4 - Training loss: 0.1484  Time: 2026-06-16_13:44:27
+
+val_mult_acc7:  0.44967880085653106
+Accuracy_val (pos/neg)  0.8343771746694503
+Accuracy_val (non-neg/neg)  0.8078158458244111
+val loss: 0.7637, val acc: 0.8078
+
+test_mult_acc7:  0.43673469387755104
+mae:  0.68004787
+corr:  0.7438732806073644
+F1 (pos/neg) : 0.8420122092140495
+test_Accuracy (pos/neg)  0.8424676397686588
+F1 (non-neg/neg) : 0.8088897953321343
+test_Accuracy (non-neg/neg)  0.8141783029001074
+test loss: 0.7947, test acc: 0.8142
+####################################################################################################
+
+Epoch 5 - Training loss: 0.1214  Time: 2026-06-16_13:46:06
+
+val_mult_acc7:  0.4732334047109208
+Accuracy_val (pos/neg)  0.8399443284620738
+Accuracy_val (non-neg/neg)  0.8244111349036403
+val loss: 0.71, val acc: 0.8244
+
+test_mult_acc7:  0.45349087003222344
+mae:  0.6579689
+corr:  0.7454360234560731
+F1 (pos/neg) : 0.8473097046288758
+test_Accuracy (pos/neg)  0.8465987331313688
+F1 (non-neg/neg) : 0.8241512549577232
+test_Accuracy (non-neg/neg)  0.827282491944146
+test loss: 0.7478, test acc: 0.8273
+####################################################################################################
+
+Epoch 6 - Training loss: 0.0989  Time: 2026-06-16_13:47:45
+
+val_mult_acc7:  0.44325481798715205
+Accuracy_val (pos/neg)  0.8413361169102297
+Accuracy_val (non-neg/neg)  0.819593147751606
+val loss: 0.8464, val acc: 0.8196
+
+test_mult_acc7:  0.41525241675617613
+mae:  0.7238693
+corr:  0.7449708574274676
+F1 (pos/neg) : 0.8471263179601873
+test_Accuracy (pos/neg)  0.8465987331313688
+F1 (non-neg/neg) : 0.8111406158376034
+test_Accuracy (non-neg/neg)  0.8154672395273899
+test loss: 0.8825, test acc: 0.8155
+####################################################################################################
+
+Epoch 7 - Training loss: 0.0829  Time: 2026-06-16_13:49:25
+
+val_mult_acc7:  0.45610278372591007
+Accuracy_val (pos/neg)  0.8329853862212944
+Accuracy_val (non-neg/neg)  0.7992505353319058
+val loss: 0.7517, val acc: 0.7993
+
+test_mult_acc7:  0.44661654135338347
+mae:  0.6663249
+corr:  0.7507579553610079
+F1 (pos/neg) : 0.8511370902342045
+test_Accuracy (pos/neg)  0.8515560451666208
+F1 (non-neg/neg) : 0.8089909843631575
+test_Accuracy (non-neg/neg)  0.8146079484425349
+test loss: 0.7628, test acc: 0.8146
+####################################################################################################
+
+Epoch 8 - Training loss: 0.0736  Time: 2026-06-16_13:51:04
+
+val_mult_acc7:  0.45021413276231265
+Accuracy_val (pos/neg)  0.8322894919972165
+Accuracy_val (non-neg/neg)  0.80406852248394
+val loss: 0.7894, val acc: 0.8041
+
+test_mult_acc7:  0.43093447905477983
+mae:  0.6944871
+corr:  0.7546877688974508
+F1 (pos/neg) : 0.8495601743072805
+test_Accuracy (pos/neg)  0.8496282015973561
+F1 (non-neg/neg) : 0.8096825219183347
+test_Accuracy (non-neg/neg)  0.8148227712137487
+test loss: 0.8087, test acc: 0.8148
+####################################################################################################
+
+Epoch 9 - Training loss: 0.0638  Time: 2026-06-16_13:52:44
+
+val_mult_acc7:  0.4662740899357602
+Accuracy_val (pos/neg)  0.8413361169102297
+Accuracy_val (non-neg/neg)  0.8254817987152034
+val loss: 0.7436, val acc: 0.8255
+
+test_mult_acc7:  0.44511278195488724
+mae:  0.67247206
+corr:  0.7526302766446751
+F1 (pos/neg) : 0.8525613479324807
+test_Accuracy (pos/neg)  0.8515560451666208
+F1 (non-neg/neg) : 0.8249349040417554
+test_Accuracy (non-neg/neg)  0.8279269602577873
+test loss: 0.7733, test acc: 0.8279
+####################################################################################################
+
+Epoch 10 - Training loss: 0.0562  Time: 2026-06-16_13:54:23
+
+val_mult_acc7:  0.46413276231263384
+Accuracy_val (pos/neg)  0.8232428670842032
+Accuracy_val (non-neg/neg)  0.8072805139186295
+val loss: 0.7893, val acc: 0.8073
+
+test_mult_acc7:  0.43759398496240604
+mae:  0.68423676
+corr:  0.7539644880466947
+F1 (pos/neg) : 0.8516078101020352
+test_Accuracy (pos/neg)  0.8512806389424401
+F1 (non-neg/neg) : 0.8200377643689598
+test_Accuracy (non-neg/neg)  0.8240601503759398
+test loss: 0.7908, test acc: 0.8241
+================== Start Testing ====================================
+
+test_mult_acc7:  0.4842105263157895
+mae:  0.59592515
+corr:  0.7472736873885075
+F1 (pos/neg) : 0.8502669590110289
+mae:  0.59592515
+corr:  0.7472736873885075
+mult_acc5:  0.5097744360902255
+mult_acc7: 
+ 0.4842105263157895
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.82759   0.74777   0.78566      1348
+        True    0.85910   0.90802   0.88288      2283
+
+    accuracy                        0.84853      3631
+   macro avg    0.84334   0.82790   0.83427      3631
+weighted avg    0.84740   0.84853   0.84679      3631
+
+
+Accuracy (pos/neg)  0.8485265767006335
+F1 (pos/neg) : 0.8502669590110289
+test_Accuracy (pos/neg)  0.8485265767006335
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.70440   0.74777   0.72544      1348
+        True    0.89454   0.87209   0.88317      3307
+
+    accuracy                        0.83609      4655
+   macro avg    0.79947   0.80993   0.80431      4655
+weighted avg    0.83948   0.83609   0.83750      4655
+
+
+Accuracy (non-neg/neg)  0.8360902255639098
+F1 (non-neg/neg) : 0.8346840240909283
+F1 (non-neg/neg) : 0.8346840240909283
+test_Accuracy (non-neg/neg)  0.8360902255639098
+####################################################################################################
+
+Epoch 11 - Training loss: 0.4018  Time: 2026-06-16_13:56:14
+
+val_mult_acc7:  0.4989293361884368
+Accuracy_val (pos/neg)  0.8420320111343076
+Accuracy_val (non-neg/neg)  0.8163811563169164
+val loss: 0.6191, val acc: 0.8164
+
+test_mult_acc7:  0.48141783029001073
+mae:  0.6164147
+corr:  0.7396411226121632
+F1 (pos/neg) : 0.8449922974964056
+test_Accuracy (pos/neg)  0.8452217020104654
+F1 (non-neg/neg) : 0.8169188534897565
+test_Accuracy (non-neg/neg)  0.8214822771213749
+test loss: 0.6725, test acc: 0.8215
+####################################################################################################
+
+Epoch 12 - Training loss: 0.2629  Time: 2026-06-16_13:57:53
+
+val_mult_acc7:  0.4330835117773019
+Accuracy_val (pos/neg)  0.837160751565762
+Accuracy_val (non-neg/neg)  0.8206638115631691
+val loss: 0.8855, val acc: 0.8207
+
+test_mult_acc7:  0.40902255639097745
+mae:  0.74588084
+corr:  0.7281160554303511
+F1 (pos/neg) : 0.8458898216974222
+test_Accuracy (pos/neg)  0.8443954833379235
+F1 (non-neg/neg) : 0.8274036601239778
+test_Accuracy (non-neg/neg)  0.8294307196562836
+test loss: 0.9548, test acc: 0.8294
+####################################################################################################
+
+Epoch 13 - Training loss: 0.1929  Time: 2026-06-16_13:59:33
+
+val_mult_acc7:  0.430406852248394
+Accuracy_val (pos/neg)  0.8406402226861517
+Accuracy_val (non-neg/neg)  0.8308351177730193
+val loss: 0.833, val acc: 0.8308
+
+test_mult_acc7:  0.42749731471535984
+mae:  0.71505535
+corr:  0.7456426907201862
+F1 (pos/neg) : 0.8488535272153266
+test_Accuracy (pos/neg)  0.8468741393555494
+F1 (non-neg/neg) : 0.8340762897228526
+test_Accuracy (non-neg/neg)  0.8352309344790548
+test loss: 0.8604, test acc: 0.8352
+####################################################################################################
+
+Epoch 14 - Training loss: 0.1407  Time: 2026-06-16_14:01:12
+
+val_mult_acc7:  0.493576017130621
+Accuracy_val (pos/neg)  0.8350730688935282
+Accuracy_val (non-neg/neg)  0.7960385438972163
+val loss: 0.6381, val acc: 0.796
+
+test_mult_acc7:  0.48292158968850696
+mae:  0.6209122
+corr:  0.7409112140182693
+F1 (pos/neg) : 0.8421369698179397
+test_Accuracy (pos/neg)  0.8430184522170201
+F1 (non-neg/neg) : 0.7937627631483262
+test_Accuracy (non-neg/neg)  0.8006444683136412
+test loss: 0.678, test acc: 0.8006
+####################################################################################################
+
+Epoch 15 - Training loss: 0.1108  Time: 2026-06-16_14:02:52
+
+val_mult_acc7:  0.4550321199143469
+Accuracy_val (pos/neg)  0.8295059151009047
+Accuracy_val (non-neg/neg)  0.7746252676659529
+val loss: 0.7998, val acc: 0.7746
+
+test_mult_acc7:  0.43737916219119227
+mae:  0.69922704
+corr:  0.7378437692695505
+F1 (pos/neg) : 0.8305656024446768
+test_Accuracy (pos/neg)  0.8325530156981548
+F1 (non-neg/neg) : 0.7655217443034233
+test_Accuracy (non-neg/neg)  0.7750805585392052
+test loss: 0.8369, test acc: 0.7751
+####################################################################################################
+
+Epoch 16 - Training loss: 0.0943  Time: 2026-06-16_14:04:31
+
+val_mult_acc7:  0.4464668094218415
+Accuracy_val (pos/neg)  0.8392484342379958
+Accuracy_val (non-neg/neg)  0.8110278372591007
+val loss: 0.8597, val acc: 0.811
+
+test_mult_acc7:  0.4326530612244898
+mae:  0.71758056
+corr:  0.73382873028975
+F1 (pos/neg) : 0.8415475118584178
+test_Accuracy (pos/neg)  0.8419168273202975
+F1 (non-neg/neg) : 0.8031880732792123
+test_Accuracy (non-neg/neg)  0.8088077336197637
+test loss: 0.8795, test acc: 0.8088
+Running out of patience, loading previous best model.
+Current learning rate: 5e-05
+####################################################################################################
+
+Epoch 17 - Training loss: 0.326  Time: 2026-06-16_14:06:12
+
+val_mult_acc7:  0.4582441113490364
+Accuracy_val (pos/neg)  0.848990953375087
+Accuracy_val (non-neg/neg)  0.8319057815845824
+val loss: 0.7491, val acc: 0.8319
+
+test_mult_acc7:  0.4504833512352309
+mae:  0.6791303
+corr:  0.7517179198226889
+F1 (pos/neg) : 0.8528103256130979
+test_Accuracy (pos/neg)  0.8515560451666208
+F1 (non-neg/neg) : 0.8307823527071647
+test_Accuracy (non-neg/neg)  0.8330827067669173
+test loss: 0.796, test acc: 0.8331
+####################################################################################################
+
+Epoch 18 - Training loss: 0.2607  Time: 2026-06-16_14:07:51
+
+val_mult_acc7:  0.4346895074946467
+Accuracy_val (pos/neg)  0.8427279053583855
+Accuracy_val (non-neg/neg)  0.8142398286937902
+val loss: 0.8873, val acc: 0.8142
+
+test_mult_acc7:  0.4079484425349087
+mae:  0.73585886
+corr:  0.744534423148833
+F1 (pos/neg) : 0.8506467219217845
+test_Accuracy (pos/neg)  0.8510052327182595
+F1 (non-neg/neg) : 0.8097770996051044
+test_Accuracy (non-neg/neg)  0.8152524167561761
+test loss: 0.9317, test acc: 0.8153
+####################################################################################################
+
+Epoch 19 - Training loss: 0.2139  Time: 2026-06-16_14:09:30
+
+val_mult_acc7:  0.46948608137044967
+Accuracy_val (pos/neg)  0.8295059151009047
+Accuracy_val (non-neg/neg)  0.7789079229122056
+val loss: 0.7759, val acc: 0.7789
+
+test_mult_acc7:  0.44339419978517725
+mae:  0.67940736
+corr:  0.7444806834087678
+F1 (pos/neg) : 0.8331617011586806
+test_Accuracy (pos/neg)  0.8350316717157807
+F1 (non-neg/neg) : 0.7696943458352082
+test_Accuracy (non-neg/neg)  0.7789473684210526
+test loss: 0.814, test acc: 0.7789
+####################################################################################################
+
+Epoch 20 - Training loss: 0.167  Time: 2026-06-16_14:11:10
+
+val_mult_acc7:  0.4619914346895075
+Accuracy_val (pos/neg)  0.8343771746694503
+Accuracy_val (non-neg/neg)  0.8083511777301927
+val loss: 0.7647, val acc: 0.8084
+
+test_mult_acc7:  0.4397422126745435
+mae:  0.6733306
+corr:  0.744715154872518
+F1 (pos/neg) : 0.8417748474077723
+test_Accuracy (pos/neg)  0.8419168273202975
+F1 (non-neg/neg) : 0.8062233233558077
+test_Accuracy (non-neg/neg)  0.8113856068743287
+test loss: 0.7859, test acc: 0.8114
+================== Start Testing ====================================
+
+test_mult_acc7:  0.4842105263157895
+mae:  0.59592515
+corr:  0.7472736873885075
+F1 (pos/neg) : 0.8502669590110289
+mae:  0.59592515
+corr:  0.7472736873885075
+mult_acc5:  0.5097744360902255
+mult_acc7: 
+ 0.4842105263157895
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.82759   0.74777   0.78566      1348
+        True    0.85910   0.90802   0.88288      2283
+
+    accuracy                        0.84853      3631
+   macro avg    0.84334   0.82790   0.83427      3631
+weighted avg    0.84740   0.84853   0.84679      3631
+
+
+Accuracy (pos/neg)  0.8485265767006335
+F1 (pos/neg) : 0.8502669590110289
+test_Accuracy (pos/neg)  0.8485265767006335
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.70440   0.74777   0.72544      1348
+        True    0.89454   0.87209   0.88317      3307
+
+    accuracy                        0.83609      4655
+   macro avg    0.79947   0.80993   0.80431      4655
+weighted avg    0.83948   0.83609   0.83750      4655
+
+
+Accuracy (non-neg/neg)  0.8360902255639098
+F1 (non-neg/neg) : 0.8346840240909283
+F1 (non-neg/neg) : 0.8346840240909283
+test_Accuracy (non-neg/neg)  0.8360902255639098
+####################################################################################################
+
+Epoch 21 - Training loss: 0.3246  Time: 2026-06-16_14:13:00
+
+val_mult_acc7:  0.4678800856531049
+Accuracy_val (pos/neg)  0.8503827418232429
+Accuracy_val (non-neg/neg)  0.8308351177730193
+val loss: 0.6822, val acc: 0.8308
+
+test_mult_acc7:  0.4582169709989259
+mae:  0.65083474
+corr:  0.7533649127493628
+F1 (pos/neg) : 0.8528385779714985
+test_Accuracy (pos/neg)  0.8515560451666208
+F1 (non-neg/neg) : 0.8352291868689864
+test_Accuracy (non-neg/neg)  0.8371643394199785
+test loss: 0.7354, test acc: 0.8372
+####################################################################################################
+
+Epoch 22 - Training loss: 0.2623  Time: 2026-06-16_14:14:40
+
+val_mult_acc7:  0.4544967880085653
+Accuracy_val (pos/neg)  0.8448155880306193
+Accuracy_val (non-neg/neg)  0.8313704496788008
+val loss: 0.7648, val acc: 0.8314
+
+test_mult_acc7:  0.4345864661654135
+mae:  0.6897452
+corr:  0.7493769487758457
+F1 (pos/neg) : 0.8515719889560581
+test_Accuracy (pos/neg)  0.8496282015973561
+F1 (non-neg/neg) : 0.8350768654050281
+test_Accuracy (non-neg/neg)  0.8363050483351235
+test loss: 0.8092, test acc: 0.8363
+####################################################################################################
+
+Epoch 23 - Training loss: 0.2097  Time: 2026-06-16_14:16:20
+
+val_mult_acc7:  0.4555674518201285
+Accuracy_val (pos/neg)  0.8441196938065414
+Accuracy_val (non-neg/neg)  0.8329764453961456
+val loss: 0.7847, val acc: 0.833
+
+test_mult_acc7:  0.43523093447905475
+mae:  0.6909493
+corr:  0.7508731424602194
+F1 (pos/neg) : 0.8519613032275408
+test_Accuracy (pos/neg)  0.8501790140457174
+F1 (non-neg/neg) : 0.835349872961211
+test_Accuracy (non-neg/neg)  0.8367346938775511
+test loss: 0.814, test acc: 0.8367
+####################################################################################################
+
+Epoch 24 - Training loss: 0.17  Time: 2026-06-16_14:18:00
+
+val_mult_acc7:  0.43897216274089934
+Accuracy_val (pos/neg)  0.83785664578984
+Accuracy_val (non-neg/neg)  0.8217344753747323
+val loss: 0.8689, val acc: 0.8217
+
+test_mult_acc7:  0.4221267454350161
+mae:  0.7240318
+corr:  0.7398900540627409
+F1 (pos/neg) : 0.8500508776523261
+test_Accuracy (pos/neg)  0.8488019829248141
+F1 (non-neg/neg) : 0.8220511048840854
+test_Accuracy (non-neg/neg)  0.8249194414607949
+test loss: 0.8936, test acc: 0.8249
+####################################################################################################
+
+Epoch 25 - Training loss: 0.1417  Time: 2026-06-16_14:19:39
+
+val_mult_acc7:  0.4475374732334047
+Accuracy_val (pos/neg)  0.83785664578984
+Accuracy_val (non-neg/neg)  0.819593147751606
+val loss: 0.8258, val acc: 0.8196
+
+test_mult_acc7:  0.42363050483351233
+mae:  0.7048568
+corr:  0.7452236010974579
+F1 (pos/neg) : 0.8445515760305553
+test_Accuracy (pos/neg)  0.8443954833379235
+F1 (non-neg/neg) : 0.8141141357985865
+test_Accuracy (non-neg/neg)  0.8184747583243824
+test loss: 0.8525, test acc: 0.8185
+####################################################################################################
+
+Epoch 26 - Training loss: 0.1179  Time: 2026-06-16_14:21:18
+
+val_mult_acc7:  0.4668094218415418
+Accuracy_val (pos/neg)  0.8343771746694503
+Accuracy_val (non-neg/neg)  0.800321199143469
+val loss: 0.7742, val acc: 0.8003
+
+test_mult_acc7:  0.43737916219119227
+mae:  0.6902631
+corr:  0.7425260431768658
+F1 (pos/neg) : 0.8405142644563546
+test_Accuracy (pos/neg)  0.8413660148719361
+F1 (non-neg/neg) : 0.7940966078390339
+test_Accuracy (non-neg/neg)  0.800859291084855
+test loss: 0.8229, test acc: 0.8009
+####################################################################################################
+
+Epoch 27 - Training loss: 0.0985  Time: 2026-06-16_14:22:58
+
+val_mult_acc7:  0.4550321199143469
+Accuracy_val (pos/neg)  0.826722338204593
+Accuracy_val (non-neg/neg)  0.7858672376873662
+val loss: 0.8274, val acc: 0.7859
+
+test_mult_acc7:  0.43501611170784105
+mae:  0.70805424
+corr:  0.7422097447610002
+F1 (pos/neg) : 0.8361749463331213
+test_Accuracy (pos/neg)  0.8372349215092261
+F1 (non-neg/neg) : 0.7826734540195045
+test_Accuracy (non-neg/neg)  0.7903329752953813
+test loss: 0.8598, test acc: 0.7903
+####################################################################################################
+
+Epoch 28 - Training loss: 0.084  Time: 2026-06-16_14:24:37
+
+val_mult_acc7:  0.4534261241970021
+Accuracy_val (pos/neg)  0.8434237995824635
+Accuracy_val (non-neg/neg)  0.819593147751606
+val loss: 0.7936, val acc: 0.8196
+
+test_mult_acc7:  0.43157894736842106
+mae:  0.69502836
+corr:  0.745754211856574
+F1 (pos/neg) : 0.8465152592944555
+test_Accuracy (pos/neg)  0.8454971082346461
+F1 (non-neg/neg) : 0.8170646967786311
+test_Accuracy (non-neg/neg)  0.8204081632653061
+test loss: 0.8215, test acc: 0.8204
+####################################################################################################
+
+Epoch 29 - Training loss: 0.0748  Time: 2026-06-16_14:26:16
+
+val_mult_acc7:  0.4534261241970021
+Accuracy_val (pos/neg)  0.8413361169102297
+Accuracy_val (non-neg/neg)  0.8142398286937902
+val loss: 0.7959, val acc: 0.8142
+
+test_mult_acc7:  0.4259935553168636
+mae:  0.69785064
+corr:  0.7516138516765128
+F1 (pos/neg) : 0.8509939296548467
+test_Accuracy (pos/neg)  0.8510052327182595
+F1 (non-neg/neg) : 0.8145685897222985
+test_Accuracy (non-neg/neg)  0.8193340494092374
+test loss: 0.8235, test acc: 0.8193
+####################################################################################################
+
+Epoch 30 - Training loss: 0.0665  Time: 2026-06-16_14:27:56
+
+val_mult_acc7:  0.480728051391863
+Accuracy_val (pos/neg)  0.8343771746694503
+Accuracy_val (non-neg/neg)  0.7917558886509636
+val loss: 0.7027, val acc: 0.7918
+
+test_mult_acc7:  0.4556390977443609
+mae:  0.6549124
+corr:  0.7435136414061907
+F1 (pos/neg) : 0.8397533200608307
+test_Accuracy (pos/neg)  0.8405397961993941
+F1 (non-neg/neg) : 0.7907129348676003
+test_Accuracy (non-neg/neg)  0.7976369495166488
+test loss: 0.737, test acc: 0.7976
+================== Start Testing ====================================
+
+test_mult_acc7:  0.4842105263157895
+mae:  0.59592515
+corr:  0.7472736873885075
+F1 (pos/neg) : 0.8502669590110289
+mae:  0.59592515
+corr:  0.7472736873885075
+mult_acc5:  0.5097744360902255
+mult_acc7: 
+ 0.4842105263157895
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.82759   0.74777   0.78566      1348
+        True    0.85910   0.90802   0.88288      2283
+
+    accuracy                        0.84853      3631
+   macro avg    0.84334   0.82790   0.83427      3631
+weighted avg    0.84740   0.84853   0.84679      3631
+
+
+Accuracy (pos/neg)  0.8485265767006335
+F1 (pos/neg) : 0.8502669590110289
+test_Accuracy (pos/neg)  0.8485265767006335
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.70440   0.74777   0.72544      1348
+        True    0.89454   0.87209   0.88317      3307
+
+    accuracy                        0.83609      4655
+   macro avg    0.79947   0.80993   0.80431      4655
+weighted avg    0.83948   0.83609   0.83750      4655
+
+
+Accuracy (non-neg/neg)  0.8360902255639098
+F1 (non-neg/neg) : 0.8346840240909283
+F1 (non-neg/neg) : 0.8346840240909283
+test_Accuracy (non-neg/neg)  0.8360902255639098
+####################################################################################################
+
+Epoch 31 - Training loss: 0.3333  Time: 2026-06-16_14:29:47
+
+val_mult_acc7:  0.480728051391863
+Accuracy_val (pos/neg)  0.8364648573416841
+Accuracy_val (non-neg/neg)  0.8147751605995718
+val loss: 0.6804, val acc: 0.8148
+
+test_mult_acc7:  0.45499462943071967
+mae:  0.65611625
+corr:  0.7488740025722189
+F1 (pos/neg) : 0.8526088336280179
+test_Accuracy (pos/neg)  0.8518314513908014
+F1 (non-neg/neg) : 0.8277062452963451
+test_Accuracy (non-neg/neg)  0.830719656283566
+test loss: 0.7522, test acc: 0.8307
+####################################################################################################
+
+Epoch 32 - Training loss: 0.261  Time: 2026-06-16_14:31:27
+
+val_mult_acc7:  0.4582441113490364
+Accuracy_val (pos/neg)  0.8385525400139179
+Accuracy_val (non-neg/neg)  0.8120985010706638
+val loss: 0.8113, val acc: 0.8121
+
+test_mult_acc7:  0.4414607948442535
+mae:  0.6950014
+corr:  0.7443083241705418
+F1 (pos/neg) : 0.850022415122176
+test_Accuracy (pos/neg)  0.8501790140457174
+F1 (non-neg/neg) : 0.8128206802016369
+test_Accuracy (non-neg/neg)  0.8178302900107411
+test loss: 0.851, test acc: 0.8178
+Running out of patience, loading previous best model.
+Current learning rate: 5e-05
+####################################################################################################
+
+Epoch 33 - Training loss: 0.3256  Time: 2026-06-16_14:33:07
+
+val_mult_acc7:  0.49143468950749464
+Accuracy_val (pos/neg)  0.8448155880306193
+Accuracy_val (non-neg/neg)  0.8190578158458244
+val loss: 0.6355, val acc: 0.8191
+
+test_mult_acc7:  0.4831364124597207
+mae:  0.61908
+corr:  0.7540685050064492
+F1 (pos/neg) : 0.8502089199856181
+test_Accuracy (pos/neg)  0.8496282015973561
+F1 (non-neg/neg) : 0.8189846749217942
+test_Accuracy (non-neg/neg)  0.8227712137486574
+test loss: 0.6767, test acc: 0.8228
+####################################################################################################
+
+Epoch 34 - Training loss: 0.2656  Time: 2026-06-16_14:34:46
+
+val_mult_acc7:  0.4593147751605996
+Accuracy_val (pos/neg)  0.8385525400139179
+Accuracy_val (non-neg/neg)  0.8115631691648822
+val loss: 0.7864, val acc: 0.8116
+
+test_mult_acc7:  0.4423200859291085
+mae:  0.6897613
+corr:  0.7523130280419462
+F1 (pos/neg) : 0.84829289971898
+test_Accuracy (pos/neg)  0.8488019829248141
+F1 (non-neg/neg) : 0.8078511873921203
+test_Accuracy (non-neg/neg)  0.8135338345864662
+test loss: 0.8294, test acc: 0.8135
+####################################################################################################
+
+Epoch 35 - Training loss: 0.2131  Time: 2026-06-16_14:36:26
+
+val_mult_acc7:  0.4759100642398287
+Accuracy_val (pos/neg)  0.8357689631176062
+Accuracy_val (non-neg/neg)  0.8137044967880086
+val loss: 0.7227, val acc: 0.8137
+
+test_mult_acc7:  0.4588614393125671
+mae:  0.6585708
+corr:  0.7491289069129109
+F1 (pos/neg) : 0.8482366573775393
+test_Accuracy (pos/neg)  0.8479757642522721
+F1 (non-neg/neg) : 0.8177882272322706
+test_Accuracy (non-neg/neg)  0.8219119226638023
+test loss: 0.763, test acc: 0.8219
+####################################################################################################
+
+Epoch 36 - Training loss: 0.1656  Time: 2026-06-16_14:38:05
+
+val_mult_acc7:  0.47002141327623126
+Accuracy_val (pos/neg)  0.8427279053583855
+Accuracy_val (non-neg/neg)  0.819593147751606
+val loss: 0.7521, val acc: 0.8196
+
+test_mult_acc7:  0.45757250268528465
+mae:  0.6702233
+corr:  0.7439419337605397
+F1 (pos/neg) : 0.8469785796912679
+test_Accuracy (pos/neg)  0.8471495455797301
+F1 (non-neg/neg) : 0.814103354138537
+test_Accuracy (non-neg/neg)  0.8189044038668098
+test loss: 0.7924, test acc: 0.8189
+####################################################################################################
+
+Epoch 37 - Training loss: 0.1362  Time: 2026-06-16_14:39:45
+
+val_mult_acc7:  0.4748394004282655
+Accuracy_val (pos/neg)  0.83785664578984
+Accuracy_val (non-neg/neg)  0.8329764453961456
+val loss: 0.7131, val acc: 0.833
+
+test_mult_acc7:  0.45005370569280345
+mae:  0.6587663
+corr:  0.7380649098582487
+F1 (pos/neg) : 0.8518908352537489
+test_Accuracy (pos/neg)  0.8499036078215367
+F1 (non-neg/neg) : 0.8362719569615193
+test_Accuracy (non-neg/neg)  0.8373791621911922
+test loss: 0.7522, test acc: 0.8374
+####################################################################################################
+
+Epoch 38 - Training loss: 0.1116  Time: 2026-06-16_14:41:25
+
+val_mult_acc7:  0.47644539614561027
+Accuracy_val (pos/neg)  0.8336812804453723
+Accuracy_val (non-neg/neg)  0.8094218415417559
+val loss: 0.7377, val acc: 0.8094
+
+test_mult_acc7:  0.4569280343716434
+mae:  0.6695057
+corr:  0.7462801658758337
+F1 (pos/neg) : 0.8465178683671499
+test_Accuracy (pos/neg)  0.8465987331313688
+F1 (non-neg/neg) : 0.8123636978046088
+test_Accuracy (non-neg/neg)  0.8171858216970999
+test loss: 0.7855, test acc: 0.8172
+####################################################################################################
+
+Epoch 39 - Training loss: 0.0954  Time: 2026-06-16_14:43:04
+
+val_mult_acc7:  0.4678800856531049
+Accuracy_val (pos/neg)  0.8322894919972165
+Accuracy_val (non-neg/neg)  0.7992505353319058
+val loss: 0.767, val acc: 0.7993
+
+test_mult_acc7:  0.4556390977443609
+mae:  0.67929894
+corr:  0.7394564725152187
+F1 (pos/neg) : 0.8448169459482179
+test_Accuracy (pos/neg)  0.8452217020104654
+F1 (non-neg/neg) : 0.7960224579984418
+test_Accuracy (non-neg/neg)  0.8023630504833512
+test loss: 0.8045, test acc: 0.8024
+####################################################################################################
+
+Epoch 40 - Training loss: 0.0838  Time: 2026-06-16_14:44:44
+
+val_mult_acc7:  0.44593147751605994
+Accuracy_val (pos/neg)  0.8406402226861517
+Accuracy_val (non-neg/neg)  0.8217344753747323
+val loss: 0.8112, val acc: 0.8217
+
+test_mult_acc7:  0.42663802363050485
+mae:  0.7133188
+corr:  0.7537409894594828
+F1 (pos/neg) : 0.85080877795409
+test_Accuracy (pos/neg)  0.8501790140457174
+F1 (non-neg/neg) : 0.8190117225132327
+test_Accuracy (non-neg/neg)  0.8227712137486574
+test loss: 0.8542, test acc: 0.8228
+================== Start Testing ====================================
+
+test_mult_acc7:  0.4842105263157895
+mae:  0.59592515
+corr:  0.7472736873885075
+F1 (pos/neg) : 0.8502669590110289
+mae:  0.59592515
+corr:  0.7472736873885075
+mult_acc5:  0.5097744360902255
+mult_acc7: 
+ 0.4842105263157895
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.82759   0.74777   0.78566      1348
+        True    0.85910   0.90802   0.88288      2283
+
+    accuracy                        0.84853      3631
+   macro avg    0.84334   0.82790   0.83427      3631
+weighted avg    0.84740   0.84853   0.84679      3631
+
+
+Accuracy (pos/neg)  0.8485265767006335
+F1 (pos/neg) : 0.8502669590110289
+test_Accuracy (pos/neg)  0.8485265767006335
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.70440   0.74777   0.72544      1348
+        True    0.89454   0.87209   0.88317      3307
+
+    accuracy                        0.83609      4655
+   macro avg    0.79947   0.80993   0.80431      4655
+weighted avg    0.83948   0.83609   0.83750      4655
+
+
+Accuracy (non-neg/neg)  0.8360902255639098
+F1 (non-neg/neg) : 0.8346840240909283
+F1 (non-neg/neg) : 0.8346840240909283
+test_Accuracy (non-neg/neg)  0.8360902255639098
+####################################################################################################
+
+Epoch 41 - Training loss: 0.3285  Time: 2026-06-16_14:46:34
+
+val_mult_acc7:  0.5085653104925053
+Accuracy_val (pos/neg)  0.837160751565762
+Accuracy_val (non-neg/neg)  0.7981798715203426
+val loss: 0.641, val acc: 0.7982
+
+test_mult_acc7:  0.48141783029001073
+mae:  0.621747
+corr:  0.7494435153614344
+F1 (pos/neg) : 0.8415060707083618
+test_Accuracy (pos/neg)  0.8427430459928394
+F1 (non-neg/neg) : 0.7922391791858093
+test_Accuracy (non-neg/neg)  0.7995703544575725
+test loss: 0.6907, test acc: 0.7996
+####################################################################################################
+
+Epoch 42 - Training loss: 0.2552  Time: 2026-06-16_14:48:13
+
+val_mult_acc7:  0.4785867237687366
+Accuracy_val (pos/neg)  0.8281141266527487
+Accuracy_val (non-neg/neg)  0.7826552462526767
+val loss: 0.7159, val acc: 0.7827
+
+test_mult_acc7:  0.47089151450053707
+mae:  0.64762247
+corr:  0.7403020096535401
+F1 (pos/neg) : 0.8316063909054043
+test_Accuracy (pos/neg)  0.8333792343706968
+F1 (non-neg/neg) : 0.7719251020124602
+test_Accuracy (non-neg/neg)  0.7808807733619764
+test loss: 0.7595, test acc: 0.7809
+####################################################################################################
+
+Epoch 43 - Training loss: 0.2035  Time: 2026-06-16_14:49:53
+
+val_mult_acc7:  0.45610278372591007
+Accuracy_val (pos/neg)  0.8350730688935282
+Accuracy_val (non-neg/neg)  0.7922912205567452
+val loss: 0.8016, val acc: 0.7923
+
+test_mult_acc7:  0.439312567132116
+mae:  0.70351547
+corr:  0.7393522365014424
+F1 (pos/neg) : 0.8391962397550898
+test_Accuracy (pos/neg)  0.8402643899752135
+F1 (non-neg/neg) : 0.7846305011802376
+test_Accuracy (non-neg/neg)  0.792266380236305
+test loss: 0.8615, test acc: 0.7923
+####################################################################################################
+
+Epoch 44 - Training loss: 0.1616  Time: 2026-06-16_14:51:33
+
+val_mult_acc7:  0.4817987152034261
+Accuracy_val (pos/neg)  0.8392484342379958
+Accuracy_val (non-neg/neg)  0.815845824411135
+val loss: 0.6777, val acc: 0.8158
+
+test_mult_acc7:  0.4799140708915145
+mae:  0.63255805
+corr:  0.7562862815014002
+F1 (pos/neg) : 0.8545021478615539
+test_Accuracy (pos/neg)  0.8543101074084274
+F1 (non-neg/neg) : 0.8195261712303529
+test_Accuracy (non-neg/neg)  0.8238453276047261
+test loss: 0.7017, test acc: 0.8238
+####################################################################################################
+
+Epoch 45 - Training loss: 0.135  Time: 2026-06-16_14:53:12
+
+val_mult_acc7:  0.44967880085653106
+Accuracy_val (pos/neg)  0.8385525400139179
+Accuracy_val (non-neg/neg)  0.7922912205567452
+val loss: 0.8332, val acc: 0.7923
+
+test_mult_acc7:  0.43200859291084853
+mae:  0.7133844
+corr:  0.7408889024416541
+F1 (pos/neg) : 0.8352030264985575
+test_Accuracy (pos/neg)  0.8364087028366841
+F1 (non-neg/neg) : 0.7786165021294434
+test_Accuracy (non-neg/neg)  0.7866809881847476
+test loss: 0.8803, test acc: 0.7867
+####################################################################################################
+
+Epoch 46 - Training loss: 0.1104  Time: 2026-06-16_14:54:51
+
+val_mult_acc7:  0.4673447537473233
+Accuracy_val (pos/neg)  0.8406402226861517
+Accuracy_val (non-neg/neg)  0.8228051391862955
+val loss: 0.7205, val acc: 0.8228
+
+test_mult_acc7:  0.45671321160042966
+mae:  0.66222346
+corr:  0.751370560950045
+F1 (pos/neg) : 0.8479532746259906
+test_Accuracy (pos/neg)  0.8468741393555494
+F1 (non-neg/neg) : 0.8219626601493355
+test_Accuracy (non-neg/neg)  0.8249194414607949
+test loss: 0.7621, test acc: 0.8249
+####################################################################################################
+
+Epoch 47 - Training loss: 0.095  Time: 2026-06-16_14:56:31
+
+val_mult_acc7:  0.4689507494646681
+Accuracy_val (pos/neg)  0.8288100208768268
+Accuracy_val (non-neg/neg)  0.7917558886509636
+val loss: 0.7572, val acc: 0.7918
+
+test_mult_acc7:  0.44597207303974223
+mae:  0.67672706
+corr:  0.7493908822624146
+F1 (pos/neg) : 0.8433825189239091
+test_Accuracy (pos/neg)  0.843844670889562
+F1 (non-neg/neg) : 0.7941606610581068
+test_Accuracy (non-neg/neg)  0.8006444683136412
+test loss: 0.7908, test acc: 0.8006
+####################################################################################################
+
+Epoch 48 - Training loss: 0.083  Time: 2026-06-16_14:58:10
+
+val_mult_acc7:  0.4748394004282655
+Accuracy_val (pos/neg)  0.83785664578984
+Accuracy_val (non-neg/neg)  0.8217344753747323
+val loss: 0.7331, val acc: 0.8217
+
+test_mult_acc7:  0.45456498388829214
+mae:  0.6690739
+corr:  0.7494565934870895
+F1 (pos/neg) : 0.8477863936881445
+test_Accuracy (pos/neg)  0.8468741393555494
+F1 (non-neg/neg) : 0.8178251053268917
+test_Accuracy (non-neg/neg)  0.8212674543501611
+test loss: 0.7702, test acc: 0.8213
+Running out of patience, loading previous best model.
+Current learning rate: 5e-05
+####################################################################################################
+
+Epoch 49 - Training loss: 0.3304  Time: 2026-06-16_14:59:50
+
+val_mult_acc7:  0.5091006423982869
+Accuracy_val (pos/neg)  0.8510786360473208
+Accuracy_val (non-neg/neg)  0.8367237687366167
+val loss: 0.555, val acc: 0.8367
+
+test_mult_acc7:  0.5003222341568206
+mae:  0.58324987
+corr:  0.7567485755423125
+F1 (pos/neg) : 0.8596099954712019
+test_Accuracy (pos/neg)  0.8578903883227761
+F1 (non-neg/neg) : 0.844460042126116
+test_Accuracy (non-neg/neg)  0.8455424274973147
+test loss: 0.6012, test acc: 0.8455
+Found new best model on dev set!
+####################################################################################################
+
+Epoch 50 - Training loss: 0.2644  Time: 2026-06-16_15:01:32
+
+val_mult_acc7:  0.49571734475374735
+Accuracy_val (pos/neg)  0.8496868475991649
+Accuracy_val (non-neg/neg)  0.8345824411134903
+val loss: 0.6582, val acc: 0.8346
+
+test_mult_acc7:  0.47261009667024706
+mae:  0.63391006
+corr:  0.7514295420441128
+F1 (pos/neg) : 0.8543655136918163
+test_Accuracy (pos/neg)  0.8526576700633435
+F1 (non-neg/neg) : 0.832835776076135
+test_Accuracy (non-neg/neg)  0.8345864661654135
+test loss: 0.7109, test acc: 0.8346
+================== Start Testing ====================================
+
+test_mult_acc7:  0.5003222341568206
+mae:  0.58324987
+corr:  0.7567485755423125
+F1 (pos/neg) : 0.8596099954712019
+mae:  0.58324987
+corr:  0.7567485755423125
+mult_acc5:  0.5198711063372717
+mult_acc7: 
+ 0.5003222341568206
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.84323   0.75816   0.79844      1348
+        True    0.86523   0.91678   0.89026      2283
+
+    accuracy                        0.85789      3631
+   macro avg    0.85423   0.83747   0.84435      3631
+weighted avg    0.85707   0.85789   0.85617      3631
+
+
+Accuracy (pos/neg)  0.8578903883227761
+F1 (pos/neg) : 0.8596099954712019
+test_Accuracy (pos/neg)  0.8578903883227761
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.72226   0.75816   0.73978      1348
+        True    0.89938   0.88116   0.89018      3307
+
+    accuracy                        0.84554      4655
+   macro avg    0.81082   0.81966   0.81498      4655
+weighted avg    0.84809   0.84554   0.84662      4655
+
+
+Accuracy (non-neg/neg)  0.8455424274973147
+F1 (non-neg/neg) : 0.844460042126116
+F1 (non-neg/neg) : 0.844460042126116
+test_Accuracy (non-neg/neg)  0.8455424274973147
+####################################################################################################
+
+Epoch 51 - Training loss: 0.2651  Time: 2026-06-16_15:03:22
+
+val_mult_acc7:  0.47055674518201285
+Accuracy_val (pos/neg)  0.8496868475991649
+Accuracy_val (non-neg/neg)  0.832441113490364
+val loss: 0.7161, val acc: 0.8324
+
+test_mult_acc7:  0.45091299677765845
+mae:  0.6642672
+corr:  0.7509150405378946
+F1 (pos/neg) : 0.8545978353433802
+test_Accuracy (pos/neg)  0.8534838887358854
+F1 (non-neg/neg) : 0.8291526647304774
+test_Accuracy (non-neg/neg)  0.8317937701396348
+test loss: 0.7618, test acc: 0.8318
+####################################################################################################
+
+Epoch 52 - Training loss: 0.2084  Time: 2026-06-16_15:05:01
+
+val_mult_acc7:  0.4668094218415418
+Accuracy_val (pos/neg)  0.8364648573416841
+Accuracy_val (non-neg/neg)  0.7997858672376874
+val loss: 0.766, val acc: 0.7998
+
+test_mult_acc7:  0.4429645542427497
+mae:  0.6768047
+corr:  0.7462845666702311
+F1 (pos/neg) : 0.8452602744006749
+test_Accuracy (pos/neg)  0.8463233269071881
+F1 (non-neg/neg) : 0.7966810448026779
+test_Accuracy (non-neg/neg)  0.8036519871106337
+test loss: 0.8049, test acc: 0.8037
+####################################################################################################
+
+Epoch 53 - Training loss: 0.1671  Time: 2026-06-16_15:06:41
+
+val_mult_acc7:  0.45235546038543895
+Accuracy_val (pos/neg)  0.8434237995824635
+Accuracy_val (non-neg/neg)  0.8308351177730193
+val loss: 0.7894, val acc: 0.8308
+
+test_mult_acc7:  0.43845327604726103
+mae:  0.6918121
+corr:  0.7480931143624285
+F1 (pos/neg) : 0.8529029707125432
+test_Accuracy (pos/neg)  0.8518314513908014
+F1 (non-neg/neg) : 0.8287162730695081
+test_Accuracy (non-neg/neg)  0.8313641245972073
+test loss: 0.8151, test acc: 0.8314
+####################################################################################################
+
+Epoch 54 - Training loss: 0.1331  Time: 2026-06-16_15:08:20
+
+val_mult_acc7:  0.46306209850107066
+Accuracy_val (pos/neg)  0.8336812804453723
+Accuracy_val (non-neg/neg)  0.8013918629550322
+val loss: 0.7754, val acc: 0.8014
+
+test_mult_acc7:  0.44360902255639095
+mae:  0.6829472
+corr:  0.7462230480940855
+F1 (pos/neg) : 0.8509967167326531
+test_Accuracy (pos/neg)  0.8515560451666208
+F1 (non-neg/neg) : 0.8079100836991692
+test_Accuracy (non-neg/neg)  0.8137486573576799
+test loss: 0.8121, test acc: 0.8137
+####################################################################################################
+
+Epoch 55 - Training loss: 0.1144  Time: 2026-06-16_15:09:59
+
+val_mult_acc7:  0.4801927194860814
+Accuracy_val (pos/neg)  0.8364648573416841
+Accuracy_val (non-neg/neg)  0.8094218415417559
+val loss: 0.7153, val acc: 0.8094
+
+test_mult_acc7:  0.4476906552094522
+mae:  0.663187
+corr:  0.7494551894319721
+F1 (pos/neg) : 0.8495275862801979
+test_Accuracy (pos/neg)  0.8493527953731754
+F1 (non-neg/neg) : 0.8097178275033812
+test_Accuracy (non-neg/neg)  0.8146079484425349
+test loss: 0.7545, test acc: 0.8146
+####################################################################################################
+
+Epoch 56 - Training loss: 0.0962  Time: 2026-06-16_15:11:39
+
+val_mult_acc7:  0.4336188436830835
+Accuracy_val (pos/neg)  0.8343771746694503
+Accuracy_val (non-neg/neg)  0.7938972162740899
+val loss: 0.9068, val acc: 0.7939
+
+test_mult_acc7:  0.41245972073039744
+mae:  0.7411233
+corr:  0.7423272538911068
+F1 (pos/neg) : 0.8415578146922356
+test_Accuracy (pos/neg)  0.8427430459928394
+F1 (non-neg/neg) : 0.7885848663850175
+test_Accuracy (non-neg/neg)  0.7961331901181525
+test loss: 0.9341, test acc: 0.7961
+####################################################################################################
+
+Epoch 57 - Training loss: 0.0853  Time: 2026-06-16_15:13:18
+
+val_mult_acc7:  0.4416488222698073
+Accuracy_val (pos/neg)  0.8288100208768268
+Accuracy_val (non-neg/neg)  0.7965738758029979
+val loss: 0.87, val acc: 0.7966
+
+test_mult_acc7:  0.4180451127819549
+mae:  0.72846645
+corr:  0.7455099684681327
+F1 (pos/neg) : 0.8437998309722011
+test_Accuracy (pos/neg)  0.8441200771137428
+F1 (non-neg/neg) : 0.8059348813315614
+test_Accuracy (non-neg/neg)  0.8113856068743287
+test loss: 0.9033, test acc: 0.8114
+####################################################################################################
+
+Epoch 58 - Training loss: 0.0756  Time: 2026-06-16_15:14:58
+
+val_mult_acc7:  0.4753747323340471
+Accuracy_val (pos/neg)  0.8239387613082811
+Accuracy_val (non-neg/neg)  0.8008565310492506
+val loss: 0.6803, val acc: 0.8009
+
+test_mult_acc7:  0.4680988184747583
+mae:  0.63933176
+corr:  0.7496106030219322
+F1 (pos/neg) : 0.8520167618872675
+test_Accuracy (pos/neg)  0.8523822638391627
+F1 (non-neg/neg) : 0.8111042361194875
+test_Accuracy (non-neg/neg)  0.8165413533834587
+test loss: 0.7079, test acc: 0.8165
+####################################################################################################
+
+Epoch 59 - Training loss: 0.0685  Time: 2026-06-16_15:16:37
+
+val_mult_acc7:  0.4785867237687366
+Accuracy_val (pos/neg)  0.8336812804453723
+Accuracy_val (non-neg/neg)  0.7955032119914347
+val loss: 0.7375, val acc: 0.7955
+
+test_mult_acc7:  0.4455424274973147
+mae:  0.6676765
+corr:  0.7481954284397464
+F1 (pos/neg) : 0.8474741538476946
+test_Accuracy (pos/neg)  0.8479757642522721
+F1 (non-neg/neg) : 0.8006892360955961
+test_Accuracy (non-neg/neg)  0.8068743286788399
+test loss: 0.7673, test acc: 0.8069
+####################################################################################################
+
+Epoch 60 - Training loss: 0.0603  Time: 2026-06-16_15:18:16
+
+val_mult_acc7:  0.471627408993576
+Accuracy_val (pos/neg)  0.8350730688935282
+Accuracy_val (non-neg/neg)  0.8024625267665952
+val loss: 0.7429, val acc: 0.8025
+
+test_mult_acc7:  0.4539205155746509
+mae:  0.6676098
+corr:  0.7520365957319962
+F1 (pos/neg) : 0.8445875552031487
+test_Accuracy (pos/neg)  0.8452217020104654
+F1 (non-neg/neg) : 0.7990404729726776
+test_Accuracy (non-neg/neg)  0.8053705692803437
+test loss: 0.7765, test acc: 0.8054
+================== Start Testing ====================================
+
+test_mult_acc7:  0.5003222341568206
+mae:  0.58324987
+corr:  0.7567485755423125
+F1 (pos/neg) : 0.8596099954712019
+mae:  0.58324987
+corr:  0.7567485755423125
+mult_acc5:  0.5198711063372717
+mult_acc7: 
+ 0.5003222341568206
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.84323   0.75816   0.79844      1348
+        True    0.86523   0.91678   0.89026      2283
+
+    accuracy                        0.85789      3631
+   macro avg    0.85423   0.83747   0.84435      3631
+weighted avg    0.85707   0.85789   0.85617      3631
+
+
+Accuracy (pos/neg)  0.8578903883227761
+F1 (pos/neg) : 0.8596099954712019
+test_Accuracy (pos/neg)  0.8578903883227761
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.72226   0.75816   0.73978      1348
+        True    0.89938   0.88116   0.89018      3307
+
+    accuracy                        0.84554      4655
+   macro avg    0.81082   0.81966   0.81498      4655
+weighted avg    0.84809   0.84554   0.84662      4655
+
+
+Accuracy (non-neg/neg)  0.8455424274973147
+F1 (non-neg/neg) : 0.844460042126116
+F1 (non-neg/neg) : 0.844460042126116
+test_Accuracy (non-neg/neg)  0.8455424274973147
+####################################################################################################
+
+Epoch 61 - Training loss: 0.2736  Time: 2026-06-16_15:20:07
+
+val_mult_acc7:  0.4518201284796574
+Accuracy_val (pos/neg)  0.8427279053583855
+Accuracy_val (non-neg/neg)  0.813169164882227
+val loss: 0.7941, val acc: 0.8132
+
+test_mult_acc7:  0.4339419978517723
+mae:  0.69463015
+corr:  0.7370190983387288
+F1 (pos/neg) : 0.8471549310779285
+test_Accuracy (pos/neg)  0.8474249518039108
+F1 (non-neg/neg) : 0.8107273982050714
+test_Accuracy (non-neg/neg)  0.8158968850698174
+test loss: 0.8394, test acc: 0.8159
+####################################################################################################
+
+Epoch 62 - Training loss: 0.2107  Time: 2026-06-16_15:21:47
+
+val_mult_acc7:  0.4480728051391863
+Accuracy_val (pos/neg)  0.8455114822546973
+Accuracy_val (non-neg/neg)  0.8222698072805139
+val loss: 0.8014, val acc: 0.8223
+
+test_mult_acc7:  0.43780880773361974
+mae:  0.6944584
+corr:  0.7393205575263919
+F1 (pos/neg) : 0.8465434437664595
+test_Accuracy (pos/neg)  0.8454971082346461
+F1 (non-neg/neg) : 0.8161602647024145
+test_Accuracy (non-neg/neg)  0.8195488721804511
+test loss: 0.8328, test acc: 0.8195
+####################################################################################################
+
+Epoch 63 - Training loss: 0.1685  Time: 2026-06-16_15:23:26
+
+val_mult_acc7:  0.4544967880085653
+Accuracy_val (pos/neg)  0.8302018093249826
+Accuracy_val (non-neg/neg)  0.7938972162740899
+val loss: 0.8241, val acc: 0.7939
+
+test_mult_acc7:  0.43952738990332973
+mae:  0.69177467
+corr:  0.7431211559033535
+F1 (pos/neg) : 0.8362739553682108
+test_Accuracy (pos/neg)  0.8377857339575875
+F1 (non-neg/neg) : 0.7937709442687695
+test_Accuracy (non-neg/neg)  0.8010741138560687
+test loss: 0.8432, test acc: 0.8011
+####################################################################################################
+
+Epoch 64 - Training loss: 0.1316  Time: 2026-06-16_15:25:06
+
+val_mult_acc7:  0.46413276231263384
+Accuracy_val (pos/neg)  0.8357689631176062
+Accuracy_val (non-neg/neg)  0.8190578158458244
+val loss: 0.7625, val acc: 0.8191
+
+test_mult_acc7:  0.43995703544575726
+mae:  0.67789006
+corr:  0.7469156823760409
+F1 (pos/neg) : 0.8525310366535535
+test_Accuracy (pos/neg)  0.8518314513908014
+F1 (non-neg/neg) : 0.8259950657277961
+test_Accuracy (non-neg/neg)  0.8292158968850698
+test loss: 0.7826, test acc: 0.8292
+####################################################################################################
+
+Epoch 65 - Training loss: 0.1105  Time: 2026-06-16_15:26:46
+
+val_mult_acc7:  0.4544967880085653
+Accuracy_val (pos/neg)  0.826722338204593
+Accuracy_val (non-neg/neg)  0.8078158458244111
+val loss: 0.762, val acc: 0.8078
+
+test_mult_acc7:  0.4397422126745435
+mae:  0.6743079
+corr:  0.750392128182726
+F1 (pos/neg) : 0.8465870957814224
+test_Accuracy (pos/neg)  0.8465987331313688
+F1 (non-neg/neg) : 0.8163945384240258
+test_Accuracy (non-neg/neg)  0.8208378088077336
+test loss: 0.7775, test acc: 0.8208
+Running out of patience, loading previous best model.
+Current learning rate: 2.5e-05
+####################################################################################################
+
+Epoch 66 - Training loss: 0.2527  Time: 2026-06-16_15:28:26
+
+val_mult_acc7:  0.4860813704496788
+Accuracy_val (pos/neg)  0.8448155880306193
+Accuracy_val (non-neg/neg)  0.8222698072805139
+val loss: 0.6397, val acc: 0.8223
+
+test_mult_acc7:  0.47604726100966704
+mae:  0.6228801
+corr:  0.7565607973539626
+F1 (pos/neg) : 0.8560818580433748
+test_Accuracy (pos/neg)  0.8554117323051501
+F1 (non-neg/neg) : 0.82673496189332
+test_Accuracy (non-neg/neg)  0.8300751879699249
+test loss: 0.6833, test acc: 0.8301
+####################################################################################################
+
+Epoch 67 - Training loss: 0.2203  Time: 2026-06-16_15:30:05
+
+val_mult_acc7:  0.44271948608137046
+Accuracy_val (pos/neg)  0.8455114822546973
+Accuracy_val (non-neg/neg)  0.8104925053533191
+val loss: 0.8, val acc: 0.8105
+
+test_mult_acc7:  0.43609022556390975
+mae:  0.69598526
+corr:  0.7466891332044947
+F1 (pos/neg) : 0.8460519636071755
+test_Accuracy (pos/neg)  0.8468741393555494
+F1 (non-neg/neg) : 0.8029502075563578
+test_Accuracy (non-neg/neg)  0.8092373791621912
+test loss: 0.8384, test acc: 0.8092
+####################################################################################################
+
+Epoch 68 - Training loss: 0.1874  Time: 2026-06-16_15:31:45
+
+val_mult_acc7:  0.4817987152034261
+Accuracy_val (pos/neg)  0.8441196938065414
+Accuracy_val (non-neg/neg)  0.826017130620985
+val loss: 0.697, val acc: 0.826
+
+test_mult_acc7:  0.4564983888292159
+mae:  0.64770985
+corr:  0.7555414462797932
+F1 (pos/neg) : 0.8545489941021107
+test_Accuracy (pos/neg)  0.8540347011842467
+F1 (non-neg/neg) : 0.8270929991193106
+test_Accuracy (non-neg/neg)  0.8305048335123523
+test loss: 0.733, test acc: 0.8305
+####################################################################################################
+
+Epoch 69 - Training loss: 0.1622  Time: 2026-06-16_15:33:24
+
+val_mult_acc7:  0.4475374732334047
+Accuracy_val (pos/neg)  0.8420320111343076
+Accuracy_val (non-neg/neg)  0.8147751605995718
+val loss: 0.79, val acc: 0.8148
+
+test_mult_acc7:  0.43437164339419976
+mae:  0.6936203
+corr:  0.7509846583758565
+F1 (pos/neg) : 0.8508445923822465
+test_Accuracy (pos/neg)  0.8507298264940788
+F1 (non-neg/neg) : 0.8130865714334189
+test_Accuracy (non-neg/neg)  0.8178302900107411
+test loss: 0.8274, test acc: 0.8178
+####################################################################################################
+
+Epoch 70 - Training loss: 0.1418  Time: 2026-06-16_15:35:04
+
+val_mult_acc7:  0.4550321199143469
+Accuracy_val (pos/neg)  0.8406402226861517
+Accuracy_val (non-neg/neg)  0.8072805139186295
+val loss: 0.7649, val acc: 0.8073
+
+test_mult_acc7:  0.43845327604726103
+mae:  0.6833458
+corr:  0.7468987602762139
+F1 (pos/neg) : 0.8485020750398057
+test_Accuracy (pos/neg)  0.8488019829248141
+F1 (non-neg/neg) : 0.8024932333629712
+test_Accuracy (non-neg/neg)  0.8083780880773362
+test loss: 0.8065, test acc: 0.8084
+================== Start Testing ====================================
+
+test_mult_acc7:  0.5003222341568206
+mae:  0.58324987
+corr:  0.7567485755423125
+F1 (pos/neg) : 0.8596099954712019
+mae:  0.58324987
+corr:  0.7567485755423125
+mult_acc5:  0.5198711063372717
+mult_acc7: 
+ 0.5003222341568206
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.84323   0.75816   0.79844      1348
+        True    0.86523   0.91678   0.89026      2283
+
+    accuracy                        0.85789      3631
+   macro avg    0.85423   0.83747   0.84435      3631
+weighted avg    0.85707   0.85789   0.85617      3631
+
+
+Accuracy (pos/neg)  0.8578903883227761
+F1 (pos/neg) : 0.8596099954712019
+test_Accuracy (pos/neg)  0.8578903883227761
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.72226   0.75816   0.73978      1348
+        True    0.89938   0.88116   0.89018      3307
+
+    accuracy                        0.84554      4655
+   macro avg    0.81082   0.81966   0.81498      4655
+weighted avg    0.84809   0.84554   0.84662      4655
+
+
+Accuracy (non-neg/neg)  0.8455424274973147
+F1 (non-neg/neg) : 0.844460042126116
+F1 (non-neg/neg) : 0.844460042126116
+test_Accuracy (non-neg/neg)  0.8455424274973147
+####################################################################################################
+
+Epoch 71 - Training loss: 0.2558  Time: 2026-06-16_15:36:54
+
+val_mult_acc7:  0.47002141327623126
+Accuracy_val (pos/neg)  0.8503827418232429
+Accuracy_val (non-neg/neg)  0.832441113490364
+val loss: 0.7087, val acc: 0.8324
+
+test_mult_acc7:  0.45349087003222344
+mae:  0.6638565
+corr:  0.7526656915803926
+F1 (pos/neg) : 0.8572899364761712
+test_Accuracy (pos/neg)  0.8559625447535114
+F1 (non-neg/neg) : 0.8322921521769917
+test_Accuracy (non-neg/neg)  0.8345864661654135
+test loss: 0.7645, test acc: 0.8346
+####################################################################################################
+
+Epoch 72 - Training loss: 0.2199  Time: 2026-06-16_15:38:34
+
+val_mult_acc7:  0.46413276231263384
+Accuracy_val (pos/neg)  0.8434237995824635
+Accuracy_val (non-neg/neg)  0.816916488222698
+val loss: 0.7592, val acc: 0.8169
+
+test_mult_acc7:  0.4481203007518797
+mae:  0.67403936
+corr:  0.7495348899232099
+F1 (pos/neg) : 0.8464722836752931
+test_Accuracy (pos/neg)  0.8465987331313688
+F1 (non-neg/neg) : 0.8141764006393071
+test_Accuracy (non-neg/neg)  0.8189044038668098
+test loss: 0.7952, test acc: 0.8189
+####################################################################################################
+
+Epoch 73 - Training loss: 0.187  Time: 2026-06-16_15:40:13
+
+val_mult_acc7:  0.4721627408993576
+Accuracy_val (pos/neg)  0.8364648573416841
+Accuracy_val (non-neg/neg)  0.8083511777301927
+val loss: 0.7203, val acc: 0.8084
+
+test_mult_acc7:  0.45091299677765845
+mae:  0.6661561
+corr:  0.7516859450807218
+F1 (pos/neg) : 0.8463162904644653
+test_Accuracy (pos/neg)  0.8465987331313688
+F1 (non-neg/neg) : 0.8133095481941683
+test_Accuracy (non-neg/neg)  0.8182599355531687
+test loss: 0.7734, test acc: 0.8183
+####################################################################################################
+
+Epoch 74 - Training loss: 0.1648  Time: 2026-06-16_15:41:53
+
+val_mult_acc7:  0.45663811563169165
+Accuracy_val (pos/neg)  0.8420320111343076
+Accuracy_val (non-neg/neg)  0.8115631691648822
+val loss: 0.7786, val acc: 0.8116
+
+test_mult_acc7:  0.4412459720730397
+mae:  0.6869747
+corr:  0.7482204426014528
+F1 (pos/neg) : 0.8455561432324236
+test_Accuracy (pos/neg)  0.8454971082346461
+F1 (non-neg/neg) : 0.8083698870063922
+test_Accuracy (non-neg/neg)  0.8133190118152525
+test loss: 0.8076, test acc: 0.8133
+####################################################################################################
+
+Epoch 75 - Training loss: 0.1435  Time: 2026-06-16_15:43:32
+
+val_mult_acc7:  0.4603854389721627
+Accuracy_val (pos/neg)  0.8364648573416841
+Accuracy_val (non-neg/neg)  0.8126338329764454
+val loss: 0.7847, val acc: 0.8126
+
+test_mult_acc7:  0.43952738990332973
+mae:  0.6938852
+corr:  0.7499587755314427
+F1 (pos/neg) : 0.8503646590519945
+test_Accuracy (pos/neg)  0.8501790140457174
+F1 (non-neg/neg) : 0.8227257479404003
+test_Accuracy (non-neg/neg)  0.8266380236305049
+test loss: 0.8246, test acc: 0.8266
+####################################################################################################
+
+Epoch 76 - Training loss: 0.1236  Time: 2026-06-16_15:45:12
+
+val_mult_acc7:  0.47805139186295503
+Accuracy_val (pos/neg)  0.8392484342379958
+Accuracy_val (non-neg/neg)  0.8088865096359743
+val loss: 0.7236, val acc: 0.8089
+
+test_mult_acc7:  0.45177228786251344
+mae:  0.66225547
+corr:  0.7477190174908709
+F1 (pos/neg) : 0.847494994989205
+test_Accuracy (pos/neg)  0.8474249518039108
+F1 (non-neg/neg) : 0.8108574815259352
+test_Accuracy (non-neg/neg)  0.8156820622986036
+test loss: 0.7618, test acc: 0.8157
+####################################################################################################
+
+Epoch 77 - Training loss: 0.1121  Time: 2026-06-16_15:46:51
+
+val_mult_acc7:  0.4475374732334047
+Accuracy_val (pos/neg)  0.8441196938065414
+Accuracy_val (non-neg/neg)  0.8206638115631691
+val loss: 0.8363, val acc: 0.8207
+
+test_mult_acc7:  0.42148227712137487
+mae:  0.71733224
+corr:  0.7464701983066251
+F1 (pos/neg) : 0.8438144765319472
+test_Accuracy (pos/neg)  0.8430184522170201
+F1 (non-neg/neg) : 0.8150826200236869
+test_Accuracy (non-neg/neg)  0.8186895810955961
+test loss: 0.8698, test acc: 0.8187
+####################################################################################################
+
+Epoch 78 - Training loss: 0.0972  Time: 2026-06-16_15:48:31
+
+val_mult_acc7:  0.46359743040685225
+Accuracy_val (pos/neg)  0.8329853862212944
+Accuracy_val (non-neg/neg)  0.7896145610278372
+val loss: 0.7653, val acc: 0.7896
+
+test_mult_acc7:  0.4423200859291085
+mae:  0.682738
+corr:  0.7440280800720033
+F1 (pos/neg) : 0.8386791335088143
+test_Accuracy (pos/neg)  0.8397135775268522
+F1 (non-neg/neg) : 0.7897948656331358
+test_Accuracy (non-neg/neg)  0.7969924812030075
+test loss: 0.8057, test acc: 0.797
+####################################################################################################
+
+Epoch 79 - Training loss: 0.0882  Time: 2026-06-16_15:50:11
+
+val_mult_acc7:  0.4619914346895075
+Accuracy_val (pos/neg)  0.8232428670842032
+Accuracy_val (non-neg/neg)  0.7773019271948608
+val loss: 0.768, val acc: 0.7773
+
+test_mult_acc7:  0.44833512352309346
+mae:  0.67369896
+corr:  0.7470412275975329
+F1 (pos/neg) : 0.8369615322071868
+test_Accuracy (pos/neg)  0.8383365464059488
+F1 (non-neg/neg) : 0.7811522501721271
+test_Accuracy (non-neg/neg)  0.7892588614393126
+test loss: 0.7894, test acc: 0.7893
+####################################################################################################
+
+Epoch 80 - Training loss: 0.0807  Time: 2026-06-16_15:51:50
+
+val_mult_acc7:  0.46306209850107066
+Accuracy_val (pos/neg)  0.8329853862212944
+Accuracy_val (non-neg/neg)  0.7971092077087795
+val loss: 0.7706, val acc: 0.7971
+
+test_mult_acc7:  0.44683136412459723
+mae:  0.6781369
+corr:  0.7457978324901242
+F1 (pos/neg) : 0.8452845243292125
+test_Accuracy (pos/neg)  0.8457725144588267
+F1 (non-neg/neg) : 0.8021937193678784
+test_Accuracy (non-neg/neg)  0.8081632653061225
+test loss: 0.7897, test acc: 0.8082
+================== Start Testing ====================================
+
+test_mult_acc7:  0.5003222341568206
+mae:  0.58324987
+corr:  0.7567485755423125
+F1 (pos/neg) : 0.8596099954712019
+mae:  0.58324987
+corr:  0.7567485755423125
+mult_acc5:  0.5198711063372717
+mult_acc7: 
+ 0.5003222341568206
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.84323   0.75816   0.79844      1348
+        True    0.86523   0.91678   0.89026      2283
+
+    accuracy                        0.85789      3631
+   macro avg    0.85423   0.83747   0.84435      3631
+weighted avg    0.85707   0.85789   0.85617      3631
+
+
+Accuracy (pos/neg)  0.8578903883227761
+F1 (pos/neg) : 0.8596099954712019
+test_Accuracy (pos/neg)  0.8578903883227761
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.72226   0.75816   0.73978      1348
+        True    0.89938   0.88116   0.89018      3307
+
+    accuracy                        0.84554      4655
+   macro avg    0.81082   0.81966   0.81498      4655
+weighted avg    0.84809   0.84554   0.84662      4655
+
+
+Accuracy (non-neg/neg)  0.8455424274973147
+F1 (non-neg/neg) : 0.844460042126116
+F1 (non-neg/neg) : 0.844460042126116
+test_Accuracy (non-neg/neg)  0.8455424274973147
+####################################################################################################
+
+Epoch 81 - Training loss: 0.255  Time: 2026-06-16_15:53:41
+
+val_mult_acc7:  0.4544967880085653
+Accuracy_val (pos/neg)  0.8441196938065414
+Accuracy_val (non-neg/neg)  0.8179871520342612
+val loss: 0.7261, val acc: 0.818
+
+test_mult_acc7:  0.44253490870032225
+mae:  0.66972864
+corr:  0.7527054861769515
+F1 (pos/neg) : 0.8548061359925079
+test_Accuracy (pos/neg)  0.8548609198567888
+F1 (non-neg/neg) : 0.8196990748025197
+test_Accuracy (non-neg/neg)  0.8242749731471536
+test loss: 0.7805, test acc: 0.8243
+Running out of patience, loading previous best model.
+Current learning rate: 2.5e-05
+####################################################################################################
+Running out of patience, early stopping.
+================== Start Testing ====================================
+
+test_mult_acc7:  0.5003222341568206
+mae:  0.58324987
+corr:  0.7567485755423125
+F1 (pos/neg) : 0.8596099954712019
+mae:  0.58324987
+corr:  0.7567485755423125
+mult_acc5:  0.5198711063372717
+mult_acc7: 
+ 0.5003222341568206
+Classification Report (pos/neg) 
+:
+              precision    recall  f1-score   support
+
+       False    0.84323   0.75816   0.79844      1348
+        True    0.86523   0.91678   0.89026      2283
+
+    accuracy                        0.85789      3631
+   macro avg    0.85423   0.83747   0.84435      3631
+weighted avg    0.85707   0.85789   0.85617      3631
+
+
+Accuracy (pos/neg)  0.8578903883227761
+F1 (pos/neg) : 0.8596099954712019
+test_Accuracy (pos/neg)  0.8578903883227761
+Classification Report (non-neg/neg) :
+
+              precision    recall  f1-score   support
+
+       False    0.72226   0.75816   0.73978      1348
+        True    0.89938   0.88116   0.89018      3307
+
+    accuracy                        0.84554      4655
+   macro avg    0.81082   0.81966   0.81498      4655
+weighted avg    0.84809   0.84554   0.84662      4655
+
+
+Accuracy (non-neg/neg)  0.8455424274973147
+F1 (non-neg/neg) : 0.844460042126116
+F1 (non-neg/neg) : 0.844460042126116
+test_Accuracy (non-neg/neg)  0.8455424274973147

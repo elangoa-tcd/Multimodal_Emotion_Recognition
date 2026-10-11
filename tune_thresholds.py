@@ -1,7 +1,4 @@
-"""Post-hoc per-emotion threshold tuning. No retraining.
-Sweeps the decision cut-off on DEV to maximise positive-class F1,
-then reports TEST metrics at those cut-offs vs the default (logit > 0).
-Also supports test-time modality ablation via --ablate (see Part B)."""
+""" per-emotion threshold tuning. No retraining."""
 import argparse
 import numpy as np
 import torch
@@ -69,11 +66,11 @@ if __name__ == "__main__":
     test_logit, test_lab = collect(model, test_loader)
     dev_true, test_true = (dev_lab > 0).astype(int), (test_lab > 0).astype(int)
 
-    # ---- baseline: the current fixed cut-off ----
+    # baseline: the current fixed cut-off 
     base = report(test_true, (test_logit > 0).astype(int),
                   "TEST @ default cut-off (logit > 0)")
 
-    # ---- sweep each emotion's cut-off on DEV ----
+    # sweep each emotion's cut-off on DEV 
     thresholds = []
     for i in range(6):
         cands = np.percentile(dev_logit[:, i], np.linspace(0.5, 99.5, args.grid))
@@ -84,8 +81,6 @@ if __name__ == "__main__":
     for e, t in zip(EMO, thresholds):
         print(f"  {e:10s} {t:+.4f}")
 
-    tuned = report(test_true,
-                   (test_logit > np.array(thresholds)).astype(int),
-                   "TEST @ tuned cut-offs (chosen on DEV)")
+    tuned = report(test_true, (test_logit > np.array(thresholds)).astype(int),"TEST @ tuned cut-offs (chosen on DEV)")
     print(f"\nmacro-F1: {base:.4f} (default) -> {tuned:.4f} (tuned)   delta {tuned-base:+.4f}")
     print("\nBRANCH COUNTS:", _BRANCH_COUNTS)
