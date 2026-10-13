@@ -66,7 +66,7 @@ def extract(model, loader):
 
     with torch.no_grad():
         for batch in loader:
-            v, a, y, l, bert_sent, bert_type, bert_mask = batch
+            v, a, y, l, bert_sent, bert_type, bert_mask,_segment_ids = batch
 
             # ---- text: replicate network.py:175-182 (masked mean over BERT tokens) ----
             ids = bert_sent.cuda()

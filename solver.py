@@ -509,7 +509,7 @@ class Solver(object):
         """
         self.model.zero_grad()
 
-        v, a, y, l, bert_sent, bert_sent_type, bert_sent_mask = batch # ([63, 64, 35]) ([63, 64, 74]) ([64, 1]) 64 ([64, 65]) 
+        v, a, y, l, bert_sent, bert_sent_type, bert_sent_mask,_segment_ids = batch # ([63, 64, 35]) ([63, 64, 74]) ([64, 1]) 64 ([64, 65]) 
         # ([42, 128, 47]) ([42, 128, 74]) ([128, 1]) 128 ([128, 44])
         v = to_gpu(v)
         a = to_gpu(a)
