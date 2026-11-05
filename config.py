@@ -6,34 +6,12 @@ from torch import optim
 import torch.nn as nn
 import os
 
-# path to a pretrained word embedding file
-# word_emb_path = ''
-data_str = "mosei" # mosi or mosei or ur_funny
-# text encoder: "bert-base-uncased" (768d, 12 layers) or "roberta-large" (1024d, 24 layers)
-text_encoder_str = "roberta-large"
-# text_encoder_str = "bert-base-uncased"
-word_emb_path = '/home/elangoa/data/MOSEI/glove_dummy.txt' # 改为mosi测试的时候，这里记得也要改 MOSI MOSEI UR_FUNNY
-assert(word_emb_path is not None)
-
-# project_dir = Path(__file__).resolve().parent.parent # 默认设置为当前文件路名的上一层，再上一层目录
-# sdk_dir = project_dir.joinpath('/home/jack/Project/MutiModal/SentimentAnalysis/PSMixer/CMU_MultimodalSDK')
-# data_dir = project_dir.joinpath('datasets')  
-# data_dict = {'mosi': data_dir.joinpath('MOSI'), 'mosei': data_dir.joinpath(
-#     'MOSEI'), 'ur_funny': data_dir.joinpath('UR_FUNNY')}
-
-project_dir = "/home/elangoa/data"
-sdk_dir ='/home/elangoa/TMBL/CMU-MultimodalSDK-main'
-data_dir = os.path.join(project_dir, 'Multimodal') # /data/ProjectData/Multimodal
-data_dict = {'mosi': os.path.join(data_dir,'MOSI'),
-            #  'mosei': '/home/elangoa/data/MOSEI',
-             'mosei': '/home/elangoa/data/MOSEI_C_both',
-             'ur_funny': os.path.join(data_dir,'UR_FUNNY')}
+REPO_ROOT = Path(__file__).resolve().parent
 
 optimizer_dict = {'RMSprop': optim.RMSprop, 'Adam': optim.Adam}
 activation_dict = {'elu': nn.ELU, "hardshrink": nn.Hardshrink, "hardtanh": nn.Hardtanh,
                    "leakyrelu": nn.LeakyReLU, "prelu": nn.PReLU, "relu": nn.ReLU, "rrelu": nn.RReLU,
-                   "tanh": nn.Tanh,"gelu":nn.GELU}
-
+                   "tanh": nn.Tanh, "gelu": nn.GELU}
 
 def str2bool(v):
     """string to boolean"""
@@ -57,12 +35,9 @@ class Config(object):
                 setattr(self, key, value)
 
 
-        self.dataset_dir = data_dict[self.data.lower()]
-        self.sdk_dir = sdk_dir
-        # Glove path
-        self.word_emb_path = word_emb_path
-
-        self.data_dir = self.dataset_dir
+        self.dataset_dir = self.data_dir
+        if self.word_emb_path is None:
+            self.word_emb_path = os.path.join(self.data_dir, 'glove_dummy.txt')
 
     def __str__(self):
         """Pretty-print configurations in alphabetical order"""
@@ -78,7 +53,7 @@ def get_config(parse=True, **optional_kwargs):
     2. Create Config class initilized with parsed kwargs.
     3. Return Config class.
     """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(allow_abbrev=False)
 
     # Mode
     parser.add_argument('--mode', type=str, default='train')
@@ -89,8 +64,8 @@ def get_config(parse=True, **optional_kwargs):
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--n_epoch', type=int, default=300)
     parser.add_argument('--milestones', type=list, default=[10, 30, 80])
-    parser.add_argument('--patience', type=int, default=6)
-    parser.add_argument('--trials', type=int, default=3)
+    parser.add_argument('--patience', type=int, default=15)
+    parser.add_argument('--trials', type=int, default=5)
 
     parser.add_argument('--learning_rate', type=float, default=1e-4)
     parser.add_argument('--optimizer', type=str, default='Adam')
@@ -119,12 +94,33 @@ def get_config(parse=True, **optional_kwargs):
     parser.add_argument('--test_duration', type=int, default=1)
 
     # Data
-    parser.add_argument('--data', type=str, default=data_str)  # mosi or mosei or ur_funny
+    parser.add_argument('--data', type=str, default='mosei')  # mosi or mosei or ur_funny
 
     # modality ablation: zero out one modality's pooled features ('none' = full model)
     parser.add_argument('--ablate', type=str, default='none', choices=['none', 'text', 'audio', 'video','only_text','shuffle_text', 'shuffle_audio', 'shuffle_video'])
     
     parser.add_argument('--modality_dropout', type=float, default=0.0)
+     # ---- experiment switches (previously changed by editing code) ----
+    parser.add_argument('--task', type=str, default='emotion', choices=['emotion'],
+                        help='emotion = 6-way multi-label detection; sentiment = original TMBL regression')
+    parser.add_argument('--text_encoder', type=str, default='roberta-large',
+                        choices=['roberta-large', 'bert-base-uncased'])
+    parser.add_argument('--pooling', type=str, default='mean', choices=['mean', 'attention'],
+                        help='how BERT/RoBERTa token vectors are collapsed into one text vector')
+    parser.add_argument('--pos_weight', type=str, default='full', choices=['none', 'full', 'sqrt'],
+                        help='class-imbalance weighting in the emotion loss (ignored for sentiment)')
+    parser.add_argument('--seed', type=int, default=55654)
+
+    # ---- paths (previously hardcoded to /home/elangoa/...) ----
+    parser.add_argument('--data_dir', type=str, default=str(REPO_ROOT / 'data' / 'MOSEI_C_both'),
+                        help='folder with train/dev/test .pkl files built by build_variant.py')
+    parser.add_argument('--sdk_dir', type=str, default=str(REPO_ROOT / 'CMU-MultimodalSDK-main'))
+    parser.add_argument('--word_emb_path', type=str, default=None,
+                        help='GloVe placeholder file; defaults to <data_dir>/glove_dummy.txt')
+    parser.add_argument('--checkpoint_dir', type=str, default=str(REPO_ROOT / 'checkpoints'))
+    
+    
+    
     # Parse arguments
     if parse:
         kwargs = parser.parse_args()
@@ -138,7 +134,7 @@ def get_config(parse=True, **optional_kwargs):
         kwargs.depth = 1
     elif kwargs.data == "mosei":
         # kwargs.num_classes = 1
-        kwargs.num_classes = 6
+        kwargs.num_classes = 6 if kwargs.task == 'emotion' else 1
         kwargs.batch_size = 48 # PXmixer 64 20G 左右显存 %%% Swim 32 24G 左右显存
         kwargs.depth = 1
     elif kwargs.data == "ur_funny":
@@ -148,9 +144,12 @@ def get_config(parse=True, **optional_kwargs):
         print("No dataset mentioned")
         exit()
     
-    kwargs.text_encoder = text_encoder_str
-    # freeze encoder layers 0..N, train the top ~25%: N=8 for 12-layer bert-base, N=19 for 24-layer roberta-large
-    kwargs.text_freeze_upto = 19 if "large" in text_encoder_str else 8
+     # freeze encoder layers 0..N, train the top ~25%: N=8 for 12-layer bert-base, N=19 for 24-layer roberta-large
+    kwargs.text_freeze_upto = 19 if "large" in kwargs.text_encoder else 8
+    # allow ~ in paths even when written as --data_dir=~/data/...
+    for key in ('data_dir', 'sdk_dir', 'word_emb_path', 'checkpoint_dir'):
+        if getattr(kwargs, key):
+            setattr(kwargs, key, os.path.expanduser(getattr(kwargs, key)))
     # Namespace => Dictionary
     kwargs = vars(kwargs)
     kwargs.update(optional_kwargs)

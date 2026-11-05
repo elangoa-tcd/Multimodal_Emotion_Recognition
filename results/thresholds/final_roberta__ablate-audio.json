@@ -1,0 +1,15 @@
+{
+  "checkpoint": "checkpoints/devBest/model_final_roberta.std",
+  "ablate": "audio",
+  "grid": 200,
+  "thresholds": {
+    "happy": -1.5235873463764862,
+    "sad": -0.24428504724149142,
+    "anger": -0.1843294068721673,
+    "surprise": 0.07249014308891409,
+    "disgust": 1.3367352106762884,
+    "fear": -0.7723735433876809
+  },
+  "macro_f1_default": 0.4459493335627826,
+  "macro_f1_tuned": 0.4551559878049943
+}

@@ -34,9 +34,10 @@ Usage
 
 import argparse
 import sys
-
+import os 
 import numpy as np
 import torch
+
 
 try:
     from sklearn.linear_model import LogisticRegression      # noqa: F401  (used via fit_and_score)
@@ -47,6 +48,7 @@ except ImportError:
 from config import get_config
 from data_loader import get_loader
 import network
+from utils.results_io import write_json
 
 # Reuse the probe's pooling and scoring so the protocol is identical by construction
 from probe_av_features import pool_clip, fit_and_score, trivial_baseline, print_row, EMOTIONS
@@ -64,7 +66,7 @@ def extract(model, loader):
 
     with torch.no_grad():
         for batch in loader:
-            v, a, y, l, bert_sent, bert_type, bert_mask = batch
+            v, a, y, l, bert_sent, bert_type, bert_mask,_segment_ids = batch
 
             # ---- text: replicate network.py:175-182 (masked mean over BERT tokens) ----
             ids = bert_sent.cuda()
@@ -112,7 +114,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", required=True, help="path to a trained .std file")
     ap.add_argument("--grid", type=int, default=200, help="cut-off candidates per emotion")
-    args = ap.parse_args()
+    ap.add_argument("--results_dir", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "results"))
+    args, _ = ap.parse_known_args() 
 
     print("=" * 78)
     print("CEILING ON TOP OF BERT-STRENGTH TEXT")
@@ -183,6 +186,16 @@ def main():
     print("  available and further fusion work cannot help. If realised is well")
     print("  below, that gap is what a fusion fix could recover.")
     print()
+    run_name = os.path.basename(args.checkpoint).replace('model_', '', 1).rsplit('.', 1)[0]
+    write_json(os.path.join(args.results_dir, 'metrics', f'ceiling_{run_name}.json'), {
+        'checkpoint': args.checkpoint,
+        'emotions': list(EMOTIONS),
+        'per_emotion_f1': {'trivial': [float(x) for x in triv],
+                           **{label: [float(x) for x in f1] for label, _, f1 in rows}},
+        'macro_f1': {'trivial': tb, 'audio_video_only': av, 'text_only': bt, 'text_audio_video': bav},
+        'ceiling_av_over_text': bav - bt,
+    })
+
 
 
 if __name__ == "__main__":

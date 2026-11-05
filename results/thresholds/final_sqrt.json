@@ -1,0 +1,15 @@
+{
+  "checkpoint": "checkpoints/devBest/model_final_sqrt.std",
+  "ablate": "none",
+  "grid": 200,
+  "thresholds": {
+    "happy": -1.558802401809836,
+    "sad": -0.6598202426379649,
+    "anger": -0.8506249364896035,
+    "surprise": -0.8537994072664921,
+    "disgust": -0.7922925465071026,
+    "fear": -1.5859048824813498
+  },
+  "macro_f1_default": 0.4180089153959074,
+  "macro_f1_tuned": 0.4449866684705097
+}

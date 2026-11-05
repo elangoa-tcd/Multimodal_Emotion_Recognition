@@ -1,0 +1,15 @@
+{
+  "checkpoint": "checkpoints/devBest/model_final_attnpool.std",
+  "ablate": "none",
+  "grid": 200,
+  "thresholds": {
+    "happy": -0.5035089706356202,
+    "sad": -0.25547240223716866,
+    "anger": -0.16478966904719874,
+    "surprise": 0.7346099071916026,
+    "disgust": 0.8442633921027776,
+    "fear": -1.0407335415257883
+  },
+  "macro_f1_default": 0.4378046709818823,
+  "macro_f1_tuned": 0.4429869076326048
+}
