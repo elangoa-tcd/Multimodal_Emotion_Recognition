@@ -1,0 +1,15 @@
+{
+  "checkpoint": "checkpoints/devBest/model_final_posweight.std",
+  "ablate": "none",
+  "grid": 200,
+  "thresholds": {
+    "happy": -1.0464347376595788,
+    "sad": -0.26558255976318873,
+    "anger": -0.40846840114749283,
+    "surprise": -0.2868367836703015,
+    "disgust": -0.5207800033553743,
+    "fear": -2.7582325125459453
+  },
+  "macro_f1_default": 0.4379736775145943,
+  "macro_f1_tuned": 0.4443350880978611
+}
