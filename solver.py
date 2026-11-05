@@ -177,7 +177,7 @@ class Solver(object):
                 print("Found new best model on dev set!")
                 with open(self.log_file, "a") as file:
                     file.write(f"Found new best model on dev set!\n")            
-                torch.save(self.model.state_dict(), self.best_path('model'))
+                torch.save(self.model.state_dict(), self._best_path('model'))
                 torch.save(self.optimizer.state_dict(),	self._best_path('optim'))
                 curr_patience = patience
             else:

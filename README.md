@@ -10,8 +10,6 @@ regression*, to **six-way multi-label emotion detection** (happy, sad, anger, su
 fear) on CMU-MOSEI, using text, audio and video. It also includes diagnostic tools that measure
 how much each modality actually contributes.
 
-> **TODO:** add a link to the dissertation PDF once it's public (TARA or similar).
-
 ## Key findings
 
 - **Handling class imbalance matters most.** Weighting rare emotions in the loss (`pos_weight`)
@@ -87,7 +85,7 @@ EOF
 
 ## 1. Environment
 
-Tested with **TODO: Python 3.X.Y, CUDA 12.8, PyTorch X.Y.Z on <GPU model>**, on Linux.
+Tested with **Python 3.13.7, CUDA 12.8, PyTorch 2.11.0 and transformers 5.10.2 on an NVIDIA RTX A6000**, on Linux.
 
 ```bash
 git clone https://github.com/elangoa-tcd/Multimodal_Emotion_Recognition.git
@@ -95,7 +93,7 @@ cd Multimodal_Emotion_Recognition
 python3 -m venv .venv && source .venv/bin/activate
 
 # 1) PyTorch first, from the CUDA index (pins the CUDA build); version as in requirements.txt
-pip install torch==X.Y.Z --index-url https://download.pytorch.org/whl/cu128
+pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128
 # 2) everything else, pinned
 pip install -r requirements.txt
 # 3) the CMU Multimodal SDK, bundled in this repo
@@ -109,7 +107,7 @@ python3 -c "import torch; print(torch.__version__, torch.cuda.is_available())"  
 python3 -c "from mmsdk import mmdatasdk; print('sdk ok')"
 ```
 
-`requirements.txt` lists the direct dependencies. `requirements-lock.txt` is the complete
+`requirements.txt` lists the direct dependencies.
 environment the reported results were produced in (`pip freeze`), for debugging differences.
 
 ---
@@ -172,7 +170,7 @@ python3 train.py --data_dir data/MOSEI_C_both --name final_roberta
 
 The defaults are the final configuration (RoBERTa-large, pos_weight, mean pooling, seed 55654), so
 this command trains the model behind Tables 5.7–5.11. Training stops early (patience 15, at most
-5 learning-rate halvings); the reported runs stopped after 85–138 epochs. On **TODO: GPU model** this took about
+5 learning-rate halvings); the reported runs stopped after 85–138 epochs. On an **NVIDIA RTX A6000** this took about
 **5.5 h** for RoBERTa-large and **2.5–4 h** for the BERT runs.
 
 For long runs, detach from the terminal so the job survives a disconnected SSH session:
@@ -277,7 +275,6 @@ video can add on top of this text. The result goes to `results/metrics/ceiling_f
 | Dissertation | Data in this repository | Produced by |
 |---|---|---|
 | Table 3.1 | – (reproduced from Bagher Zadeh et al., 2018) | – |
-| Table 3.2, Figs 3.1–3.3 | **TODO** | **TODO:** `analyze_mosei_data.py` |
 | Table 5.2 (sentiment replication) | `test_results_final/Sentiment Results.log` | an earlier version of this code; see [Limitations](#limitations) |
 | Table 5.3 | `results/metrics/final_baseline_test_default.csv` | `train.py --text_encoder bert-base-uncased --pos_weight none --name final_baseline` |
 | Table 5.4 | `results/metrics/final_posweight_test_default.csv` | `train.py --text_encoder bert-base-uncased --name final_posweight` |
@@ -348,7 +345,7 @@ experiments and has no data behind it.
 ## Acknowledgements and attribution
 
 - The model and much of the training code come from **TMBL** by Huang et al. (2024),
-  **TODO: link to the upstream TMBL GitHub repository**. `network.py`, `jack_transformer_share.py`,
+  [github.com/JackAILab/TMBL](https://github.com/JackAILab/TMBL). `network.py`, `jack_transformer_share.py`,
   `create_dataset.py`, `data_loader.py`, `solver.py` and `utils/functions.py` are adapted from it.
   Model variants from the upstream repository that this work doesn't use were removed; see the
   upstream repository for them.
@@ -382,7 +379,4 @@ If you use this code, please cite the dissertation and the original TMBL paper:
 
 Please also cite CMU-MOSEI (Bagher Zadeh et al., 2018) if you use the dataset.
 
-## Licence
 
-**TODO** — decide after checking the licence of the upstream TMBL repository (see Step 9).
-The bundled CMU Multimodal SDK keeps its own MIT licence (`CMU-MultimodalSDK-main/LICENSE`).

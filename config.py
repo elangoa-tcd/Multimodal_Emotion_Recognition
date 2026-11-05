@@ -8,6 +8,11 @@ import os
 
 REPO_ROOT = Path(__file__).resolve().parent
 
+optimizer_dict = {'RMSprop': optim.RMSprop, 'Adam': optim.Adam}
+activation_dict = {'elu': nn.ELU, "hardshrink": nn.Hardshrink, "hardtanh": nn.Hardtanh,
+                   "leakyrelu": nn.LeakyReLU, "prelu": nn.PReLU, "relu": nn.ReLU, "rrelu": nn.RReLU,
+                   "tanh": nn.Tanh, "gelu": nn.GELU}
+
 def str2bool(v):
     """string to boolean"""
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
